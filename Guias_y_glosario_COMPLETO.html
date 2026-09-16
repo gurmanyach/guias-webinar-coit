@@ -3468,15 +3468,15 @@ ollama run qwen3:8b</code></pre>
 
   <div class="tblwrap"><table>
     <tr><th>Capa</th><th>Quién</th><th>Qué hace</th></tr>
-    <tr><td><strong>Árbitro</strong></td><td>Joaquín Serrat González, el ingeniero</td><td>Decide lo importante y firma. Tiene la última palabra</td></tr>
-    <tr><td><strong>Cúspide</strong></td><td>Los agentes principales del servidor y del Mac, con Joaquín</td><td>Decisiones de arquitectura del sistema, con veto</td></tr>
+    <tr><td><strong>Árbitro</strong></td><td>Kim, el ingeniero</td><td>Decide lo importante y firma. Tiene la última palabra</td></tr>
+    <tr><td><strong>Cúspide</strong></td><td>Los agentes principales del servidor y del Mac, con Kim</td><td>Decisiones de arquitectura del sistema, con veto</td></tr>
     <tr><td><strong>Supervisor</strong></td><td>CC_BM, en el PC de despacho</td><td>Traduce las decisiones en encargos para los especialistas y coordina</td></tr>
     <tr><td><strong>Especialistas</strong></td><td>Un agente por proyecto o dominio</td><td>Hacen el trabajo de su terreno</td></tr>
     <tr><td><strong>Soporte</strong></td><td>Claude Desktop y otros</td><td>Análisis, planificación, segunda opinión</td></tr>
   </table></div>
 
   <h3>Quien inicia y lidera un proyecto</h3>
-  <p>El que lo convoca (o Joaquín), que define objetivo y criterio de cierre. En el <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> normativo, por
+  <p>El que lo convoca (o Kim), que define objetivo y criterio de cierre. En el <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> normativo, por
   ejemplo, un único agente <strong>integra</strong> los cambios: los demás proponen, él decide qué
   entra, para que no haya dos versiones de la verdad.</p>
 
@@ -3518,7 +3518,7 @@ ollama run qwen3:8b</code></pre>
     <tr><th>Pieza</th><th>Cómo funciona</th></tr>
     <tr><td><strong>El tablón (<abbr title="BUS: tablón común de mensajes entre agentes">BUS</abbr>)</strong></td><td>Cada mensaje es una fila: fecha y hora, quién, para quién, tipo y contenido. <strong>Solo se añade, nunca se edita ni se borra</strong>: es el registro de todo lo que ha pasado.</td></tr>
     <tr><td><strong>Buzones (INBOX)</strong></td><td>Un servicio en el servidor lee el tablón cada 15 segundos y copia cada mensaje al buzón de su destinatario, con aviso al móvil.</td></tr>
-    <tr><td><strong>Tipos de mensaje</strong></td><td>Aviso, informe, tarea, consulta, acuse, hallazgo, propuesta, decisión para Joaquín… Separar <em>lo que he medido</em> de <em>lo que propongo</em> evita mezclar diagnóstico y decisión.</td></tr>
+    <tr><td><strong>Tipos de mensaje</strong></td><td>Aviso, informe, tarea, consulta, acuse, hallazgo, propuesta, decisión para Kim… Separar <em>lo que he medido</em> de <em>lo que propongo</em> evita mezclar diagnóstico y decisión.</td></tr>
     <tr><td><strong>Vigía</strong></td><td>Cada agente, mientras su sesión está abierta, tiene un vigía que le avisa en cuanto llega algo para él.</td></tr>
     <tr><td><strong>Firma</strong></td><td>Cada agente escribe solo en su propio nombre.</td></tr>
   </table></div>
@@ -3548,7 +3548,7 @@ ollama run qwen3:8b</code></pre>
 
   <div class="tblwrap"><table>
     <tr><th></th><th>Reunión de Vecinos</th><th>Sala de Debate</th><th>El Laboratorio</th></tr>
-    <tr><td><strong>Para qué</strong></td><td>Resolver una <strong>contradicción</strong>: dos vecinos discrepan sobre un hecho medido, o algo va a escalar a Joaquín</td><td>Que 2–5 vecinos <strong>decidan</strong> juntos algo sin llenar el tablón</td><td><strong>Ejecutar</strong> hasta el final un plan ya decidido</td></tr>
+    <tr><td><strong>Para qué</strong></td><td>Resolver una <strong>contradicción</strong>: dos vecinos discrepan sobre un hecho medido, o algo va a escalar a Kim</td><td>Que 2–5 vecinos <strong>decidan</strong> juntos algo sin llenar el tablón</td><td><strong>Ejecutar</strong> hasta el final un plan ya decidido</td></tr>
     <tr><td><strong>Ficheros</strong></td><td>Reunión activa + acta</td><td>Historial (solo se añade) + pizarra (estado vivo)</td><td>Plan (no se reescribe) + lista de tareas + historial</td></tr>
     <tr><td><strong>Papeles</strong></td><td>Convocante, presidente, secretario (<strong>distinto del presidente</strong>), asistentes y adversario con turno obligatorio</td><td>Participantes que reclaman cada tarea antes de empezar</td><td>Coordinador, escriba y «blindaje de ruido», que filtra lo que llega de fuera</td></tr>
     <tr><td><strong>Cómo termina</strong></td><td>Por quórum, no por reloj. Mejor un cierre parcial que uno falso</td><td>Marcada como cerrada, con el resultado en una línea</td><td>Cuando se cumple el criterio de cierre verificable</td></tr>
@@ -3612,7 +3612,7 @@ ollama run qwen3:8b</code></pre>
   <h3>El cierre formal, paso a paso</h3>
   <ol>
     <li><strong>Informe de jornada</strong> en una página con pestañas: qué se hizo, qué queda, qué
-    decisiones esperan a Joaquín con la opción recomendada, y el estado del Manual de Calidad.</li>
+    decisiones esperan a Kim con la opción recomendada, y el estado del Manual de Calidad.</li>
     <li><strong>Mirar el Patio y contestar</strong> lo que esté pendiente: el tablón no despierta a
     nadie, y cerrar sin mirar deja a otros esperando.</li>
     <li><strong>Escribir la memoria</strong>: lecciones nuevas, estado del proyecto y la hoja de ruta.</li>
@@ -3819,7 +3819,7 @@ ollama run qwen3:8b</code></pre>
     <p><strong>Qué pasó.</strong> Cuando una fila llevaba «todos» junto a nombres concretos, el
     repartidor <strong>sustituía</strong> la lista por el censo general en vez de sumarla, y los
     nombrados que no estaban en ese censo no recibían nada. De 225 filas dirigidas a dos agentes
-    concretos, llegaron 0. El buzón de Joaquín pasó siete horas sin recibir nada, incluida la fila que
+    concretos, llegaron 0. El buzón de Kim pasó siete horas sin recibir nada, incluida la fila que
     avisaba del propio problema.</p>
     <p><strong>Cómo se detectó.</strong> Ejecutando el reparto sobre filas reales: al quitar la palabra,
     la misma fila llegó a los tres buzones en 5 segundos.</p>
@@ -3849,7 +3849,7 @@ ollama run qwen3:8b</code></pre>
     podían</strong>: el único canal para avisar era el bloqueado. Otra noche, reparar el tablón
     sustituyéndolo por una copia limpia dejó a los lectores remotos viendo una foto antigua; uno de
     ellos, al escribir, restauró la versión dañada y se perdieron al menos 7 filas.</p>
-    <p><strong>Cómo se detectó.</strong> El bloqueo, porque un agente avisó a Joaquín por fuera del Patio;
+    <p><strong>Cómo se detectó.</strong> El bloqueo, porque un agente avisó a Kim por fuera del Patio;
     la reversión, comparando la huella del fichero desde las dos máquinas en el mismo instante (la fecha
     de modificación no servía: la foto vieja era coherente consigo misma).</p>
     <p><strong>Regla que quedó.</strong> Toda protección se prueba desde <strong>cada camino</strong> de
