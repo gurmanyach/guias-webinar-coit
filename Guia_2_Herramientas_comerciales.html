@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Guía 2 · Herramientas comerciales — Webinar COIT</title>
+<title>Guía 2 · Herramientas de IA de plataforma — Webinar COIT</title>
 <style>
   :root{
     --bg:#ffffff; --ink:#1F2A37; --muted:#6B7785; --line:#D9E1EC;
@@ -46,6 +46,8 @@
   h3{font-size:1.14rem;margin:28px 0 8px;font-weight:620}
   p{margin:0 0 14px;max-width:78ch}
   ul,ol{max-width:78ch;padding-left:22px;margin:0 0 14px} li{margin-bottom:7px}
+  code{font:13.5px/1.5 ui-monospace,Menlo,Consolas,monospace;background:var(--card);
+    padding:2px 6px;border-radius:4px;border:1px solid var(--line)}
   .tblwrap{overflow-x:auto;margin:0 0 18px}
   table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
   th{background:var(--navy);color:#fff;text-align:left;padding:9px 11px;font-weight:600}
@@ -60,14 +62,17 @@
   .lbl{font:600 11.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.1em;
     text-transform:uppercase;display:block;margin-bottom:8px}
   .tip .lbl{color:var(--green)} .warn .lbl{color:var(--amber)} .key .lbl{color:var(--accent)}
-  .ex{background:var(--card);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;
-    padding:10px 14px;margin:0 0 10px;font-size:15px}
-  .ex b{color:var(--accent)}
+  .flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:0 0 18px}
+  .flow div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
+  .flow b{display:block;color:var(--accent);font-size:13px;margin-bottom:4px}
+  .flow span{font-size:14px}
   footer{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13.5px}
   .pill{display:inline-block;background:var(--card);border:1px solid var(--line);
     border-radius:999px;padding:2px 10px;font-size:12.5px;color:var(--muted);margin-right:6px}
   abbr[title]{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}
   .gl{color:var(--muted);font-size:.86em}
+  a{color:var(--accent)}
+  td a{word-break:break-word}
 
   .home{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;
     border:0;border-radius:10px;padding:11px 20px;margin:18px 0 0;
@@ -78,285 +83,333 @@
   @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .home{color:#12161C}}
   :root[data-theme="dark"] .home{color:#12161C}
 
-  a{color:var(--accent)}
-  a:hover{text-decoration:underline}
-
   .autoria{border-top:1px solid var(--line);margin-top:18px;padding-top:14px;font-size:14px;line-height:1.55}
   .autoria .nom{font-weight:700;color:var(--ink)}
   .autoria .det{color:var(--muted)}
+
+  .aviso{background:var(--amber-bg);border-left:4px solid var(--amber);border-radius:8px;
+    padding:11px 15px;margin:12px 0}
+  .box.key .lbl{font-size:13px;letter-spacing:.06em}
 </style>
 </head>
 <body>
 <div class="wrap">
 <a class="home" href="index.html"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M6 10.5V20h5v-5h2v5h5v-9.5"/></svg><span>Índice de guías</span></a>
 
-
 <header class="top">
   <p class="eyebrow">Webinar COIT · Guía 2 de 14</p>
-  <h1>Herramientas comerciales: lo que puedes usar mañana</h1>
-  <p class="sub">Antes de montar nada propio, las herramientas de Google, Microsoft, OpenAI,
-  Anthropic y Perplexity resuelven mucho trabajo de un despacho. Qué hace cada una, cuánto
-  cuesta, ejemplos concretos de uso y dónde está el límite con los datos de tus clientes.</p>
-  <p><span class="pill">Nivel: desde cero</span><span class="pill">Lectura: ~25 min</span>
-  <span class="pill">Precios consultados el 14/09/2026</span></p>
+  <h1>Herramientas de IA de plataforma</h1>
+  <p class="sub">Las que puedes contratar hoy con una tarjeta, ordenadas por <strong>lo que quieres
+  hacer</strong>, no por quién las vende. De cada una: para qué sirve, qué te deja hacer con ejemplos
+  de despacho, <strong>qué lleva dentro</strong> y dónde está el límite con los datos de tu cliente.</p>
+  <p><span class="pill">Nivel: cualquiera</span><span class="pill">Lectura: ~20 min</span>
+  <span class="pill">Comprobado en septiembre de 2026</span></p>
 </header>
 
 <nav class="tabs" role="tablist">
-  <button role="tab" aria-selected="true" data-p="g1">1 · Panorama</button>
-  <button role="tab" aria-selected="false" data-p="g2">2 · Google</button>
-  <button role="tab" aria-selected="false" data-p="g3">3 · Microsoft</button>
-  <button role="tab" aria-selected="false" data-p="g4">4 · ChatGPT y Claude</button>
-  <button role="tab" aria-selected="false" data-p="g5">5 · Perplexity</button>
-  <button role="tab" aria-selected="false" data-p="g6">6 · Tus datos</button>
-  <button role="tab" aria-selected="false" data-p="g7">7 · Comercial o propia</button>
+  <button role="tab" aria-selected="true" data-p="h1">1 · Panorama</button>
+  <button role="tab" aria-selected="false" data-p="h2">2 · Preguntar a tus documentos</button>
+  <button role="tab" aria-selected="false" data-p="h3">3 · Trabajar sobre tus carpetas</button>
+  <button role="tab" aria-selected="false" data-p="h4">4 · Dentro de tu ofimática</button>
+  <button role="tab" aria-selected="false" data-p="h5">5 · Buscar en internet con fuentes</button>
+  <button role="tab" aria-selected="false" data-p="h6">6 · La opción europea y los modelos que puedes bajarte</button>
+  <button role="tab" aria-selected="false" data-p="h7">7 · Tus datos</button>
+  <button role="tab" aria-selected="false" data-p="h8">8 · Las mismas piezas, en tu sistema</button>
+  <button role="tab" aria-selected="false" data-p="h9">9 · Precios y cuándo compensa</button>
 </nav>
 
-<!-- ════════════ 1 ════════════ -->
-<section role="tabpanel" id="g1">
-  <h2>Panorama: cada herramienta tiene su terreno</h2>
-
-  <p>No compiten todas por lo mismo. Conviene elegir por la <strong>tarea</strong>, no por la marca.</p>
-
-  <div class="tblwrap"><table>
-    <tr><th>Herramienta</th><th>Donde brilla</th><th>¿Gratis?</th><th>De pago, desde</th></tr>
-    <tr><td><strong>Gemini Notebook</strong> (antes NotebookLM)</td><td>Preguntar a <em>tus</em> documentos con cita a la fuente</td><td>Sí, con límites</td><td>incluido en Google AI</td></tr>
-    <tr><td><strong>Gemini</strong></td><td>Asistente general y trabajo dentro de Gmail, Docs y Sheets</td><td>Sí</td><td>4,99 €/mes</td></tr>
-    <tr><td><strong>Copilot / Microsoft 365</strong></td><td>Word, Excel, PowerPoint y Outlook, donde ya trabajas</td><td>Sí, limitado</td><td>10 €/mes (particular)</td></tr>
-    <tr><td><strong>ChatGPT</strong></td><td>Generalista, análisis de datos, redacción</td><td>Sí</td><td>7,99 €/mes</td></tr>
-    <tr><td><strong>Claude</strong></td><td>Documentos largos, revisión detallada, código</td><td>Sí</td><td>17–20 $/mes</td></tr>
-    <tr><td><strong>Perplexity</strong></td><td>Buscar en internet con fuentes citadas</td><td>Sí, con límites diarios</td><td>20 $/mes</td></tr>
+<section role="tabpanel" id="h1">
+  <h2>Panorama</h2>
+  <p class="sub">Empieza por lo que quieres hacer. Casi nadie necesita todas: con una de cada familia vas sobrado, y el error caro es pagar cuatro suscripciones que se solapan.</p>
+  <div class="tblwrap"><table><tr><th>Si lo que quieres es…</th><th>Empieza por</th><th>Alternativa</th></tr>
+    <tr><td>Preguntar a un expediente y que cite la página</td><td><strong>Gemini Notebook</strong></td><td>Acrobat, para un PDF suelto</td></tr>
+    <tr><td>Analizar datos de medida de verdad</td><td><strong>ChatGPT</strong></td><td>Claude, si son muchos ficheros en carpetas</td></tr>
+    <tr><td>Revisar carpetas enteras de proyecto</td><td><strong>Claude</strong></td><td>—</td></tr>
+    <tr><td>Responder sobre el archivo del despacho</td><td><strong>Microsoft 365 Copilot</strong></td><td>Gemini, si vives en Google</td></tr>
+    <tr><td>Vigilar normativa y mercado</td><td><strong>Perplexity</strong></td><td>La investigación profunda de ChatGPT o Gemini</td></tr>
+    <tr><td>No sacar los datos de la UE</td><td><strong>Mistral Vibe</strong></td><td>Un modelo descargado, en tu equipo</td></tr>
+    <tr><td>No sacar los datos del despacho</td><td><strong>Un modelo local</strong></td><td>Es el bloque siguiente del webinar</td></tr>
   </table></div>
-
-  <div class="box warn">
-    <span class="lbl">La regla que va antes que cualquier herramienta</span>
-    <p><strong>Con datos de clientes, planes de empresa.</strong> Con planes personales, solo
-    material público —normativa, formación, redacción general— y con el uso de tus datos para
-    entrenamiento desactivado. El detalle, en la pestaña 6.</p>
-  </div>
-
-  <div class="box key">
-    <span class="lbl">Cómo leer los precios</span>
-    <p>Son los publicados o de referencia en España el <strong>14 de septiembre de 2026</strong>.
-    Algunos se muestran sin IVA (planes de empresa) y los de Claude y Perplexity solo están en
-    dólares. <strong>Cambian a menudo: confírmalos en la web oficial antes de contratar.</strong></p>
-  </div>
+  <div class="box tip"><span class="lbl">Lo que de verdad las diferencia</span>
+  <p>Todas escriben bien. Lo que las separa es <strong>de dónde sacan lo que dicen</strong>: de su
+  memoria, de tus documentos, de tu correo o de internet; y <strong>qué pueden hacer además de
+  hablar</strong>: ejecutar un cálculo, abrir tus ficheros, navegar. Esa es la parte que conviene mirar
+  al elegir, y es la misma que tendrás que montar si decides tener la tuya.</p></div>
 </section>
 
-<!-- ════════════ 2 ════════════ -->
-<section role="tabpanel" id="g2" hidden>
-  <h2>Google: Gemini Notebook, Gemini y Workspace</h2>
-
-  <h3>Gemini Notebook (antes NotebookLM)</h3>
-  <p>Google lo renombró en julio de 2026 manteniéndolo como producto independiente. Su principio
-  es el que más interesa a un ingeniero: <strong>solo responde con las fuentes que tú le cargas</strong>,
-  y cita el pasaje del que sale cada afirmación. Es, en la práctica, un <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr><span class="gl"> (Retrieval-Augmented Generation: busca en tus documentos y responde citándolos)</span> ya montado.</p>
-
-  <div class="tblwrap"><table>
-    <tr><th></th><th>Gratis</th><th>Con Google AI Pro</th></tr>
-    <tr><td>Cuadernos</td><td>100</td><td>500</td></tr>
-    <tr><td>Fuentes por cuaderno</td><td>50</td><td>300</td></tr>
-    <tr><td>Consultas al día</td><td>50</td><td>500</td></tr>
-    <tr><td>Resúmenes en audio al día</td><td>3</td><td>más</td></tr>
+<section role="tabpanel" id="h2" hidden>
+  <h2>Preguntar a tus documentos</h2>
+  <p class="sub">Le das un montón de documentos —un pliego, dos versiones de una norma, el expediente entero— y te responde citando el párrafo del que lo saca. Es la familia más útil para un técnico, porque el valor no está en que escriba bonito, sino en que puedas comprobar de dónde sale cada frase.</p>
+<div class="box key">
+  <span class="lbl">Gemini Notebook · NotebookLM · renombrado el 16/07/2026, misma dirección</span>
+  <p><strong>Para qué sirve.</strong> Un cuaderno que solo responde con los documentos que TÚ le subes, citando el párrafo exacto. Si algo no está en tus fuentes, te dice que no está.</p>
+  <p><strong>Qué te deja hacer</strong></p><ul>
+    <li>Subir la versión antigua y la nueva de una norma y preguntar qué apartados cambian de valor umbral, con cita a cada una.</li>
+    <li>Cargar pliego + memoria + anexos + acta de visita y preguntar «¿qué exige el pliego sobre la medida de atenuación y qué dice mi memoria?».</li>
+    <li>Convertir el expediente en un resumen para un cliente no técnico: audio a dos voces, mapa mental o infografía.</li>
+  </ul>
+  <p><strong>Qué lleva dentro</strong></p>
+  <div class="tblwrap"><table><tr><th>Pieza</th><th>Cómo la hace</th></tr>
+    <tr><td><strong>RAG con corpus cerrado</strong></td><td>Es su razón de ser: recuperación sobre TUS fuentes y respuesta con cita obligatoria</td></tr>
+    <tr><td><strong>Ejecución de código</strong></td><td>Desde julio de 2026, cada cuaderno tiene un «ordenador seguro» y ejecuta análisis sobre tus fuentes</td></tr>
+    <tr><td><strong>Búsqueda web</strong></td><td>No es su modo principal: está anclado a tus fuentes, aunque admite URLs como fuente</td></tr>
+    <tr><td><strong>Conectores</strong></td><td>Drive y Documentos; el resto, subiendo material</td></tr>
   </table></div>
-
-  <div class="ex"><b>Ejemplo · <abbr title="ICT: Infraestructura Común de Telecomunicaciones (RD 346/2011)">ICT</abbr>:</b> carga el RD 346/2011 y su reglamento técnico en un cuaderno y
-  pregunta «¿qué exige para el recinto de instalaciones de telecomunicación superior?». Obtienes la
-  respuesta con el pasaje señalado. Añade al cuaderno el Reglamento (UE) 2024/1309: su artículo 10.1 obliga a
-  que los edificios nuevos o con reforma importante cuyo permiso de construcción se solicite después del
-  12/02/2026 lleven infraestructura adaptada a la fibra y cableado de fibra hasta el punto de conexión del usuario.</div>
-  <div class="ex"><b>Ejemplo · ordenanzas:</b> un cuaderno por municipio donde trabajas, con su ordenanza
-  de ruido o de actividades. Deja de haber que buscar el artículo cada vez.</div>
-  <div class="ex"><b>Ejemplo · formación:</b> convierte una norma nueva en un resumen en audio para
-  escucharla en el coche de camino a obra.</div>
-
-  <h3>Gemini (app y Google AI)</h3>
-  <div class="tblwrap"><table>
-    <tr><th>Plan</th><th>Precio</th></tr>
-    <tr><td>Gratis</td><td>0 €, con límites</td></tr>
-    <tr><td>Google AI Plus</td><td>4,99 €/mes</td></tr>
-    <tr><td>Google AI Pro</td><td>21,99 €/mes</td></tr>
-    <tr><td>Google AI Ultra</td><td>desde 99,99 €/mes <em>(varían las fuentes: confirmar)</em></td></tr>
+  <p><strong>Tus datos.</strong> Textual de Google: el contenido «no se usará para entrenar directamente nuestros modelos fundacionales, SALVO que decidas dar feedback». Si pulsas el pulgar, Google recoge tus fuentes y salidas, las revisan equipos de personas y se retienen hasta 3 años, desvinculadas de tu cuenta. En Workspace y Workspace for Education, ni con feedback: nunca revisión humana ni entrenamiento.</p>
+  <p class="aviso"><strong>Consejo:</strong> Con cuenta personal, NO pulses el pulgar sobre nada que lleve datos de cliente.</p>
+  <p><strong>En tu propio sistema.</strong> Es el ejemplo más limpio de lo que hace un RAG propio: tus documentos troceados, un índice y respuesta citando la fuente.</p>
+  <p class="gl"><em>Precio:</em> Nivel gratuito utilizable; los límites altos van con las suscripciones de Google. · <em>Cómo lo hemos comprobado:</em> Renombrado y política de datos leídos en blog.google y support.google.com por CC_BM el 16/09. Límites por plan: fuente secundaria, no se citan.</p>
+</div>
+<div class="box key">
+  <span class="lbl">Adobe Acrobat · asistente de IA</span>
+  <p><strong>Para qué sirve.</strong> La IA dentro del propio lector de PDF: en vez de sacar el documento a otra herramienta, le preguntas ahí mismo y responde señalando la página exacta.</p>
+  <p><strong>Qué te deja hacer</strong></p><ul>
+    <li>«¿Qué dice el pliego sobre penalizaciones por retraso?» y responde con la cita y el número de página.</li>
+    <li>Comparar varios anexos o versiones de un mismo documento en una sola sesión.</li>
+  </ul>
+  <p><strong>Qué lleva dentro</strong></p>
+  <div class="tblwrap"><table><tr><th>Pieza</th><th>Cómo la hace</th></tr>
+    <tr><td><strong>RAG sobre el documento abierto</strong></td><td>El mismo patrón que Gemini Notebook, pero dentro del visor</td></tr>
+    <tr><td><strong>Reconocimiento de texto</strong></td><td>Funciona también con escaneados</td></tr>
   </table></div>
-
-  <h3>Gemini dentro de Google Workspace</h3>
-  <p>Para quien trabaja con Gmail y Google Drive como empresa. Por usuario y mes, <strong>sin IVA</strong>:
-  Business Starter <strong>6,80 €</strong> · Standard <strong>13,60 €</strong> · Plus <strong>21,10 €</strong>
-  (el pago anual ahorra en torno a un 16 %).</p>
-  <div class="ex"><b>Ejemplo · correo:</b> redactar la respuesta a un requerimiento de la administración a
-  partir del hilo de Gmail.</div>
-  <div class="ex"><b>Ejemplo · hojas:</b> limpiar y ordenar una tabla de presupuesto en Sheets.</div>
+  <p><strong>Tus datos.</strong> NO VERIFICADO. Adobe publica compromisos de no entrenar con contenido de clientes en sus productos de documentos, pero no lo hemos comprobado: no lo des por bueno sin mirarlo.</p>
+  <p><strong>En tu propio sistema.</strong> Demuestra que la unidad útil no es «el chat», sino «preguntar a un documento con cita»: eso lo monta cualquiera en local.</p>
+  <p class="gl"><em>Precio:</em> Complemento de pocos euros al mes sobre Acrobat. · <em>Cómo lo hemos comprobado:</em> Todo procede de fuentes secundarias. Ficha marcada como no verificada.</p>
+</div>
 </section>
 
-<!-- ════════════ 3 ════════════ -->
-<section role="tabpanel" id="g3" hidden>
-  <h2>Microsoft: Copilot en las herramientas que ya usas</h2>
-
-  <p>Su gran ventaja es que vive <strong>dentro de Word, Excel, PowerPoint y Outlook</strong>, que
-  es donde está el trabajo de la mayoría de los despachos.</p>
-
-  <h3>Para profesionales individuales</h3>
-  <div class="tblwrap"><table>
-    <tr><th>Plan</th><th>Mensual</th><th>Anual</th></tr>
-    <tr><td>Copilot gratis</td><td colspan="2">0 €, «sujeto a capacidad y límites»</td></tr>
-    <tr><td>Microsoft 365 Personal</td><td>10 €</td><td>99 €</td></tr>
-    <tr><td>Microsoft 365 Familia</td><td>13 €</td><td>129 €</td></tr>
-    <tr><td>Microsoft 365 Premium</td><td>22 €</td><td>219 €</td></tr>
+<section role="tabpanel" id="h3" hidden>
+  <h2>Trabajar sobre tus carpetas</h2>
+  <p class="sub">Aquí el asistente no se limita a conversar: abre ficheros, escribe programas, los ejecuta y te devuelve resultados. Es la diferencia entre que te «estime» un cálculo y que lo haga.</p>
+<div class="box key">
+  <span class="lbl">Claude</span>
+  <p><strong>Para qué sirve.</strong> El que trabaja sobre TUS CARPETAS: además del chat, hay una herramienta que abre una carpeta de tu disco, lee los ficheros, los edita y ejecuta comandos.</p>
+  <p><strong>Qué te deja hacer</strong></p><ul>
+    <li>Abrirlo sobre la carpeta de un proyecto y pedir «revisa los 14 anexos contra esta lista de comprobación y dime qué falta en cada uno».</li>
+    <li>«De estos 12 PDF de fabricante, saca a CSV la tabla de atenuación por banda, con columna de origen y página»: escribe el programa que lo extrae en vez de leer la tabla a ojo.</li>
+    <li>Generar un entregable interactivo para el cliente —una calculadora o un panel— que se abre en el navegador y se comparte con un enlace.</li>
+  </ul>
+  <p><strong>Qué lleva dentro</strong></p>
+  <div class="tblwrap"><table><tr><th>Pieza</th><th>Cómo la hace</th></tr>
+    <tr><td><strong>RAG automático</strong></td><td>En Proyectos, al acercarse al límite de contexto activa recuperación y multiplica por diez la capacidad. Es la mejor demostración de «contexto largo frente a RAG»</td></tr>
+    <tr><td><strong>Conectores por protocolo abierto</strong></td><td>MCP: no es una interfaz propietaria, es un estándar que puedes implementar en tu casa</td></tr>
+    <tr><td><strong>Ejecución de código</strong></td><td>Ejecuta comandos en tu máquina sobre las carpetas que autorices</td></tr>
+    <tr><td><strong>Agentes</strong></td><td>Subagentes en paralelo, flujos reutilizables, instrucciones permanentes por proyecto y tareas programadas</td></tr>
   </table></div>
-
-  <h3>Para empresa (con protección de datos corporativa)</h3>
-  <div class="tblwrap"><table>
-    <tr><th>Plan</th><th>Precio por usuario y mes, sin IVA</th></tr>
-    <tr><td>Complemento Microsoft 365 Copilot</td><td>15,60 € en oferta (18,20 € normal) en pago anual · 21,84 € en pago mensual</td></tr>
-    <tr><td>Empresa Estándar + Copilot</td><td>20,36 € (anual)</td></tr>
-    <tr><td>Empresa Premium + Copilot</td><td>27,73 € (anual)</td></tr>
+  <p><strong>Tus datos.</strong> En planes personales solo entrenan si activas la mejora del modelo; si pulsas el pulgar, esa conversación se guarda hasta 5 años. En planes comerciales no se usan para entrenar, sin interruptores. Ojo: retención cero no es lo mismo que residencia — no hay residencia europea en su interfaz directa.</p>
+  <p><strong>En tu propio sistema.</strong> MCP es literalmente la pieza que conecta un asistente propio con tus herramientas; y su RAG en proyectos enseña cuándo conviene recuperar en vez de meterlo todo en el contexto.</p>
+  <p class="gl"><em>Precio:</em> Gratuito · personal ~20 $/mes · equipo ~25 $ por asiento. · <em>Cómo lo hemos comprobado:</em> Modelos, contexto, precios y política de datos leídos en sus páginas oficiales. La residencia europea por terceros no está confirmada por el fabricante.</p>
+</div>
+<div class="box key">
+  <span class="lbl">ChatGPT</span>
+  <p><strong>Para qué sirve.</strong> El más completo: conversa, lee tus ficheros, busca en internet y —esto es lo que casi nadie usa— escribe y EJECUTA código de verdad para analizar tus datos.</p>
+  <p><strong>Qué te deja hacer</strong></p><ul>
+    <li>Subir el volcado en CSV de un sonómetro o un analizador de espectro y pedir percentiles, niveles por periodo y gráficas: lo hace ejecutando Python real, no estimando.</li>
+    <li>Subir el pliego administrativo y el técnico y pedir la tabla de criterios de adjudicación con su ponderación, plazos y qué va en cada sobre.</li>
+    <li>Cargar el proyecto y una lista de comprobación propia, y pedir el informe de conformidad punto por punto con cita de página.</li>
+  </ul>
+  <p><strong>Qué lleva dentro</strong></p>
+  <div class="tblwrap"><table><tr><th>Pieza</th><th>Cómo la hace</th></tr>
+    <tr><td><strong>Índice vectorial privado</strong></td><td>En Proyectos, los ficheros se indexan; en PDF grandes incrusta texto E IMÁGENES en un índice privado</td></tr>
+    <tr><td><strong>Ejecución de código</strong></td><td>Python en un entorno aislado con estado. Límite declarado: ese entorno NO puede salir a internet</td></tr>
+    <tr><td><strong>Agentes</strong></td><td>Investigación profunda (se puede acotar a sitios de confianza: solo el BOE, solo fabricantes), modo agente con navegador y terminal</td></tr>
+    <tr><td><strong>Conectores</strong></td><td>Drive, OneDrive y SharePoint; en planes de empresa responde sobre el archivo corporativo citando el documento</td></tr>
   </table></div>
-
-  <div class="ex"><b>Ejemplo · Word:</b> «redacta el apartado de antecedentes de la memoria a partir de
-  estas notas de visita» y luego corriges tú.</div>
-  <div class="ex"><b>Ejemplo · Excel:</b> «analiza este registro de mediciones y dime qué puntos superan el
-  límite y en qué franja horaria».</div>
-  <div class="ex"><b>Ejemplo · PowerPoint:</b> convertir el informe final en una presentación para la
-  reunión con el cliente.</div>
-  <div class="ex"><b>Ejemplo · Outlook:</b> resumir un hilo largo de correos de obra y listar lo pendiente
-  de cada parte.</div>
+  <p><strong>Tus datos.</strong> En planes de empresa, por defecto no se usan tus entradas ni salidas para entrenar. En los planes personales el histórico es que sí, salvo que lo desactives en los controles de datos: compruébalo en tu cuenta. La residencia de datos en Europa cubre Enterprise y Edu, NO el plan Business.</p>
+  <p><strong>En tu propio sistema.</strong> Sus Proyectos son la pareja «embeddings + base vectorial» de un sistema propio; su entorno de Python es el intérprete que tú ejecutas en tu máquina.</p>
+  <p class="gl"><em>Precio:</em> Gratuito · personal ~20 $/mes · empresa ~25 $ por usuario. · <em>Cómo lo hemos comprobado:</em> Su web devuelve error a la descarga automática: lo de modelos y contexto sale de la documentación de desarrollador; lo demás, de fragmentos de sus páginas de ayuda. La política de los planes personales NO está verificada hoy.</p>
+</div>
 </section>
 
-<!-- ════════════ 4 ════════════ -->
-<section role="tabpanel" id="g4" hidden>
-  <h2>ChatGPT y Claude: los asistentes generalistas</h2>
-
-  <h3>ChatGPT (OpenAI)</h3>
-  <div class="tblwrap"><table>
-    <tr><th>Plan</th><th>Precio orientativo en España</th></tr>
-    <tr><td>Free</td><td>0 €</td></tr>
-    <tr><td>Go</td><td>7,99 €/mes</td></tr>
-    <tr><td>Plus</td><td>22,99 €/mes</td></tr>
-    <tr><td>Pro</td><td>desde 102,99 €/mes</td></tr>
-    <tr><td>Business</td><td>en torno a 21 € por usuario y mes en pago anual (mínimo 2 usuarios) <em>(confirmar)</em></td></tr>
+<section role="tabpanel" id="h4" hidden>
+  <h2>Dentro de tu ofimática</h2>
+  <p class="sub">Si tu trabajo ya vive en Word, Excel y el correo, esta familia responde sobre el archivo que ya tienes, sin que subas nada. A cambio, te ata a esa plataforma.</p>
+<div class="box key">
+  <span class="lbl">Microsoft 365 Copilot</span>
+  <p><strong>Para qué sirve.</strong> La IA dentro de Word, Excel, Outlook y Teams, que además responde usando los correos y ficheros de tu organización respetando los permisos que ya tiene cada persona.</p>
+  <p><strong>Qué te deja hacer</strong></p><ul>
+    <li>En Excel, analizar una campaña de medidas, generar las fórmulas y explicarte la que ha puesto.</li>
+    <li>Resumir un hilo de cuarenta correos de la dirección facultativa y sacar los compromisos adquiridos.</li>
+    <li>Preguntar «¿qué presupuestamos para la red de datos en el proyecto de la nave del polígono?» sin decirle dónde está el fichero.</li>
+  </ul>
+  <p><strong>Qué lleva dentro</strong></p>
+  <div class="tblwrap"><table><tr><th>Pieza</th><th>Cómo la hace</th></tr>
+    <tr><td><strong>Índice semántico con permisos</strong></td><td>Recupera sobre el archivo de la organización acotado por los permisos del usuario. Esto es justo lo que un RAG casero suele olvidar</td></tr>
+    <tr><td><strong>Enrutador de modelos</strong></td><td>No hay un modelo único: elige según la pregunta, con modos de respuesta rápida o razonamiento profundo</td></tr>
+    <tr><td><strong>Agentes</strong></td><td>Investigador y analista incluidos; se pueden construir propios, que se facturan aparte por consumo</td></tr>
+    <tr><td><strong>Conectores</strong></td><td>Todo el ecosistema de Microsoft más orígenes externos</td></tr>
   </table></div>
-  <div class="ex"><b>Ejemplo · pliegos:</b> revisar la coherencia de un pliego de prescripciones técnicas y
-  señalar contradicciones entre apartados.</div>
-  <div class="ex"><b>Ejemplo · datos:</b> subir un CSV de mediciones y pedir un gráfico y un resumen
-  estadístico, generado con código que puedes revisar.</div>
-
-  <h3>Claude (Anthropic)</h3>
-  <div class="tblwrap"><table>
-    <tr><th>Plan</th><th>Precio (en dólares, sin impuestos)</th></tr>
-    <tr><td>Free</td><td>0 $</td></tr>
-    <tr><td>Pro</td><td>17 $/mes en pago anual · 20 $ mensual</td></tr>
-    <tr><td>Max</td><td>desde 100 $/mes</td></tr>
-    <tr><td>Team</td><td>20–25 $ por usuario y mes (estándar)</td></tr>
+  <p><strong>Tus datos.</strong> El más explícito de todos: ni tus consultas, ni las respuestas, ni los datos a los que accede se usan para entrenar los modelos. AVISO MEDIDO: existe una función llamada «flex routing», activada POR DEFECTO en organizaciones dadas de alta después del 25 de marzo de 2026, que en horas punta puede procesar la consulta en Estados Unidos, Canadá o Australia. Se desactiva en el panel de administración.</p>
+  <p class="aviso"><strong>Consejo:</strong> Si tu alta en Microsoft 365 es posterior a marzo de 2026, entra en el panel y desactiva el «flex routing».</p>
+  <p><strong>En tu propio sistema.</strong> El «respeta los permisos de cada usuario» es el requisito que más se olvida al montar un RAG propio en un despacho con varias personas.</p>
+  <p class="gl"><em>Precio:</em> Complemento por usuario y mes sobre tu suscripción. · <em>Cómo lo hemos comprobado:</em> Documentación oficial de Microsoft leída; el flex routing está en su documentación. Lo de los modelos de terceros y la frontera europea queda sin aclarar por el fabricante.</p>
+</div>
+<div class="box key">
+  <span class="lbl">Google Gemini</span>
+  <p><strong>Para qué sirve.</strong> El asistente que lee directamente tu Gmail y tu Drive sin que subas nada, y que puede pasarse varios minutos investigando por su cuenta y devolverte un informe.</p>
+  <p><strong>Qué te deja hacer</strong></p><ul>
+    <li>«Busca en mi Drive todos los proyectos con este tipo de canalización y dime qué precio unitario puse cada vez».</li>
+    <li>Investigación profunda sobre un cambio normativo o una técnica de medida, combinando la web con tu propio correo si lo autorizas.</li>
+    <li>Convertir un informe técnico en un documento editable lado a lado para repasarlo con el cliente.</li>
+  </ul>
+  <p><strong>Qué lleva dentro</strong></p>
+  <div class="tblwrap"><table><tr><th>Pieza</th><th>Cómo la hace</th></tr>
+    <tr><td><strong>Recuperación por conectores</strong></td><td>No subes ficheros: lee Gmail, Drive, Documentos y Hojas de cálculo</td></tr>
+    <tr><td><strong>Agentes</strong></td><td>Investigación profunda en cuatro fases declaradas: planificar, buscar, razonar y redactar</td></tr>
+    <tr><td><strong>Búsqueda web</strong></td><td>Nativa</td></tr>
+    <tr><td><strong>Aplicación de escritorio</strong></td><td>Desde septiembre de 2026 en Windows, invocable desde cualquier sitio</td></tr>
   </table></div>
-  <div class="ex"><b>Ejemplo · revisión:</b> pasarle un proyecto completo y una lista de comprobación, y
-  pedirle qué puntos no están resueltos y en qué página debería estar cada uno.</div>
-  <div class="ex"><b>Ejemplo · herramientas:</b> escribir un script de cálculo o una macro de Excel,
-  explicando qué debe hacer; y probarlo tú con un caso conocido.</div>
-  <div class="ex"><b>Ejemplo · expediente:</b> un «proyecto» con la documentación de un encargo, para
-  consultarlo durante semanas sin volver a subir nada.</div>
-
-  <div class="box tip">
-    <span class="lbl">Cuál elegir entre los dos</span>
-    <p>Para la mayoría de las tareas, <strong>los dos sirven</strong>. Prueba la misma tarea real en
-    ambos durante una semana con el plan gratuito y quédate con el que mejor encaje con tu forma de
-    trabajar. Pagar dos a la vez rara vez compensa.</p>
-  </div>
+  <p><strong>Tus datos.</strong> Distinción crítica y fácil de olvidar: en la versión de consumo, una muestra de conversaciones ES revisada por personas para mejorar los servicios. En Google Workspace no se usa para entrenar ni hay revisión humana. La interfaz es idéntica; el régimen de datos, no.</p>
+  <p><strong>En tu propio sistema.</strong> Sus conectores son el equivalente de dar a tu asistente propio acceso de lectura a tus carpetas: la diferencia es dónde vive el índice.</p>
+  <p class="gl"><em>Precio:</em> Gratuito con límites; suscripciones personales y de empresa. · <em>Cómo lo hemos comprobado:</em> Notas de versión y política de datos leídas en páginas oficiales. Los precios proceden de fuentes secundarias y no se citan.</p>
+</div>
 </section>
 
-<!-- ════════════ 5 ════════════ -->
-<section role="tabpanel" id="g5" hidden>
-  <h2>Perplexity: buscar con fuentes</h2>
-
-  <p>Es un buscador conversacional: en lugar de una lista de enlaces, te da una respuesta
-  <strong>con las fuentes citadas</strong> para que las compruebes.</p>
-
-  <div class="tblwrap"><table>
-    <tr><th>Plan</th><th>Qué incluye</th><th>Precio</th></tr>
-    <tr><td>Free</td><td>3 búsquedas avanzadas y 5 investigaciones profundas al día</td><td>0</td></tr>
-    <tr><td>Pro</td><td>uso intensivo</td><td>20 $/mes (≈20 € con IVA)</td></tr>
-    <tr><td>Max</td><td>el máximo</td><td>200 $/mes</td></tr>
+<section role="tabpanel" id="h5" hidden>
+  <h2>Buscar en internet con fuentes</h2>
+  <p class="sub">Para vigilancia normativa y de mercado: en vez de diez enlaces, la respuesta redactada con la cita pegada a cada frase. Sirve para orientarte rápido, nunca como fuente última.</p>
+<div class="box key">
+  <span class="lbl">Perplexity</span>
+  <p><strong>Para qué sirve.</strong> Un buscador que responde redactado y con la cita pegada a cada frase, para que puedas comprobar de dónde sale cada afirmación.</p>
+  <p><strong>Qué te deja hacer</strong></p><ul>
+    <li>Vigilancia normativa: «¿qué cambia este reglamento respecto al anterior?», con las fuentes al lado para verificarlo en el acto.</li>
+    <li>Buscar fabricantes que cumplan una especificación concreta y contrastar sus fichas técnicas con enlace a cada una.</li>
+  </ul>
+  <p><strong>Qué lleva dentro</strong></p>
+  <div class="tblwrap"><table><tr><th>Pieza</th><th>Cómo la hace</th></tr>
+    <tr><td><strong>RAG sobre la web</strong></td><td>Su arquitectura es recuperación más generación, pero sobre internet, no sobre tu disco</td></tr>
+    <tr><td><strong>Modelos de terceros</strong></td><td>Uno propio orientado a búsqueda más modelos de otros fabricantes, seleccionables</td></tr>
+    <tr><td><strong>Navegador con asistente</strong></td><td>Su propio navegador, capaz de actuar dentro de las páginas</td></tr>
   </table></div>
-
-  <div class="ex"><b>Ejemplo · vigilancia normativa:</b> «¿ha habido cambios este año en la normativa de
-  <abbr title="ICT: Infraestructura Común de Telecomunicaciones (RD 346/2011)">ICT</abbr><span class="gl"> (Infraestructura Común de Telecomunicaciones (RD 346/2011))</span>?», y abrir las fuentes que devuelve.</div>
-  <div class="ex"><b>Ejemplo · productos:</b> comparar las fichas técnicas de tres fabricantes de un mismo
-  material o equipo.</div>
-  <div class="ex"><b>Ejemplo · estado del arte:</b> una investigación profunda antes de un informe sobre
-  una tecnología que no dominas.</div>
-
-  <div class="box warn">
-    <span class="lbl">Una cita no es una verificación</span>
-    <p>Que venga con enlace no significa que el enlace diga eso. Para cualquier cosa que vaya a un
-    documento que firmas, <strong>abre la fuente y compruébalo</strong>, y prefiere siempre el BOE, el
-    boletín autonómico o la norma UNE a un artículo que la resuma.</p>
-  </div>
+  <p><strong>Tus datos.</strong> Es el proveedor de esta lista sobre el que menos se ha podido verificar: sus páginas legales devuelven error a la consulta automática. Residencia europea no confirmada. Dicho tal cual: si vas a meter datos de cliente, este es el que menos documentado tenemos.</p>
+  <p><strong>En tu propio sistema.</strong> Enseña que «buscar y citar» es una arquitectura, no una marca: lo mismo que hace sobre internet lo hace tu RAG sobre tu archivo.</p>
+  <p class="gl"><em>Precio:</em> Personal ~20 $/mes. · <em>Cómo lo hemos comprobado:</em> Precios de su centro de ayuda; el resto, fuentes secundarias. Declarado como el menos verificado.</p>
+</div>
 </section>
 
-<!-- ════════════ 6 ════════════ -->
-<section role="tabpanel" id="g6" hidden>
-  <h2>Tus datos: quién puede usarlos para entrenar</h2>
-
-  <p>Es la pregunta que decide qué puedes subir a cada herramienta. La respuesta cambia según el
-  plan, y en casi todos los personales depende de un ajuste que conviene revisar.</p>
-
-  <div class="tblwrap"><table>
-    <tr><th>Herramienta</th><th>Planes personales</th><th>Planes de empresa</th></tr>
-    <tr><td><strong>Gemini Notebook</strong></td><td>No entrena con tus fuentes, <strong>salvo que valores una respuesta</strong> (pulgar arriba o abajo): entonces esa conversación puede revisarla una persona</td><td>Sin revisión humana ni entrenamiento</td></tr>
-    <tr><td><strong>App Gemini</strong></td><td>Con el historial de actividad activado, puede haber revisión y entrenamiento</td><td>Workspace tiene condiciones propias</td></tr>
-    <tr><td><strong>Copilot</strong></td><td>En el Espacio Económico Europeo no se entrena por defecto; se puede comprobar en la configuración</td><td>Microsoft 365 Copilot no entrena con los datos de tu organización</td></tr>
-    <tr><td><strong>ChatGPT</strong></td><td>Ajuste «mejorar el modelo para todos», que se puede desactivar</td><td>Business y Enterprise no entrenan por defecto</td></tr>
-    <tr><td><strong>Claude</strong></td><td>Solo entrena si el ajuste está activado</td><td>Team, Enterprise y <abbr title="API: Application Programming Interface: puerta para que un programa hable con otro">API</abbr><span class="gl"> (Application Programming Interface: puerta para que un programa hable con otro)</span>, excluidos</td></tr>
-    <tr><td><strong>Perplexity</strong></td><td>Retención activada por defecto, desactivable</td><td>Enterprise no entrena</td></tr>
+<section role="tabpanel" id="h6" hidden>
+  <h2>La opción europea y los modelos que puedes bajarte</h2>
+  <p class="sub">Dos caminos distintos al mismo problema de los datos: una empresa europea con alojamiento en la UE, y modelos que directamente te descargas y ejecutas en tu equipo.</p>
+<div class="box key">
+  <span class="lbl">Mistral Vibe · Le Chat · renombrado en 2026, misma dirección</span>
+  <p><strong>Para qué sirve.</strong> La alternativa europea: un asistente que planifica una tarea, te pide el visto bueno y la ejecuta a través de tus herramientas, de una empresa francesa con alojamiento en la Unión Europea.</p>
+  <p><strong>Qué te deja hacer</strong></p><ul>
+    <li>Recopilar los ensayos de una carpeta compartida, consolidarlos y dejar el borrador de informe.</li>
+    <li>Con conectores a tu correo y a tu gestor documental, montar el resumen semanal de expedientes con hitos vencidos.</li>
+  </ul>
+  <p><strong>Qué lleva dentro</strong></p>
+  <div class="tblwrap"><table><tr><th>Pieza</th><th>Cómo la hace</th></tr>
+    <tr><td><strong>Conectores y protocolo abierto</strong></td><td>Decenas de conectores y soporte de MCP, igual que Claude</td></tr>
+    <tr><td><strong>Biblioteca de documentos</strong></td><td>Almacenamiento propio por plan</td></tr>
+    <tr><td><strong>Ejecución de código</strong></td><td>Intérprete propio y herramienta de línea de órdenes</td></tr>
+    <tr><td><strong>Agentes</strong></td><td>Modos de trabajo, código y conversación</td></tr>
   </table></div>
-
-  <div class="box key">
-    <span class="lbl">Tres reglas prácticas</span>
-    <ol>
-      <li><strong>Documentación de cliente, periciales o datos personales:</strong> plan de empresa o
-      IA local. Nunca un plan personal.</li>
-      <li><strong>Normativa y material público:</strong> cualquier plan, con el entrenamiento desactivado.</li>
-      <li><strong>Revisa el ajuste cada cierto tiempo:</strong> las condiciones cambian y los
-      valores por defecto también.</li>
-    </ol>
-  </div>
+  <p><strong>Tus datos.</strong> En planes de pago no se usan las conversaciones para entrenar por defecto; prioriza proveedores dentro de la Unión Europea y, para las transferencias fuera, aplica cláusulas contractuales tipo. Los clientes de empresa pueden desactivar las funciones que impliquen salir de la UE. En el plan gratuito, asume que sí entrena.</p>
+  <p><strong>En tu propio sistema.</strong> Sus modelos abiertos son de los que puedes descargar y ejecutar en tu propia máquina: es el puente más directo al bloque siguiente.</p>
+  <p class="gl"><em>Precio:</em> Gratuito · personal ~15 $/mes · equipo ~25 $ por usuario. · <em>Cómo lo hemos comprobado:</em> Precios y política leídos en sus páginas oficiales. La fecha exacta del renombrado discrepa entre fuentes: por eso no se cita día.</p>
+</div>
+<div class="box key">
+  <span class="lbl">DeepSeek</span>
+  <p><strong>Para qué sirve.</strong> Un asistente barato y técnicamente competente cuyo verdadero interés aquí es otro: sus modelos se pueden DESCARGAR y ejecutar en tu propio servidor.</p>
+  <p><strong>Qué te deja hacer</strong></p><ul>
+    <li>Razonamiento técnico y matemático, y generación de guiones de cálculo.</li>
+    <li>Y sobre todo: descargar el modelo y servirlo en la máquina del despacho, sin que salga un solo dato.</li>
+  </ul>
+  <p><strong>Qué lleva dentro</strong></p>
+  <div class="tblwrap"><table><tr><th>Pieza</th><th>Cómo la hace</th></tr>
+    <tr><td><strong>Modelos descargables</strong></td><td>Se pueden ejecutar en tu propio equipo, que es el caso del bloque siguiente</td></tr>
+    <tr><td><strong>Interfaz compatible</strong></td><td>Habla el mismo idioma que otras interfaces, así que se cambia de modelo sin rehacer el programa</td></tr>
+  </table></div>
+  <p><strong>Tus datos.</strong> Su propia política lo dice: recoge, procesa y almacena los datos personales en servidores situados en la República Popular China. Para su servicio EN LA NUBE, con datos de cliente sujetos al reglamento europeo, hace falta un análisis jurídico específico. Sus modelos DESCARGADOS y ejecutados en local son otra cosa completamente distinta.</p>
+  <p><strong>En tu propio sistema.</strong> Es el ejemplo de que la nube y el modelo son cosas separables: el mismo modelo, servido por ti, cambia por completo el problema de los datos.</p>
+  <p class="gl"><em>Precio:</em> De los más baratos del mercado. · <em>Cómo lo hemos comprobado:</em> Política de privacidad y documentación leídas en sus páginas oficiales.</p>
+</div>
 </section>
 
-<!-- ════════════ 7 ════════════ -->
-<section role="tabpanel" id="g7" hidden>
-  <h2>¿Comercial o propia? Casi siempre, las dos</h2>
-
-  <div class="tblwrap"><table>
-    <tr><th></th><th>Comercial</th><th>IA propia</th></tr>
-    <tr><td><strong>Arranque</strong></td><td>Inmediato</td><td>Una tarde para lo básico; semanas para un <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> serio</td></tr>
-    <tr><td><strong>Calidad bruta del modelo</strong></td><td>La mejor disponible</td><td>Menor, salvo con mucha memoria</td></tr>
-    <tr><td><strong>Tu normativa y tus plantillas</strong></td><td>Hasta donde permita subir documentos</td><td>Sin límite y con control de vigencia</td></tr>
-    <tr><td><strong>Confidencialidad</strong></td><td>Depende del plan</td><td>Total: nada sale del despacho</td></tr>
-    <tr><td><strong>Coste</strong></td><td>Cuota fija por usuario y mes</td><td>Inversión inicial + electricidad</td></tr>
+<section role="tabpanel" id="h7" hidden>
+  <h2>Tus datos</h2>
+  <p class="sub">La pregunta correcta no es «¿es seguro?», sino tres preguntas distintas: <strong>¿entrenan con lo que les doy?</strong>, <strong>¿lo lee alguien?</strong> y <strong>¿dónde se procesa?</strong>. Se responden por separado, y casi siempre cambian entre el plan personal y el de empresa del mismo producto.</p>
+  <div class="tblwrap"><table><tr><th>Herramienta</th><th>Qué pasa con lo que le das</th></tr>
+    <tr><td><strong>Gemini Notebook</strong></td><td>Textual de Google: el contenido «no se usará para entrenar directamente nuestros modelos fundacionales, SALVO que decidas dar feedback». Si pulsas el pulgar, Google recoge tus fuentes y salidas, las revisan equipos de personas y se retienen hasta 3 años, desvinculadas de tu cuenta. En Workspace y Workspace for Education, ni con feedback: nunca revisión humana ni entrenamiento.</td></tr>
+    <tr><td><strong>ChatGPT</strong></td><td>En planes de empresa, por defecto no se usan tus entradas ni salidas para entrenar. En los planes personales el histórico es que sí, salvo que lo desactives en los controles de datos: compruébalo en tu cuenta. La residencia de datos en Europa cubre Enterprise y Edu, NO el plan Business.</td></tr>
+    <tr><td><strong>Claude</strong></td><td>En planes personales solo entrenan si activas la mejora del modelo; si pulsas el pulgar, esa conversación se guarda hasta 5 años. En planes comerciales no se usan para entrenar, sin interruptores. Ojo: retención cero no es lo mismo que residencia — no hay residencia europea en su interfaz directa.</td></tr>
+    <tr><td><strong>Microsoft 365 Copilot</strong></td><td>El más explícito de todos: ni tus consultas, ni las respuestas, ni los datos a los que accede se usan para entrenar los modelos. AVISO MEDIDO: existe una función llamada «flex routing», activada POR DEFECTO en organizaciones dadas de alta después del 25 de marzo de 2026, que en horas punta puede procesar la consulta en Estados Unidos, Canadá o Australia. Se desactiva en el panel de administración.</td></tr>
+    <tr><td><strong>Google Gemini</strong></td><td>Distinción crítica y fácil de olvidar: en la versión de consumo, una muestra de conversaciones ES revisada por personas para mejorar los servicios. En Google Workspace no se usa para entrenar ni hay revisión humana. La interfaz es idéntica; el régimen de datos, no.</td></tr>
+    <tr><td><strong>Perplexity</strong></td><td>Es el proveedor de esta lista sobre el que menos se ha podido verificar: sus páginas legales devuelven error a la consulta automática. Residencia europea no confirmada. Dicho tal cual: si vas a meter datos de cliente, este es el que menos documentado tenemos.</td></tr>
+    <tr><td><strong>Mistral Vibe</strong></td><td>En planes de pago no se usan las conversaciones para entrenar por defecto; prioriza proveedores dentro de la Unión Europea y, para las transferencias fuera, aplica cláusulas contractuales tipo. Los clientes de empresa pueden desactivar las funciones que impliquen salir de la UE. En el plan gratuito, asume que sí entrena.</td></tr>
+    <tr><td><strong>Adobe Acrobat · asistente de IA</strong></td><td>NO VERIFICADO. Adobe publica compromisos de no entrenar con contenido de clientes en sus productos de documentos, pero no lo hemos comprobado: no lo des por bueno sin mirarlo.</td></tr>
+    <tr><td><strong>DeepSeek</strong></td><td>Su propia política lo dice: recoge, procesa y almacena los datos personales en servidores situados en la República Popular China. Para su servicio EN LA NUBE, con datos de cliente sujetos al reglamento europeo, hace falta un análisis jurídico específico. Sus modelos DESCARGADOS y ejecutados en local son otra cosa completamente distinta.</td></tr>
   </table></div>
+  <div class="box warn"><span class="lbl">Tres cosas que casi nadie sabe</span>
+  <ul>
+    <li><strong>El pulgar arriba/abajo no es inocente.</strong> En varias herramientas, valorar una
+    respuesta es justo lo que autoriza a guardarla y a que la lea una persona. Con datos de cliente,
+    no lo pulses.</li>
+    <li><strong>La misma interfaz puede tener dos regímenes de datos.</strong> Una cuenta personal y
+    una de empresa del mismo producto pueden ser idénticas en pantalla y muy distintas en el contrato.</li>
+    <li><strong>Que no retengan tus datos no significa que no salgan de Europa.</strong> Retención cero
+    y residencia son cosas distintas: puedes tener la primera y que cada palabra se haya procesado
+    fuera de la UE.</li>
+  </ul></div>
+  <div class="box tip"><span class="lbl">Y una capa que el reglamento de protección de datos no cubre</span>
+  <p>El <strong>secreto profesional</strong> va por encima: aunque un plano o una estrategia de oferta
+  no contengan datos personales, entregárselos a un tercero puede vulnerar tu deber de confidencialidad
+  con el cliente. Esa decisión es tuya, no del proveedor.</p></div>
+</section>
 
-  <h3>Una cuenta orientativa</h3>
-  <p>Un único usuario con el complemento de Microsoft 365 Copilot en pago anual paga del orden de
-  <strong>190–220 € al año sin IVA</strong>. Una tarjeta de 16 GB de gama media cuesta hoy en torno a
-  <strong>800 €</strong> (solo la tarjeta) y permite modelos de hasta unos 24B en local. Para una sola
-  persona las cifras se parecen a varios años vista; lo que inclina la balanza <strong>no es el
-  precio</strong>, sino qué datos manejas y si necesitas tu propia normativa con vigencia.
-  <em>(Cálculo orientativo con los precios de esta guía; no incluye el equipo que aloja la tarjeta
-  ni la electricidad.)</em></p>
+<section role="tabpanel" id="h8" hidden>
+  <h2>Las mismas piezas, en tu sistema</h2>
+  <p class="sub">Esta es la razón de ser de esta guía dentro del webinar. Todo lo que hacen las herramientas de pago se monta con piezas que tienen nombre, y esas piezas se pueden tener en casa. Cuando en el bloque siguiente veas «base vectorial» o «agente», ya sabrás dónde lo has visto antes.</p>
+  <div class="tblwrap"><table><tr><th>La pieza</th><th>Dónde se ve mejor</th><th>Cómo es en un sistema propio</th></tr>
+    <tr><td><strong>Buscar en tus documentos y citar</strong></td><td>Gemini Notebook</td><td>Un RAG propio: trocear, indexar y responder citando</td></tr>
+    <tr><td><strong>Índice vectorial privado</strong></td><td>Proyectos de ChatGPT</td><td>Base vectorial propia con un modelo de embeddings</td></tr>
+    <tr><td><strong>Cuándo recuperar y cuándo no</strong></td><td>Proyectos de Claude</td><td>Contexto largo frente a recuperación: la misma decisión en casa</td></tr>
+    <tr><td><strong>Respetar quién puede ver qué</strong></td><td>Microsoft 365 Copilot</td><td>Permisos en el índice: lo que más se olvida al montarlo uno mismo</td></tr>
+    <tr><td><strong>Ejecutar código de verdad</strong></td><td>ChatGPT y Gemini Notebook</td><td>Un intérprete en tu máquina, sin límite de salida a internet</td></tr>
+    <tr><td><strong>Agente con herramientas</strong></td><td>Modo agente de ChatGPT</td><td>Navegador, terminal y llamadas: la lista literal que tendrás que darle al tuyo</td></tr>
+    <tr><td><strong>Conectar con tus datos</strong></td><td>MCP en Claude y Mistral</td><td>Protocolo abierto: se implementa en casa, no es propietario</td></tr>
+    <tr><td><strong>Pensar más cuando hace falta</strong></td><td>Razonamiento configurable</td><td>Se paga en tiempo y en tokens: es un parámetro, no magia</td></tr>
+  </table></div>
+  <div class="box key"><span class="lbl">La frase para quedarse</span>
+  <p>Una herramienta de plataforma es <strong>un modelo, un buscador sobre unos documentos, un sitio
+  donde ejecutar código y unos conectores</strong>, con una buena interfaz por encima. Ninguna de esas
+  cuatro piezas es un secreto industrial: la diferencia entre pagar por ellas y tenerlas es dónde
+  quieres que vivan tus datos y cuánto tiempo quieres dedicarle.</p></div>
+</section>
 
-  <div class="box tip">
-    <span class="lbl">El modelo que mejor funciona</span>
-    <p><strong>Comercial para lo público y lo general; propia para lo confidencial y lo tuyo.</strong>
-    Y una herramienta comercial de pago es, además, la mejor ayuda para construir la propia: es lo que
-    cuenta la Guía 6.</p>
-  </div>
+<section role="tabpanel" id="h9" hidden>
+  <h2>Precios y cuándo compensa</h2>
+  <p class="sub">Aquí van todos los precios juntos, como dato de consulta y no como argumento: son orientativos, cambian a menudo y casi nunca son lo que decide. Lo que decide es qué haces con la herramienta y dónde acaban tus datos.</p>
+  <div class="tblwrap"><table><tr><th>Herramienta</th><th>Orden de precio</th></tr>
+    <tr><td>Gemini Notebook</td><td>Nivel gratuito utilizable; los límites altos van con las suscripciones de Google.</td></tr>
+    <tr><td>ChatGPT</td><td>Gratuito · personal ~20 $/mes · empresa ~25 $ por usuario.</td></tr>
+    <tr><td>Claude</td><td>Gratuito · personal ~20 $/mes · equipo ~25 $ por asiento.</td></tr>
+    <tr><td>Microsoft 365 Copilot</td><td>Complemento por usuario y mes sobre tu suscripción.</td></tr>
+    <tr><td>Google Gemini</td><td>Gratuito con límites; suscripciones personales y de empresa.</td></tr>
+    <tr><td>Perplexity</td><td>Personal ~20 $/mes.</td></tr>
+    <tr><td>Mistral Vibe</td><td>Gratuito · personal ~15 $/mes · equipo ~25 $ por usuario.</td></tr>
+    <tr><td>Adobe Acrobat · asistente de IA</td><td>Complemento de pocos euros al mes sobre Acrobat.</td></tr>
+    <tr><td>DeepSeek</td><td>De los más baratos del mercado.</td></tr>
+  </table></div>
+  <div class="box tip"><span class="lbl">Cuándo compensa cada cosa</span>
+  <ul>
+    <li><strong>Una suscripción de las buenas</strong> (unos 20 € al mes) cubre el 80 % de lo que
+    necesita un despacho pequeño. Empieza por ahí antes que por nada.</li>
+    <li><strong>Sumar cuatro suscripciones</strong> que hacen casi lo mismo es el error caro más común.</li>
+    <li><strong>Montar lo propio</strong> compensa cuando el problema no es el precio sino el
+    <em>dato</em>: proyectos bajo acuerdo de confidencialidad, expedientes con datos personales, o
+    simplemente no querer que el archivo del despacho viva en un servidor ajeno.</li>
+    <li>Y lo más habitual y sensato: <strong>las dos cosas</strong>. Comercial para lo genérico y
+    público; propio para lo que lleva nombre de cliente.</li>
+  </ul></div>
 </section>
 
 <footer>
   <p><strong>Guía 2 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
   profesional» · Colegio Oficial de Ingenieros de Telecomunicación.<br>
-  Precios y condiciones consultados el 14/09/2026 en las webs de los fabricantes y en referencias
-  de precios para España. Cambian con frecuencia: confírmalos antes de contratar.</p>
+  Las herramientas y sus condiciones cambian de mes en mes: cada ficha dice cómo se comprobó y qué
+  quedó sin comprobar. Antes de contratar, mira la página del fabricante.</p>
   <p><a href="Glosario.html">¿Una sigla que no conoces? Consulta el glosario</a></p>
-
 <!-- autoria -->
   <div class="autoria">
     <span class="nom">Joaquín Serrat González</span><br>
