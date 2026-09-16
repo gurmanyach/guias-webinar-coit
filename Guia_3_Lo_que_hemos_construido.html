@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía 3 · Lo que hemos construido — Webinar COIT</title>
+<style>
+  :root{
+    --bg:#ffffff; --ink:#1F2A37; --muted:#6B7785; --line:#D9E1EC;
+    --accent:#2E6DA4; --navy:#1B3A6B; --amber:#B5650A; --amber-bg:#FBEEDC;
+    --green:#2F7D4F; --green-bg:#E9F3EC; --card:#F3F6FB;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+      --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+      --green:#7BC49A; --green-bg:#16241C;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+    --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+    --green:#7BC49A; --green-bg:#16241C;
+  }
+  body{background:var(--bg);color:var(--ink);
+    font:16px/1.65 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    margin:0;padding:0 16px 80px}
+  .wrap{max-width:900px;margin:0 auto}
+  header.top{padding:34px 0 10px;border-bottom:1px solid var(--line)}
+  .eyebrow{font:600 12.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--amber);margin:0 0 10px}
+  h1{font-size:2.05rem;line-height:1.2;margin:0 0 10px;font-weight:650;letter-spacing:-.02em}
+  .sub{color:var(--muted);margin:0 0 18px;max-width:70ch}
+  nav.tabs{position:sticky;top:0;z-index:20;background:var(--bg);
+    border-bottom:1px solid var(--line);margin:0 0 30px;display:flex;gap:2px;
+    overflow-x:auto;padding-top:10px}
+  nav.tabs button{flex:0 0 auto;background:none;border:0;border-bottom:3px solid transparent;
+    padding:12px 15px;font:600 13.5px/1 ui-sans-serif,system-ui,sans-serif;color:var(--muted);
+    cursor:pointer;white-space:nowrap}
+  nav.tabs button:hover{color:var(--ink)}
+  nav.tabs button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+  section[role=tabpanel]{animation:fade .18s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+  h2{font-size:1.6rem;margin:34px 0 8px;font-weight:620;letter-spacing:-.01em}
+  h2:first-child{margin-top:0}
+  h3{font-size:1.14rem;margin:28px 0 8px;font-weight:620}
+  p{margin:0 0 14px;max-width:78ch}
+  ul,ol{max-width:78ch;padding-left:22px;margin:0 0 14px} li{margin-bottom:7px}
+  code{font:13.5px/1.5 ui-monospace,Menlo,Consolas,monospace;background:var(--card);
+    padding:2px 6px;border-radius:4px;border:1px solid var(--line)}
+  .tblwrap{overflow-x:auto;margin:0 0 18px}
+  table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+  th{background:var(--navy);color:#fff;text-align:left;padding:9px 11px;font-weight:600}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) th{color:#12161C}}
+  :root[data-theme="dark"] th{color:#12161C}
+  td{border-bottom:1px solid var(--line);padding:9px 11px;vertical-align:top}
+  .box{border-radius:10px;padding:16px 18px;margin:0 0 18px;border:1px solid var(--line)}
+  .box p:last-child{margin-bottom:0}
+  .tip{background:var(--green-bg);border-color:transparent}
+  .warn{background:var(--amber-bg);border-color:transparent}
+  .key{background:var(--card)}
+  .lbl{font:600 11.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.1em;
+    text-transform:uppercase;display:block;margin-bottom:8px}
+  .tip .lbl{color:var(--green)} .warn .lbl{color:var(--amber)} .key .lbl{color:var(--accent)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin:0 0 18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .card h4{margin:0 0 6px;font-size:15.5px;color:var(--accent)}
+  .card p{font-size:14.5px;margin:0 0 6px}
+  .card .t{font-size:12.5px;color:var(--muted)}
+  footer{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13.5px}
+  .pill{display:inline-block;background:var(--card);border:1px solid var(--line);
+    border-radius:999px;padding:2px 10px;font-size:12.5px;color:var(--muted);margin-right:6px}
+  .st{display:inline-block;font-size:11.5px;font-weight:700;border-radius:999px;padding:1px 8px;margin-left:6px}
+  .st.ok{background:var(--green-bg);color:var(--green)}
+  .st.dev{background:var(--amber-bg);color:var(--amber)}
+  abbr[title]{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}
+  .gl{color:var(--muted);font-size:.86em}
+
+  .home{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;
+    border:0;border-radius:10px;padding:11px 20px;margin:18px 0 0;
+    font:700 15px/1 ui-sans-serif,system-ui,sans-serif;text-decoration:none;
+    box-shadow:0 1px 2px rgba(0,0,0,.12)}
+  .home:hover{filter:brightness(1.08)}
+  .home svg{flex:0 0 auto}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .home{color:#12161C}}
+  :root[data-theme="dark"] .home{color:#12161C}
+
+  a{color:var(--accent)}
+  a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="home" href="index.html"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M6 10.5V20h5v-5h2v5h5v-9.5"/></svg><span>Índice de guías</span></a>
+
+
+<header class="top">
+  <p class="eyebrow">Webinar COIT · Guía 3 de 14</p>
+  <h1>Lo que hemos construido</h1>
+  <p class="sub">Un recorrido por un sistema real de IA propia en un despacho de ingeniería:
+  qué hace cada pieza, con qué está hecha y qué se puede aprender de ella para montar la
+  tuya. No es una receta de compra: es lo que tenemos, y cómo lo hemos adaptado a ello.</p>
+  <p><span class="pill">Casos reales</span><span class="pill">Lectura: ~30 min</span>
+  <span class="pill">Inventario verificado el 14/09/2026</span></p>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" data-p="c1">1 · El mapa</button>
+  <button role="tab" aria-selected="false" data-p="c2">2 · Modelos propios</button>
+  <button role="tab" aria-selected="false" data-p="c3">3 · Ahorrar tokens</button>
+  <button role="tab" aria-selected="false" data-p="c4">4 · Herramientas de ingeniería</button>
+  <button role="tab" aria-selected="false" data-p="c5">5 · Imagen, voz y realidad virtual</button>
+  <button role="tab" aria-selected="false" data-p="c6">6 · El despacho</button>
+  <button role="tab" aria-selected="false" data-p="c7">7 · Pautas</button>
+</nav>
+
+<!-- ════════════ 1 ════════════ -->
+<section role="tabpanel" id="c1">
+  <h2>El mapa: cuatro máquinas, cada una con su papel</h2>
+
+  <p>Este sistema no se diseñó de golpe. Se fue construyendo sobre los equipos que había, y
+  cada tarea acabó en la máquina que mejor la resolvía. <strong>Esa es la primera lección:
+  adapta el reparto a lo que tienes, no al revés.</strong></p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Máquina</th><th>Qué es</th><th>Papel en el sistema</th></tr>
+    <tr><td><strong>Portátil</strong></td><td>Windows 11 · i7-14700HX · 16 GB · RTX 4060 Laptop 8 GB</td>
+        <td>Trabajo de campo y movilidad</td></tr>
+    <tr><td><strong>Puesto de trabajo</strong></td><td>Windows 11 · i9-10900 · 64 GB · RTX 3060 12 GB</td>
+        <td>El día a día: aplicaciones de ingeniería, Office, QGIS, generación de proyectos</td></tr>
+    <tr><td><strong>Servidor</strong></td><td>Ubuntu 26.04 · 122 GB · RTX 5080 16 GB</td>
+        <td>Servicios continuos: modelos locales, <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr><span class="gl"> (Retrieval-Augmented Generation: busca en tus documentos y responde citándolos)</span>, búsqueda, documentación, transcripción</td></tr>
+    <tr><td><strong>Estación Apple</strong></td><td>Mac Studio M2 Ultra · 128 GB memoria unificada</td>
+        <td>Modelos grandes (70B), imagen, voz y realidad virtual</td></tr>
+  </table></div>
+
+  <div class="box key">
+    <span class="lbl">Por qué dos motores de IA distintos</span>
+    <p>El servidor tiene una <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr><span class="gl"> (Graphics Processing Unit, tarjeta gráfica)</span> de 16 GB: rápida, buena para atender muchas consultas, pero con
+    techo de memoria. El Mac tiene 128 GB compartidos entre procesador y gráfica: más lento por
+    consulta, pero le caben modelos que en la <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr> no entran. <strong>Cada uno hace lo que su
+    memoria le permite.</strong> Con otra combinación de equipos, el reparto sería otro.</p>
+  </div>
+
+  <h3>Cómo se hablan entre sí</h3>
+  <ul>
+    <li><strong>Carpetas compartidas en red</strong> para que los documentos estén en un solo sitio.</li>
+    <li><strong>Servicios con <abbr title="API: Application Programming Interface: puerta para que un programa hable con otro">API</abbr></strong>: cada modelo o herramienta escucha en un puerto y
+    cualquier otra aplicación puede usarlo.</li>
+    <li><strong>Varios asistentes de IA trabajando en paralelo</strong>, uno por máquina, que se
+    coordinan por escrito (se cuenta en la Guía 6).</li>
+  </ul>
+</section>
+
+<!-- ════════════ 2 ════════════ -->
+<section role="tabpanel" id="c2" hidden>
+  <h2>Nuestros modelos: los de siempre y los propios</h2>
+
+  <p>Un sistema de IA propio no es un modelo: es un <strong>conjunto de modelos</strong>, cada
+  uno para lo suyo, y una forma de elegir cuál responde.</p>
+
+  <h3>En el servidor: 16 modelos servidos con <abbr title="Ollama: programa gratuito para ejecutar modelos en tu equipo">Ollama</abbr></h3>
+  <div class="tblwrap"><table>
+    <tr><th>Tipo</th><th>Ejemplos</th><th>Para qué</th></tr>
+    <tr><td><strong>Generalistas cuantizados</strong></td><td>Qwen3 8B y 14B (Q5), GPT-OSS 20B, Phi-4 reasoning 14B</td><td>Redactar, resumir, razonar</td></tr>
+    <tr><td><strong>Código</strong></td><td>Devstral 24B, Qwen2.5-Coder 7B</td><td>Macros, scripts, automatizaciones</td></tr>
+    <tr><td><strong>Visión y <abbr title="OCR: Optical Character Recognition: convertir imagen o PDF escaneado en texto">OCR</abbr></strong></td><td>Qwen3-VL 8B, Qwen2.5-VL 7B, DeepSeek-OCR 3B</td><td>Leer planos, fotos y documentos escaneados</td></tr>
+    <tr><td><strong><abbr title="Embedding: texto convertido en números que representan su significado">Embeddings</abbr> y <abbr title="Reranker: modelo que reordena resultados por relevancia">reordenación</abbr></strong></td><td>bge-m3, Qwen3-Embedding, mxbai-rerank</td><td>Buscar por significado (el <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr>)</td></tr>
+    <tr><td><strong>Propio</strong></td><td><code>nmr-acustica:v1</code> (8,1 GB)</td><td>Modelo especializado en el dominio de la acústica</td></tr>
+  </table></div>
+
+  <h3>En el Mac: modelos grandes siempre disponibles</h3>
+  <p>Dos servidores <strong>compatibles con la <abbr title="API: Application Programming Interface: puerta para que un programa hable con otro">API</abbr> de OpenAI</strong> arrancan solos con el
+  equipo, así que cualquier aplicación que sepa hablar con ChatGPT puede hablar con ellos
+  cambiando solo la dirección:</p>
+  <ul>
+    <li><strong>Llama 3.3 70B</strong> a 4 bits, ocupando unos 38 GB de memoria.</li>
+    <li><strong>Qwen3 8B</strong> a 4 bits, para respuestas rápidas.</li>
+    <li>Y, bajo demanda, Qwen2.5 72B, Qwen3.6 35B, bge-m3 y un modelo de visión ligero.</li>
+  </ul>
+  <p>Además hay <strong>tres variantes de Qwen3 8B <abbr title="Fine-tuning: reentrenar un modelo con material propio">afinadas</abbr> con material propio</strong>. Un
+  uso concreto del 70B: redactar la parte narrativa de un informe a partir de los datos ya
+  calculados.</p>
+
+  <div class="box key">
+    <span class="lbl">Afinar un modelo no es lo mismo que darle un <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr></span>
+    <p><strong>Afinar</strong> cambia cómo habla el modelo: su vocabulario, su estilo, su forma de
+    estructurar. <strong>El <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr></strong> le da datos con fuente en el momento de responder. Para
+    normativa y cifras, lo que manda es el <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr>; afinar ayuda a que el texto «suene» a tu
+    especialidad.</p>
+  </div>
+
+  <h3>Quién elige el modelo</h3>
+  <p>Con tantos modelos, alguien tiene que decidir cuál responde cada pregunta. Aquí lo hace un
+  <strong>enrutador</strong> (SmarterRouter): mira la consulta y la manda al modelo adecuado,
+  guarda en caché respuestas repetidas y libera la <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr> cuando se llena. Y el espacio de trabajo
+  principal (Odysseus) tiene dados de alta, como si fueran un solo sistema, los modelos del
+  servidor y los del Mac.</p>
+</section>
+
+<!-- ════════════ 3 ════════════ -->
+<section role="tabpanel" id="c3" hidden>
+  <h2>Ahorrar <abbr title="Token: trozo de texto con el que trabaja el modelo">tokens</abbr>: pagar solo por el juicio</h2>
+
+  <p>Los asistentes de pago cobran por lo que leen y escriben. La idea que atraviesa todo este
+  sistema es muy simple: <strong>lo que una máquina puede hacer gratis, que lo haga una máquina
+  local; el modelo de pago se reserva para donde hace falta criterio</strong>.</p>
+
+  <h3>Buscar en internet sin gastar <abbr title="Token: trozo de texto con el que trabaja el modelo">tokens</abbr></h3>
+  <p>Cuando un asistente de pago navega por su cuenta, lee páginas enteras y paga cada palabra.
+  Aquí la navegación la hace el sistema propio y al asistente solo le llega un resumen con citas.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Pieza</th><th>Qué hace</th></tr>
+    <tr><td><strong>SearXNG</strong></td><td>Metabuscador instalado en casa: pregunta a varios buscadores públicos a la vez y junta los resultados, sin cuenta ni cuota. <em>Estado a 15/09/2026: los buscadores públicos bloquean o limitan las consultas automáticas, así que hoy no da resultados fiables; en producción hace falta una fuente estable, como una API de búsqueda.</em></td></tr>
+    <tr><td><strong>Odysseus</strong></td><td>Espacio de trabajo de IA autoalojado: chat, agente, investigación profunda, documentos y memoria. Usa los modelos locales para leer y resumir.</td></tr>
+    <tr><td><strong>Conector para el asistente</strong></td><td>Dos herramientas: <em>buscar</em> (título, dirección y fragmento, con un tope de 4.000 caracteres) e <em>investigar</em> (un informe de hasta 6.000 caracteres). Con reglas incorporadas: citar siempre la fuente y dar prioridad a BOE, UNE y boletines autonómicos.</td></tr>
+  </table></div>
+
+  <div class="box tip">
+    <span class="lbl">El ahorro, en una frase</span>
+    <p>Las páginas las lee un modelo local, que no cuesta nada por consulta. El asistente de pago
+    solo paga por <strong>pedir la búsqueda y leer el resultado compacto</strong>.</p>
+  </div>
+
+  <h3>Preparar la normativa sin gastar <abbr title="Token: trozo de texto con el que trabaja el modelo">tokens</abbr></h3>
+  <p>El <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> normativo (Guía 4) necesita convertir normas en PDF en fragmentos fiables. El proceso
+  se organizó en <strong>tres vías locales</strong> —extracción mecánica, texto con modelo local,
+  y modelo de visión local para fórmulas e imágenes—, y solo la <strong>verificación final</strong>
+  se hace con el modelo de pago.</p>
+  <ul>
+    <li>Una detección sin modelo de las páginas de texto a varias columnas las saca del modelo de
+    visión, que es lo más caro de procesar.</li>
+    <li>Una medida concreta: solo el detector de páginas escaneadas evita del orden de
+    <strong>35.000 <abbr title="Token: trozo de texto con el que trabaja el modelo">tokens</abbr></strong>.</li>
+    <li>Y una vez preparado, <strong>consultar el <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> cuesta 0 €</strong>: todo corre en local.</li>
+  </ul>
+</section>
+
+<!-- ════════════ 4 ════════════ -->
+<section role="tabpanel" id="c4" hidden>
+  <h2>Herramientas de ingeniería hechas en Python</h2>
+
+  <p>Aquí está buena parte del valor diario: aplicaciones pequeñas que hacen en segundos lo que
+  antes llevaba una tarde. <strong>Este tipo de herramienta es exactamente lo que hoy se construye
+  trabajando con un asistente de IA</strong> (Guía 6).</p>
+
+  <div class="cards">
+    <div class="card">
+      <h4>Suite de herramientas NMR <span class="st ok">en uso</span></h4>
+      <p>Aplicación de escritorio para Windows con <strong>18 herramientas</strong>.</p>
+      <p><strong>Acústica:</strong> cálculo por lotes de EDT, T20, T30, C50, C80, D50, Ts y STI a
+      partir de respuestas al impulso; visores de ARTA y CATT-Acoustic; <strong>calibración del
+      modelo CATT contra lo medido</strong>; optimizador que busca los materiales para un T30
+      objetivo.</p>
+      <p><strong>Documentos:</strong> datos del sonómetro a Excel, Word/Excel/PDF a Markdown,
+      metadatos, extraer y analizar <abbr title="VBA: Visual Basic for Applications, macros de Office">VBA</abbr><span class="gl"> (Visual Basic for Applications, macros de Office)</span>, renombrado por lotes, duplicados.</p>
+      <p class="t">Python 3.11 · tkinter · numpy · scipy · matplotlib · PyMuPDF · ejecutable único</p>
+    </div>
+    <div class="card">
+      <h4>Aplicación de proyectos <abbr title="ICT: Infraestructura Común de Telecomunicaciones (RD 346/2011)">ICT</abbr> <span class="st ok">en uso</span></h4>
+      <p>Guía el proyecto conforme al <strong>RD 346/2011</strong>: datos del proyecto → edificio →
+      infraestructura → servicios.</p>
+      <p>Genera los <strong>planos <abbr title="DXF · DWG: formatos de dibujo técnico CAD">DWG</abbr></strong>, los <strong>cálculos</strong> en Excel y la
+      <strong>memoria</strong> en Word, con un catálogo de 488 productos de fabricante y pruebas
+      automáticas.</p>
+      <p class="t">Python 3.11 · customtkinter · openpyxl · ezdxf · ODA File Converter</p>
+    </div>
+    <div class="card">
+      <h4>QGIS: propagación acústica <span class="st dev">experimental</span></h4>
+      <p>Complemento propio: se marcan en el mapa fuentes, receptores y ruido de fondo; calcula
+      distancias en 3D y el nivel teórico, y lanza el cálculo de propagación en el servidor.</p>
+      <p>Junto a él: descarga de cartografía del Catastro y un conector para que el asistente de
+      IA maneje QGIS.</p>
+      <p class="t">PyQGIS · GeoPackage · NoiseModelling</p>
+    </div>
+    <div class="card">
+      <h4>Librerías y scripts <span class="st ok">en uso</span></h4>
+      <p><strong>Evaluador normativo</strong>: con un valor medido o calculado indica
+      <em>cumple / no cumple</em>, con el margen en dB y el artículo aplicable.</p>
+      <p>Lectura de bases de precios <strong>.bc3</strong> (CYPE, Presto, BEDEC), predicción de
+      aislamiento, psicoacústica, geometría descriptiva, e importación automática de materiales
+      en software de acústica.</p>
+      <p class="t">Python · pyva · mosqito · librerías propias arta_pir, catt_parser, iso3382</p>
+    </div>
+  </div>
+
+  <div class="box tip">
+    <span class="lbl">Un detalle de oficio que vale para cualquier generador de planos</span>
+    <p>El generador de <abbr title="DXF · DWG: formatos de dibujo técnico CAD">DWG</abbr><span class="gl"> (formatos de dibujo técnico CAD)</span> <strong>no reescribe el dibujo</strong>: sustituye los textos de las
+    cartelas sobre una plantilla y convierte el resultado. Así no se rompen las tildes ni se
+    altera nada del plano original. Cuando automatices documentos técnicos, <strong>parte de una
+    plantilla buena y toca lo mínimo</strong>.</p>
+  </div>
+</section>
+
+<!-- ════════════ 5 ════════════ -->
+<section role="tabpanel" id="c5" hidden>
+  <h2>Imagen, voz y realidad virtual</h2>
+
+  <p>La memoria unificada del Mac abre un terreno que en una <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr> de 16 GB no cabe: modelos de
+  imagen y de voz grandes funcionando en local.</p>
+
+  <div class="cards">
+    <div class="card">
+      <h4>Editor de imágenes por instrucción <span class="st ok">funcionando</span></h4>
+      <p>Le dices con palabras qué cambiar en una foto —«quita el coche del fondo»— y lo hace.
+      Es una versión local de la idea de «Nano Banana» de Google, montada con <strong>modelos
+      abiertos</strong>: el servidor hace un borrador rápido y el Mac la versión de calidad.</p>
+      <p class="t">Qwen-Image-Edit 2511 a 4 bits (18,3 GB, Apache 2.0) · FLUX.2 klein 4B · <abbr title="MLX: librería de Apple para ejecutar modelos en la GPU del Mac">MLX</abbr><span class="gl"> (librería de Apple para ejecutar modelos en la GPU del Mac)</span> · aplicación web</p>
+    </div>
+    <div class="card">
+      <h4>Laboratorio de voz <span class="st dev">en desarrollo</span></h4>
+      <p>A partir de una grabación clona una voz, la transcribe y mide rasgo a rasgo cuánto se
+      parece a la original (timbre, entonación, acento), con detección de voz sintética.</p>
+      <p class="t">Chatterbox (MIT) · FreeVC · OpenVoice · RVC · faster-whisper · métricas ECAPA y NISQA</p>
+    </div>
+    <div class="card">
+      <h4>Motor acústico en tiempo real <span class="st ok">funcionando</span></h4>
+      <p>Calcula al vuelo la acústica de una sala —RT60, STI, aislamiento, nivel sonoro— con el
+      micrófono calibrado, y la sirve a otras aplicaciones.</p>
+      <p class="t">Python · servidor WebSocket</p>
+    </div>
+    <div class="card">
+      <h4>Instrumentos de medida en realidad virtual <span class="st dev">en desarrollo</span></h4>
+      <p>Cliente para <strong>Meta Quest 3</strong>: sonómetro, analizador de espectro, ISO 3382 y
+      respuesta al impulso flotando en el espacio, alimentados por el motor acústico. Con batería
+      de pruebas automáticas.</p>
+      <p class="t">WebXR · Three.js · navegador de las gafas</p>
+    </div>
+  </div>
+
+  <div class="box warn">
+    <span class="lbl">Licencias: miradlas antes de trabajar para un cliente</span>
+    <p>En el laboratorio de voz, uno de los motores disponibles <strong>está excluido de los
+    trabajos de cliente</strong> porque su licencia no permite uso comercial. El editor de imágenes
+    usa uno con licencia Apache 2.0 precisamente por eso. <strong>Que un modelo sea descargable no
+    significa que puedas usarlo en un encargo.</strong></p>
+  </div>
+</section>
+
+<!-- ════════════ 6 ════════════ -->
+<section role="tabpanel" id="c6" hidden>
+  <h2>El despacho: servicios que ahorran horas</h2>
+
+  <p>No todo es IA en sentido estricto. Estos servicios corren en el servidor, se instalan con
+  <abbr title="Docker: empaqueta programas para que funcionen igual en cualquier máquina">Docker</abbr><span class="gl"> (empaqueta programas para que funcionen igual en cualquier máquina)</span> y son de código abierto. Juntos cubren buena parte de la trastienda de un despacho.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Servicio</th><th>Qué resuelve</th></tr>
+    <tr><td><strong>Paperless-ngx</strong></td><td>Archivo documental: digitaliza con <abbr title="OCR: Optical Character Recognition: convertir imagen o PDF escaneado en texto">OCR</abbr><span class="gl"> (Optical Character Recognition: convertir imagen o PDF escaneado en texto)</span>, indexa y busca expedientes, facturas y certificados</td></tr>
+    <tr><td><strong>Scriberr</strong></td><td>Transcripción de audio: reuniones con cliente, visitas de obra, notas de voz</td></tr>
+    <tr><td><strong>Docmost</strong></td><td>Wiki interna: procedimientos, plantillas y conocimiento del despacho</td></tr>
+    <tr><td><strong>Open WebUI</strong></td><td>El «ChatGPT propio»: chat contra los modelos locales</td></tr>
+    <tr><td><strong>Qdrant</strong></td><td>La base de datos donde vive el <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr></td></tr>
+    <tr><td><strong>ntfy</strong></td><td>Avisos al móvil cuando un proceso largo termina o algo falla</td></tr>
+    <tr><td><strong>Langfuse</strong></td><td>Registro de qué se preguntó, qué se respondió y cuánto costó</td></tr>
+  </table></div>
+
+  <div class="box key">
+    <span class="lbl">Por dónde empezar si solo quieres uno</span>
+    <p><strong>Paperless-ngx.</strong> Resuelve un problema que todo despacho tiene —encontrar un
+    documento—, no exige <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr> y, cuando más adelante montes un <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr>, ya tendrás tus documentos
+    digitalizados y ordenados.</p>
+  </div>
+</section>
+
+<!-- ════════════ 7 ════════════ -->
+<section role="tabpanel" id="c7" hidden>
+  <h2>Pautas que salen de construirlo</h2>
+
+  <ol>
+    <li><strong>Reparte según la memoria de cada equipo.</strong> No hay una arquitectura correcta:
+    hay la que encaja con lo que tienes.</li>
+    <li><strong>Paga solo el juicio.</strong> Buscar, extraer, convertir y comparar lo hace una
+    máquina local. El modelo de pago, donde hace falta criterio.</li>
+    <li><strong>Cada servicio, con su dirección y con arranque automático.</strong> Y con una forma
+    sencilla de preguntarle si está vivo.</li>
+    <li><strong>Compatible con la <abbr title="API: Application Programming Interface: puerta para que un programa hable con otro">API</abbr> de OpenAI siempre que se pueda.</strong> Así cambias de modelo,
+    local o de pago, sin tocar tus aplicaciones.</li>
+    <li><strong>Revisa la licencia antes del primer encargo</strong> con cada modelo nuevo.</li>
+    <li><strong>Voz e imagen de personas, con consentimiento.</strong> Clonar una voz o editar la
+    foto de alguien es una cuestión legal, no solo técnica.</li>
+    <li><strong>Anonimiza antes de enseñar.</strong> Las plantillas de trabajo real suelen llevar
+    datos de clientes y firmas: límpialas antes de compartirlas o proyectarlas.</li>
+    <li><strong>Di en qué estado está cada cosa.</strong> «Funcionando», «experimental» o «en
+    desarrollo» no restan: evitan que alguien confíe en lo que aún no está listo.</li>
+    <li><strong>Mide antes de fiarte</strong> (Guía 4): lo que parece que funciona y lo que funciona
+    se separan con un caso cuya respuesta ya conoces.</li>
+  </ol>
+</section>
+
+<footer>
+  <p><strong>Guía 3 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  profesional» · Colegio Oficial de Ingenieros de Telecomunicación.</p>
+  <p><a href="Glosario.html">¿Una sigla que no conoces? Consulta el glosario</a></p>
+</footer>
+
+</div>
+<script>
+  const tabs=[...document.querySelectorAll('nav.tabs button')];
+  const paneles=[...document.querySelectorAll('section[role=tabpanel]')];
+  tabs.forEach(b=>b.addEventListener('click',()=>{
+    tabs.forEach(x=>x.setAttribute('aria-selected', x===b?'true':'false'));
+    paneles.forEach(p=>p.hidden = (p.id!==b.dataset.p));
+    window.scrollTo({top:0,behavior:'smooth'});
+  }));
+</script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Glosario — Webinar COIT</title>
+<style>
+  :root{
+    --bg:#ffffff; --ink:#1F2A37; --muted:#6B7785; --line:#D9E1EC;
+    --accent:#2E6DA4; --navy:#1B3A6B; --amber:#B5650A; --amber-bg:#FBEEDC;
+    --green:#2F7D4F; --green-bg:#E9F3EC; --card:#F3F6FB;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+      --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+      --green:#7BC49A; --green-bg:#16241C;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+    --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+    --green:#7BC49A; --green-bg:#16241C;
+  }
+  body{background:var(--bg);color:var(--ink);
+    font:16px/1.65 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    margin:0;padding:0 16px 80px}
+  .wrap{max-width:900px;margin:0 auto}
+  header.top{padding:34px 0 10px;border-bottom:1px solid var(--line)}
+  .eyebrow{font:600 12.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--amber);margin:0 0 10px}
+  h1{font-size:2.05rem;line-height:1.2;margin:0 0 10px;font-weight:650;letter-spacing:-.02em}
+  .sub{color:var(--muted);margin:0 0 18px;max-width:70ch}
+  nav.tabs{position:sticky;top:0;z-index:20;background:var(--bg);
+    border-bottom:1px solid var(--line);margin:0 0 30px;display:flex;gap:2px;
+    overflow-x:auto;padding-top:10px}
+  nav.tabs button{flex:0 0 auto;background:none;border:0;border-bottom:3px solid transparent;
+    padding:12px 15px;font:600 13.5px/1 ui-sans-serif,system-ui,sans-serif;color:var(--muted);
+    cursor:pointer;white-space:nowrap}
+  nav.tabs button:hover{color:var(--ink)}
+  nav.tabs button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+  section[role=tabpanel]{animation:fade .18s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+  h2{font-size:1.6rem;margin:34px 0 8px;font-weight:620;letter-spacing:-.01em}
+  h2:first-child{margin-top:0}
+  h3{font-size:1.14rem;margin:28px 0 8px;font-weight:620}
+  p{margin:0 0 14px;max-width:78ch}
+  ul,ol{max-width:78ch;padding-left:22px;margin:0 0 14px} li{margin-bottom:7px}
+  code{font:13.5px/1.5 ui-monospace,Menlo,Consolas,monospace;background:var(--card);
+    padding:2px 6px;border-radius:4px;border:1px solid var(--line)}
+  .tblwrap{overflow-x:auto;margin:0 0 18px}
+  table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+  th{background:var(--navy);color:#fff;text-align:left;padding:9px 11px;font-weight:600}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) th{color:#12161C}}
+  :root[data-theme="dark"] th{color:#12161C}
+  td{border-bottom:1px solid var(--line);padding:9px 11px;vertical-align:top}
+  .box{border-radius:10px;padding:16px 18px;margin:0 0 18px;border:1px solid var(--line)}
+  .box p:last-child{margin-bottom:0}
+  .tip{background:var(--green-bg);border-color:transparent}
+  .warn{background:var(--amber-bg);border-color:transparent}
+  .key{background:var(--card)}
+  .lbl{font:600 11.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.1em;
+    text-transform:uppercase;display:block;margin-bottom:8px}
+  .tip .lbl{color:var(--green)} .warn .lbl{color:var(--amber)} .key .lbl{color:var(--accent)}
+  .flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:0 0 18px}
+  .flow div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
+  .flow b{display:block;color:var(--accent);font-size:13px;margin-bottom:4px}
+  .flow span{font-size:14px}
+  footer{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13.5px}
+  .pill{display:inline-block;background:var(--card);border:1px solid var(--line);
+    border-radius:999px;padding:2px 10px;font-size:12.5px;color:var(--muted);margin-right:6px}
+
+  .home{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;
+    border:0;border-radius:10px;padding:11px 20px;margin:18px 0 0;
+    font:700 15px/1 ui-sans-serif,system-ui,sans-serif;text-decoration:none;
+    box-shadow:0 1px 2px rgba(0,0,0,.12)}
+  .home:hover{filter:brightness(1.08)}
+  .home svg{flex:0 0 auto}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .home{color:#12161C}}
+  :root[data-theme="dark"] .home{color:#12161C}
+
+  a{color:var(--accent)}
+  a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="home" href="index.html"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M6 10.5V20h5v-5h2v5h5v-9.5"/></svg><span>Índice de guías</span></a>
+
+<header class="top">
+  <p class="eyebrow">Webinar COIT · Glosario</p>
+  <h1>Glosario: siglas y términos</h1>
+  <p class="sub">Las palabras que salen en el webinar y en las guías, explicadas sin tecnicismos. 102 términos
+  agrupados por tema. Si una sigla no está aquí, pregúntala: probablemente también le interese a alguien más.</p>
+  <p><span class="pill">Consulta rápida</span><span class="pill">102 términos</span></p>
+</header>
+<nav class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" data-p="g0">IA y modelos</button>
+  <button role="tab" aria-selected="false" data-p="g1">RAG y datos</button>
+  <button role="tab" aria-selected="false" data-p="g2">Agentes y conectores</button>
+  <button role="tab" aria-selected="false" data-p="g3">Infraestructura</button>
+  <button role="tab" aria-selected="false" data-p="g4">Software de ingeniería y normativa</button>
+  <button role="tab" aria-selected="false" data-p="g5">Método y organización</button>
+</nav>
+<section role="tabpanel" id="g0">
+  <h2>IA y modelos</h2>
+  <div class="tblwrap"><table>
+    <tr><th>Término</th><th>Siglas o nombre completo</th><th>Qué significa</th></tr>
+    <tr><td><strong>IA</strong></td><td>Inteligencia Artificial</td><td>Programas que realizan tareas que asociamos a la inteligencia humana: entender texto, reconocer imágenes, redactar.</td></tr>
+    <tr><td><strong>LLM</strong></td><td>Large Language Model · modelo de lenguaje grande</td><td>Modelo entrenado con enormes cantidades de texto que predice la siguiente palabra; es el motor de ChatGPT, Claude o Gemini.</td></tr>
+    <tr><td><strong>Modelo abierto</strong></td><td></td><td>Modelo cuyos pesos se pueden descargar y ejecutar en tu propio equipo (Qwen, Llama, Gemma…), a diferencia de uno que solo se usa por internet.</td></tr>
+    <tr><td><strong>Parámetros (B)</strong></td><td>B = billion, miles de millones</td><td>Número de valores internos del modelo. «8B» son 8.000 millones; más parámetros suele ser más capaz y más pesado.</td></tr>
+    <tr><td><strong>MoE</strong></td><td>Mixture of Experts · mezcla de expertos</td><td>Modelo formado por varios «expertos» de los que solo trabaja una parte en cada paso: grande en total, rápido en uso.</td></tr>
+    <tr><td><strong>Token</strong></td><td></td><td>Trozo de texto con el que trabaja el modelo (una palabra o parte de ella). Los precios y límites se cuentan en tokens.</td></tr>
+    <tr><td><strong>Ventana de contexto</strong></td><td></td><td>Cuánto texto puede tener el modelo delante a la vez: tu pregunta, los documentos y la conversación.</td></tr>
+    <tr><td><strong>Compactación</strong></td><td></td><td>Resumen automático que hace el asistente cuando la conversación no cabe en la ventana; se pierden detalles.</td></tr>
+    <tr><td><strong>Prompt</strong></td><td></td><td>La instrucción o pregunta que le das al modelo.</td></tr>
+    <tr><td><strong>Alucinación</strong></td><td></td><td>Respuesta inventada pero bien presentada: una cifra, una cita o una norma que no existe.</td></tr>
+    <tr><td><strong>Cuantización</strong></td><td></td><td>Guardar los pesos del modelo con menos bits para que ocupe menos memoria, a cambio de algo de calidad.</td></tr>
+    <tr><td><strong>Q4_K_M · Q5_K_M · Q8_0 · F16</strong></td><td></td><td>Formatos de cuantización: 4, 5 u 8 bits por peso, o 16 bits sin reducir. A menos bits, menos memoria.</td></tr>
+    <tr><td><strong>QAT</strong></td><td>Quantization-Aware Training · entrenamiento consciente de la cuantización</td><td>Modelo entrenado sabiendo que se va a reducir, para que pierda menos calidad al cuantizarlo.</td></tr>
+    <tr><td><strong>FP8 · NVFP4</strong></td><td>Floating Point 8 bits · formato de 4 bits de NVIDIA</td><td>Formatos numéricos reducidos que aprovechan las GPU modernas.</td></tr>
+    <tr><td><strong>GGUF</strong></td><td>GPT-Generated Unified Format</td><td>Formato de fichero para modelos cuantizados que usan Ollama y llama.cpp.</td></tr>
+    <tr><td><strong>Fine-tuning · afinado</strong></td><td></td><td>Reentrenar un modelo ya hecho con material propio para adaptarlo a un estilo o dominio.</td></tr>
+    <tr><td><strong>LoRA</strong></td><td>Low-Rank Adaptation · adaptación de bajo rango</td><td>Forma barata de afinar: se entrena un pequeño añadido en lugar de todo el modelo.</td></tr>
+    <tr><td><strong>RAFT</strong></td><td>Retrieval-Augmented Fine-Tuning</td><td>Afinado pensado para que el modelo aprenda a usar bien los documentos que le da un RAG.</td></tr>
+    <tr><td><strong>Multimodal</strong></td><td></td><td>Modelo que entiende más de un tipo de dato: texto, imagen, audio.</td></tr>
+    <tr><td><strong>OCR</strong></td><td>Optical Character Recognition · reconocimiento óptico de caracteres</td><td>Convertir una imagen o un PDF escaneado en texto que se puede buscar y copiar.</td></tr>
+    <tr><td><strong>STT · TTS</strong></td><td>Speech-to-Text · Text-to-Speech</td><td>Transcribir voz a texto (Whisper) y generar voz a partir de texto (XTTS, Kokoro).</td></tr>
+    <tr><td><strong>GSM8K</strong></td><td>Grade School Math 8K</td><td>Banco de problemas matemáticos de primaria que se usa para medir el razonamiento de un modelo: si falla aquí, no razona, repite.</td></tr>
+    <tr><td><strong>Few-shot · zero-shot</strong></td><td></td><td>Few-shot: dar al modelo unos pocos ejemplos ya resueltos dentro de la propia pregunta. Zero-shot: pedirle la tarea sin ningún ejemplo.</td></tr>
+  </table></div>
+</section>
+<section role="tabpanel" id="g1" hidden>
+  <h2>RAG y datos</h2>
+  <div class="tblwrap"><table>
+    <tr><th>Término</th><th>Siglas o nombre completo</th><th>Qué significa</th></tr>
+    <tr><td><strong>RAG</strong></td><td>Retrieval-Augmented Generation · generación aumentada por recuperación</td><td>El modelo busca primero en TUS documentos y responde apoyándose en ellos, citando la fuente.</td></tr>
+    <tr><td><strong>Embedding</strong></td><td></td><td>Conversión de un texto en una lista de números que representa su significado; textos parecidos quedan cerca.</td></tr>
+    <tr><td><strong>Base de datos vectorial</strong></td><td></td><td>Base de datos que guarda embeddings y encuentra los fragmentos más parecidos a una pregunta (Qdrant, Chroma).</td></tr>
+    <tr><td><strong>Fragmento · chunk</strong></td><td></td><td>Trozo de un documento (un apartado, una tabla) que se guarda por separado para poder encontrarlo.</td></tr>
+    <tr><td><strong>Reranker</strong></td><td></td><td>Segundo modelo que reordena los fragmentos encontrados para poner primero los realmente relevantes.</td></tr>
+    <tr><td><strong>Vigencia</strong></td><td></td><td>Si una norma está en vigor, derogada o sustituida. Un buen RAG normativo lo tiene en cuenta.</td></tr>
+    <tr><td><strong>recall@8</strong></td><td></td><td>Porcentaje de preguntas en las que la fuente correcta aparece entre los 8 primeros resultados.</td></tr>
+    <tr><td><strong>Banco de preguntas</strong></td><td></td><td>Preguntas con respuesta conocida para medir si el sistema acierta, antes de fiarse de él.</td></tr>
+    <tr><td><strong>RAG híbrido · BM25</strong></td><td></td><td>Combina la búsqueda por significado con la búsqueda por palabra exacta (BM25); ayuda con códigos y referencias como «DnT,w» o «art. 10.1».</td></tr>
+    <tr><td><strong>CRAG</strong></td><td>Corrective RAG · RAG correctivo</td><td>Revisa lo recuperado antes de responder y corrige o avisa: por ejemplo, si la norma está derogada y cuál la sustituye.</td></tr>
+    <tr><td><strong>GraphRAG</strong></td><td></td><td>RAG que construye un grafo de entidades y relaciones a partir de los documentos para responder preguntas de conjunto.</td></tr>
+    <tr><td><strong>LazyGraphRAG</strong></td><td></td><td>Variante de GraphRAG de Microsoft que retrasa el trabajo caro al momento de la consulta.</td></tr>
+    <tr><td><strong>RAG agéntico</strong></td><td></td><td>Un agente decide qué buscar, reformula la pregunta y consulta varias fuentes en varias vueltas antes de responder.</td></tr>
+    <tr><td><strong>HyDE</strong></td><td>Hypothetical Document Embeddings</td><td>Busca a partir de una respuesta hipotética redactada antes por el modelo. Puede ayudar en preguntas vagas; con datos exactos (umbrales, fórmulas) tiende a colar invenciones: poco recomendable.</td></tr>
+    <tr><td><strong>Self-RAG</strong></td><td></td><td>El propio modelo que responde decide cuándo necesita buscar y señala si lo que afirma está respaldado. Exige afinar ese modelo.</td></tr>
+    <tr><td><strong>Adaptive-RAG</strong></td><td></td><td>Un clasificador pequeño decide, antes de nada, si la pregunta necesita buscar, basta con una búsqueda o hacen falta varias encadenadas.</td></tr>
+    <tr><td><strong>Contextual Retrieval · late chunking</strong></td><td></td><td>Mejoras del troceado: dan a cada fragmento contexto del documento entero antes de guardarlo, para que un párrafo suelto no pierda de qué norma o apartado habla.</td></tr>
+  </table></div>
+</section>
+<section role="tabpanel" id="g2" hidden>
+  <h2>Agentes y conectores</h2>
+  <div class="tblwrap"><table>
+    <tr><th>Término</th><th>Siglas o nombre completo</th><th>Qué significa</th></tr>
+    <tr><td><strong>Agente</strong></td><td></td><td>Asistente de IA que no solo conversa: usa herramientas (lee ficheros, ejecuta órdenes, consulta servicios) para cumplir un encargo.</td></tr>
+    <tr><td><strong>Sistema multiagente</strong></td><td></td><td>Varios agentes que se reparten el trabajo y se revisan entre sí.</td></tr>
+    <tr><td><strong>Subagente</strong></td><td></td><td>Agente auxiliar que lanza el principal para una tarea concreta (investigar, auditar) y le devuelve el resultado.</td></tr>
+    <tr><td><strong>CC · CD</strong></td><td>Claude Code · Claude Desktop</td><td>Las dos formas de trabajar con Claude en nuestro sistema: Claude Code actúa sobre ficheros y servidores; Claude Desktop es la aplicación de escritorio.</td></tr>
+    <tr><td><strong>MCP</strong></td><td>Model Context Protocol · protocolo de contexto del modelo</td><td>Estándar para conectar un asistente con herramientas concretas (una base de datos, un servidor, QGIS) con permisos acotados.</td></tr>
+    <tr><td><strong>Skill · habilidad</strong></td><td></td><td>Procedimiento escrito que el asistente carga cuando la tarea lo requiere.</td></tr>
+    <tr><td><strong>Hook · disparador</strong></td><td></td><td>Acción que se ejecuta automáticamente en un momento fijo (al arrancar, antes de compactar) sin que nadie tenga que acordarse.</td></tr>
+    <tr><td><strong>API</strong></td><td>Application Programming Interface · interfaz de programación</td><td>Puerta por la que un programa pide algo a otro (por ejemplo, una respuesta a un modelo).</td></tr>
+    <tr><td><strong>Patio de Vecinos</strong></td><td></td><td>Nuestro tablón común: una carpeta compartida donde los agentes se dejan mensajes.</td></tr>
+    <tr><td><strong>BUS · INBOX</strong></td><td></td><td>El tablón donde se escriben todos los mensajes y el buzón personal de cada agente.</td></tr>
+    <tr><td><strong>Vigía</strong></td><td></td><td>Pequeño proceso que avisa a un agente en cuanto llega un mensaje para él.</td></tr>
+    <tr><td><strong>Escudero · segunda lente</strong></td><td></td><td>Agente que acompaña a otro y revisa su trabajo con otro enfoque o instrumento.</td></tr>
+    <tr><td><strong>Adversario · auditor</strong></td><td></td><td>El adversario intenta demostrar que un trabajo está mal; el auditor da el sí o el no final.</td></tr>
+  </table></div>
+</section>
+<section role="tabpanel" id="g3" hidden>
+  <h2>Infraestructura</h2>
+  <div class="tblwrap"><table>
+    <tr><th>Término</th><th>Siglas o nombre completo</th><th>Qué significa</th></tr>
+    <tr><td><strong>GPU · CPU</strong></td><td>Graphics Processing Unit · Central Processing Unit</td><td>Tarjeta gráfica y procesador. La GPU hace el cálculo de los modelos mucho más rápido.</td></tr>
+    <tr><td><strong>VRAM</strong></td><td>Video RAM · memoria de la tarjeta gráfica</td><td>Memoria de la GPU. Es el límite de tamaño del modelo que puedes cargar en ella.</td></tr>
+    <tr><td><strong>RAM · memoria unificada</strong></td><td>Random Access Memory</td><td>Memoria del equipo. En los Mac con Apple Silicon la comparten CPU y GPU, por eso caben modelos grandes.</td></tr>
+    <tr><td><strong>CUDA · Metal · MLX</strong></td><td></td><td>Tecnologías para usar la GPU: CUDA en NVIDIA, Metal y MLX en Apple.</td></tr>
+    <tr><td><strong>SSH</strong></td><td>Secure Shell</td><td>Conexión cifrada para ejecutar órdenes en otra máquina.</td></tr>
+    <tr><td><strong>SMB</strong></td><td>Server Message Block</td><td>Protocolo de carpetas compartidas en red (las unidades de red de Windows).</td></tr>
+    <tr><td><strong>WSL</strong></td><td>Windows Subsystem for Linux</td><td>Un Linux que funciona dentro de Windows.</td></tr>
+    <tr><td><strong>VPN · Tailscale</strong></td><td>Virtual Private Network</td><td>Red privada cifrada entre tus equipos; Tailscale es una forma sencilla de montarla.</td></tr>
+    <tr><td><strong>Docker · contenedor</strong></td><td></td><td>Forma de empaquetar un programa con todo lo que necesita para que funcione igual en cualquier máquina.</td></tr>
+    <tr><td><strong>Ollama</strong></td><td></td><td>Programa gratuito para descargar y ejecutar modelos de lenguaje en tu equipo.</td></tr>
+    <tr><td><strong>Open WebUI</strong></td><td></td><td>Interfaz web tipo ChatGPT para usar tus modelos locales y tus documentos.</td></tr>
+    <tr><td><strong>ComfyUI</strong></td><td></td><td>Aplicación para generar imágenes y vídeo con modelos locales mediante flujos de nodos.</td></tr>
+    <tr><td><strong>n8n</strong></td><td></td><td>Herramienta de automatización por flujos visuales: «cuando llega X, haz Y».</td></tr>
+    <tr><td><strong>SearXNG</strong></td><td></td><td>Metabuscador instalable en casa que consulta varios buscadores sin cuenta.</td></tr>
+    <tr><td><strong>ntfy</strong></td><td></td><td>Servicio de avisos al móvil desde tus propios programas.</td></tr>
+    <tr><td><strong>Paperless-ngx</strong></td><td></td><td>Gestor documental con OCR: digitaliza, etiqueta y busca documentos.</td></tr>
+    <tr><td><strong>Local · nube</strong></td><td></td><td>Local: se ejecuta en tus equipos. Nube: en servidores de un proveedor, por internet.</td></tr>
+  </table></div>
+</section>
+<section role="tabpanel" id="g4" hidden>
+  <h2>Software de ingeniería y normativa</h2>
+  <div class="tblwrap"><table>
+    <tr><th>Término</th><th>Siglas o nombre completo</th><th>Qué significa</th></tr>
+    <tr><td><strong>VBA</strong></td><td>Visual Basic for Applications</td><td>Lenguaje de macros de Excel, Word y el resto de Office.</td></tr>
+    <tr><td><strong>M365</strong></td><td>Microsoft 365</td><td>Paquete de Office por suscripción (Word, Excel, Outlook, Teams); su asistente de IA es Copilot.</td></tr>
+    <tr><td><strong>COM</strong></td><td>Component Object Model</td><td>Mecanismo de Windows que permite a un programa (por ejemplo Python) manejar Excel o Word.</td></tr>
+    <tr><td><strong>Python · librería</strong></td><td></td><td>Lenguaje de programación muy usado en ingeniería; una librería es un paquete de funciones ya hecho.</td></tr>
+    <tr><td><strong>SIG · GIS · QGIS</strong></td><td>Sistema de Información Geográfica · Geographic Information System</td><td>Programas para trabajar con mapas y datos geográficos; QGIS es libre y gratuito.</td></tr>
+    <tr><td><strong>PostGIS</strong></td><td></td><td>Extensión de base de datos para guardar y consultar datos geográficos.</td></tr>
+    <tr><td><strong>CNOSSOS-EU · NoiseModelling</strong></td><td>Common Noise Assessment Methods in Europe</td><td>Método europeo de cálculo de ruido ambiental y programa libre que lo implementa para hacer mapas de ruido.</td></tr>
+    <tr><td><strong>DXF · DWG</strong></td><td>Drawing Exchange Format · Drawing</td><td>Formatos de fichero de dibujo técnico (CAD).</td></tr>
+    <tr><td><strong>CAD</strong></td><td>Computer-Aided Design</td><td>Diseño asistido por ordenador: programas de dibujo técnico como AutoCAD.</td></tr>
+    <tr><td><strong>ICT</strong></td><td>Infraestructura Común de Telecomunicaciones</td><td>Instalaciones de telecomunicación de un edificio, reguladas en España por el RD 346/2011.</td></tr>
+    <tr><td><strong>ISO/IEC 17025</strong></td><td></td><td>Norma internacional de competencia de los laboratorios de ensayo y calibración.</td></tr>
+    <tr><td><strong>INSUL · SonArchitect · CATT</strong></td><td></td><td>Programas comerciales de predicción de aislamiento acústico, modelo de edificio y acústica de salas.</td></tr>
+    <tr><td><strong>Apache 2.0 · MIT</strong></td><td></td><td>Licencias abiertas habituales que permiten usar un modelo o programa también comercialmente, con condiciones.</td></tr>
+    <tr><td><strong>ERP</strong></td><td>Enterprise Resource Planning · planificación de recursos empresariales</td><td>Programa de gestión integral de la empresa: contabilidad, compras, almacén y facturación en un mismo sistema.</td></tr>
+  </table></div>
+</section>
+<section role="tabpanel" id="g5" hidden>
+  <h2>Método y organización</h2>
+  <div class="tblwrap"><table>
+    <tr><th>Término</th><th>Siglas o nombre completo</th><th>Qué significa</th></tr>
+    <tr><td><strong>RACI</strong></td><td>Responsible · Accountable · Consulted · Informed</td><td>Quién hace, quién aprueba, a quién se consulta y a quién se informa en una decisión.</td></tr>
+    <tr><td><strong>PDCA</strong></td><td>Plan · Do · Check · Act</td><td>Ciclo de mejora continua: planificar, hacer, verificar y actuar.</td></tr>
+    <tr><td><strong>LEAR</strong></td><td>Leer · Editar · Auditar · Reparar</td><td>Método para cambiar algo sin romperlo: quien edita nunca valida su propio trabajo.</td></tr>
+    <tr><td><strong>ADPAI</strong></td><td>Analizar · Debatir · Planificar · Aprobar · Implementar</td><td>Método para gobernar un cambio: la persona aprueba el plan antes de ejecutarlo.</td></tr>
+    <tr><td><strong>Kepner-Tregoe</strong></td><td></td><td>Método que separa el análisis del problema (qué ha pasado) de la decisión (qué hacer).</td></tr>
+    <tr><td><strong>Seis sombreros</strong></td><td></td><td>Método de Edward de Bono para pensar en grupo desde seis enfoques: datos, intuición, riesgos, beneficios, alternativas y organización.</td></tr>
+    <tr><td><strong>Pre-mortem</strong></td><td></td><td>Imaginar que un proyecto ya ha fracasado y buscar por qué, antes de empezarlo.</td></tr>
+    <tr><td><strong>CoT · ReAct</strong></td><td>Chain of Thought · Reasoning and Acting</td><td>Pedir a la IA que razone paso a paso; y que alterne razonar con usar herramientas.</td></tr>
+    <tr><td><strong>Dry-run · ensayo en seco</strong></td><td></td><td>Simular una operación antes de ejecutarla de verdad.</td></tr>
+    <tr><td><strong>Rollback · vuelta atrás</strong></td><td></td><td>Restaurar el estado anterior si un cambio sale mal.</td></tr>
+    <tr><td><strong>Diagrama de flujo</strong></td><td></td><td>Dibujo de los pasos de un proceso, con sus decisiones (sí/no) y sus vueltas atrás.</td></tr>
+    <tr><td><strong>Mermaid</strong></td><td></td><td>Lenguaje de texto que se convierte en diagrama (flujos, secuencias, líneas temporales); se guarda como texto y una IA lo escribe bien.</td></tr>
+    <tr><td><strong>Grafo</strong></td><td></td><td>Representación con nodos (cosas, personas) unidos por aristas (las relaciones entre ellos).</td></tr>
+    <tr><td><strong>KPI</strong></td><td>Key Performance Indicator · indicador clave de rendimiento</td><td>Medida que vigila de forma continua la salud de un proceso, sin fecha de caducidad; un objetivo, en cambio, se cierra.</td></tr>
+    <tr><td><strong>NPS</strong></td><td>Net Promoter Score · índice de recomendación</td><td>Encuesta de una sola pregunta («¿nos recomendarías?») que resume la satisfacción del cliente en un número de −100 a 100.</td></tr>
+    <tr><td><strong>SPC</strong></td><td>Statistical Process Control · control estadístico de procesos</td><td>Vigilar un proceso con gráficos de control para distinguir la variación normal de la que avisa de un problema real.</td></tr>
+    <tr><td><strong>Gage R&amp;R</strong></td><td>Gage Repeatability &amp; Reproducibility · repetibilidad y reproducibilidad</td><td>Ensayo que comprueba que el instrumento y quien mide dan resultados consistentes, antes de fiarse de ninguna medida.</td></tr>
+    <tr><td><strong>PPAP · APQP</strong></td><td>Production Part Approval Process · Advanced Product Quality Planning</td><td>Procedimientos del sector del automóvil para planificar la calidad de un producto nuevo y aprobar las primeras piezas de producción.</td></tr>
+  </table></div>
+</section>
+<footer>
+  <p><strong>Glosario</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio profesional» ·
+  Colegio Oficial de Ingenieros de Telecomunicación.</p>
+</footer>
+</div>
+<script>
+  const tabs=[...document.querySelectorAll('nav.tabs button')];
+  const paneles=[...document.querySelectorAll('section[role=tabpanel]')];
+  tabs.forEach(b=>b.addEventListener('click',()=>{
+    tabs.forEach(x=>x.setAttribute('aria-selected', x===b?'true':'false'));
+    paneles.forEach(p=>p.hidden = (p.id!==b.dataset.p));
+    window.scrollTo({top:0,behavior:'smooth'});
+  }));
+</script>
+</body>
+</html>

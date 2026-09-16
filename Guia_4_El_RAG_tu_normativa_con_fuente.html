@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía 4 · El RAG: tu normativa, respondida con fuente — Webinar COIT</title>
+<style>
+  :root{
+    --bg:#ffffff; --ink:#1F2A37; --muted:#6B7785; --line:#D9E1EC;
+    --accent:#2E6DA4; --navy:#1B3A6B; --amber:#B5650A; --amber-bg:#FBEEDC;
+    --green:#2F7D4F; --green-bg:#E9F3EC; --card:#F3F6FB;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+      --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+      --green:#7BC49A; --green-bg:#16241C;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+    --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+    --green:#7BC49A; --green-bg:#16241C;
+  }
+  body{background:var(--bg);color:var(--ink);
+    font:16px/1.65 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    margin:0;padding:0 16px 80px}
+  .wrap{max-width:900px;margin:0 auto}
+  header.top{padding:34px 0 10px;border-bottom:1px solid var(--line)}
+  .eyebrow{font:600 12.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--amber);margin:0 0 10px}
+  h1{font-size:2.05rem;line-height:1.2;margin:0 0 10px;font-weight:650;letter-spacing:-.02em}
+  .sub{color:var(--muted);margin:0 0 18px;max-width:70ch}
+  nav.tabs{position:sticky;top:0;z-index:20;background:var(--bg);
+    border-bottom:1px solid var(--line);margin:0 0 30px;display:flex;gap:2px;
+    overflow-x:auto;padding-top:10px}
+  nav.tabs button{flex:0 0 auto;background:none;border:0;border-bottom:3px solid transparent;
+    padding:12px 15px;font:600 13.5px/1 ui-sans-serif,system-ui,sans-serif;color:var(--muted);
+    cursor:pointer;white-space:nowrap}
+  nav.tabs button:hover{color:var(--ink)}
+  nav.tabs button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+  section[role=tabpanel]{animation:fade .18s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+  h2{font-size:1.6rem;margin:34px 0 8px;font-weight:620;letter-spacing:-.01em}
+  h2:first-child{margin-top:0}
+  h3{font-size:1.14rem;margin:28px 0 8px;font-weight:620}
+  p{margin:0 0 14px;max-width:78ch}
+  ul,ol{max-width:78ch;padding-left:22px;margin:0 0 14px} li{margin-bottom:7px}
+  code{font:13.5px/1.5 ui-monospace,Menlo,Consolas,monospace;background:var(--card);
+    padding:2px 6px;border-radius:4px;border:1px solid var(--line)}
+  .tblwrap{overflow-x:auto;margin:0 0 18px}
+  table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+  th{background:var(--navy);color:#fff;text-align:left;padding:9px 11px;font-weight:600}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) th{color:#12161C}}
+  :root[data-theme="dark"] th{color:#12161C}
+  td{border-bottom:1px solid var(--line);padding:9px 11px;vertical-align:top}
+  .box{border-radius:10px;padding:16px 18px;margin:0 0 18px;border:1px solid var(--line)}
+  .box p:last-child{margin-bottom:0}
+  .tip{background:var(--green-bg);border-color:transparent}
+  .warn{background:var(--amber-bg);border-color:transparent}
+  .key{background:var(--card)}
+  .lbl{font:600 11.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.1em;
+    text-transform:uppercase;display:block;margin-bottom:8px}
+  .tip .lbl{color:var(--green)} .warn .lbl{color:var(--amber)} .key .lbl{color:var(--accent)}
+  .flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 18px}
+  .flow div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
+  .flow b{display:block;color:var(--accent);font-size:13px;margin-bottom:4px}
+  .flow span{font-size:14px}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:0 0 18px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+  .stat .n{display:block;font-size:1.9rem;font-weight:700;color:var(--accent);line-height:1.1}
+  .stat .l{font-size:13.5px;color:var(--muted)}
+  footer{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13.5px}
+  .pill{display:inline-block;background:var(--card);border:1px solid var(--line);
+    border-radius:999px;padding:2px 10px;font-size:12.5px;color:var(--muted);margin-right:6px}
+  abbr[title]{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}
+  .gl{color:var(--muted);font-size:.86em}
+  .diag{margin:0 0 18px;text-align:center}
+  .diag svg{width:100%;max-width:460px;height:auto;display:block;margin:0 auto}
+  .diag figcaption{font-size:13.5px;color:var(--muted);margin-top:6px}
+  .dg-box{fill:var(--card);stroke:var(--line);stroke-width:1.2}
+  .dg-hl{fill:var(--green-bg);stroke:var(--green);stroke-width:1.4}
+  .dg-t{fill:var(--accent);font:700 12.5px ui-sans-serif,system-ui,sans-serif;letter-spacing:.06em}
+  .dg-hl-t{fill:var(--green);font:700 12.5px ui-sans-serif,system-ui,sans-serif;letter-spacing:.06em}
+  .dg-s{fill:var(--ink);font:13px ui-sans-serif,system-ui,sans-serif}
+  .dg-a{stroke:var(--muted);stroke-width:1.6}
+  .dg-m{fill:var(--muted)}
+
+  .home{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;
+    border:0;border-radius:10px;padding:11px 20px;margin:18px 0 0;
+    font:700 15px/1 ui-sans-serif,system-ui,sans-serif;text-decoration:none;
+    box-shadow:0 1px 2px rgba(0,0,0,.12)}
+  .home:hover{filter:brightness(1.08)}
+  .home svg{flex:0 0 auto}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .home{color:#12161C}}
+  :root[data-theme="dark"] .home{color:#12161C}
+
+  a{color:var(--accent)}
+  a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="home" href="index.html"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M6 10.5V20h5v-5h2v5h5v-9.5"/></svg><span>Índice de guías</span></a>
+
+
+<header class="top">
+  <p class="eyebrow">Webinar COIT · Guía 4 de 14</p>
+  <h1>El <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr>: tu normativa, respondida con fuente</h1>
+  <p class="sub">La pieza que convierte una IA que «sabe cosas» en una herramienta de trabajo
+  profesional: responde sobre <em>tus</em> documentos y te dice de dónde ha sacado cada
+  afirmación.</p>
+  <p><span class="pill">Nivel: tras la Guía 1</span><span class="pill">Lectura: ~25 min</span>
+  <span class="pill">El bloque que más cambia el día a día</span></p>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" data-p="r1">1 · Qué es y por qué</button>
+  <button role="tab" aria-selected="false" data-p="r2">2 · Cómo funciona</button>
+  <button role="tab" aria-selected="false" data-p="r7">3 · Tipos de RAG y qué aporta cada uno</button>
+  <button role="tab" aria-selected="false" data-p="r3">4 · Que no se invente nada</button>
+  <button role="tab" aria-selected="false" data-p="r4">5 · Cómo se construye</button>
+  <button role="tab" aria-selected="false" data-p="r5">6 · Medir si funciona</button>
+  <button role="tab" aria-selected="false" data-p="r6">7 · Tu primer RAG</button>
+</nav>
+
+<!-- ════════════ 1 · Qué es y por qué ════════════ -->
+<section role="tabpanel" id="r1">
+  <h2>Qué es un <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> y por qué importa en ingeniería</h2>
+
+  <p><strong><abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr></strong> significa <em>Retrieval-Augmented Generation</em>: generación
+  aumentada por recuperación. Dicho en cristiano: <strong>antes de contestar, el sistema busca
+  en tus documentos los pasajes que tratan de lo que preguntas, y contesta a partir de ellos</strong>
+  en lugar de tirar de su memoria.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Sin <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr></th><th>Con <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr></th></tr>
+    <tr><td>El modelo responde con lo que «recuerda» de su entrenamiento.</td>
+        <td>El modelo responde con los pasajes que ha encontrado en tu corpus.</td></tr>
+    <tr><td>No sabe qué edición de una norma está en vigor.</td>
+        <td>Puede saberlo, si el corpus lo registra.</td></tr>
+    <tr><td>Si no sabe, a veces inventa con total aplomo.</td>
+        <td>Si no encuentra fuente, puede —y debe— decir que no la tiene.</td></tr>
+    <tr><td>No puede decirte de dónde sale una cifra.</td>
+        <td>Te da la norma, el apartado y el fragmento.</td></tr>
+  </table></div>
+
+  <div class="box key">
+    <span class="lbl">Por qué es el caso perfecto para un ingeniero</span>
+    <p>Buena parte del trabajo técnico consiste en <strong>encontrar el precepto que aplica y
+    citarlo bien</strong>: el reglamento de <abbr title="ICT: Infraestructura Común de Telecomunicaciones (RD 346/2011)">ICT</abbr><span class="gl"> (Infraestructura Común de Telecomunicaciones (RD 346/2011))</span>, el código técnico, la normativa autonómica,
+    la norma UNE de ensayo. Es un trabajo de búsqueda con consecuencias legales, y es justo
+    donde un <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr><span class="gl"> (Retrieval-Augmented Generation: busca en tus documentos y responde citándolos)</span> bien hecho rinde más y donde uno mal hecho es más peligroso.</p>
+  </div>
+
+  <h3>Un ejemplo real en funcionamiento</h3>
+  <p>Estas son las cifras de un <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> normativo en producción en un despacho de ingeniería,
+  medidas el <strong>14 de septiembre de 2026</strong>:</p>
+
+  <div class="stats">
+    <div class="stat"><span class="n">188</span><span class="l">normas en el corpus normativo servido</span></div>
+    <div class="stat"><span class="n">10.574</span><span class="l">fragmentos normativos consultables</span></div>
+    <div class="stat"><span class="n">17.253</span><span class="l">fragmentos en total (normativa, manuales, <abbr title="ICT: Infraestructura Común de Telecomunicaciones (RD 346/2011)">ICT</abbr>, materiales…)</span></div>
+    <div class="stat"><span class="n">0 €</span><span class="l">coste por consulta: todo corre en local</span></div>
+  </div>
+
+  <p>Normativa acústica española y europea, materiales del Código Técnico, manuales de los
+  equipos del laboratorio, normativa <abbr title="ICT: Infraestructura Común de Telecomunicaciones (RD 346/2011)">ICT</abbr> y el conocimiento propio del despacho. Todo en una
+  máquina propia, sin que ninguna consulta salga de la oficina.</p>
+
+  <div class="box tip">
+    <span class="lbl">La pregunta que separa un <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> útil de uno de demostración</span>
+    <p>No es «¿qué modelo usa?». Es <strong>«¿cómo sabe que lo que te devuelve sigue en
+    vigor?»</strong> y <strong>«¿cómo distingue el texto de la norma de un comentario sobre la
+    norma?»</strong>. Todo lo que sigue en esta guía responde a esas dos preguntas.</p>
+  </div>
+</section>
+
+<!-- ════════════ 2 · Cómo funciona ════════════ -->
+<section role="tabpanel" id="r2" hidden>
+  <h2>Cómo funciona: el recorrido de una pregunta</h2>
+
+  <p>Cuando preguntas algo, la consulta pasa por siete etapas. No hace falta saber programarlas
+  para entender qué hace cada una, y entenderlo te permite saber qué pedir y qué desconfiar.</p>
+
+  <div class="flow">
+    <div><b>1 · <abbr title="Embedding: texto convertido en números que representan su significado">Embedding</abbr></b><span>Tu pregunta se convierte en números que representan su
+    <em>significado</em>.</span></div>
+    <div><b>2 · Búsqueda</b><span>Se buscan los fragmentos con significado más parecido, con
+    filtros previos (jurisdicción, tipo de norma).</span></div>
+    <div><b>3 · Sin duplicados</b><span>Se quitan los repetidos para que no ocupen sitio.</span></div>
+    <div><b>4 · Reordenación</b><span>Un segundo modelo, más fino, reordena los candidatos
+    leyendo pregunta y fragmento juntos.</span></div>
+    <div><b>5 · Vigencia</b><span>Cada resultado se marca: vigente, sustituida, pendiente o
+    derogada — con la norma que la sustituye.</span></div>
+    <div><b>6 · Atribución</b><span>Se marca lo que <em>no</em> es texto de la norma: una
+    cabecera, una nota, un resumen.</span></div>
+    <div><b>7 · Jerarquía</b><span>Se ordena por rango y jurisdicción: ley antes que
+    comentario, estatal y autonómica en su sitio.</span></div>
+  </div>
+
+  <p>Las etapas 1 a 4 son las de cualquier <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr>. <strong>Las 5 y 6 son las que lo hacen
+  utilizable para normativa</strong>, y son las que casi nunca traen las soluciones de manual.</p>
+
+  <h3>Las piezas, sin tecnicismos</h3>
+  <div class="tblwrap"><table>
+    <tr><th>Pieza</th><th>Qué hace</th><th>Ejemplo que funciona</th></tr>
+    <tr><td><strong>Modelo de <abbr title="Embedding: texto convertido en números que representan su significado">embeddings</abbr></strong></td><td>Traduce texto a vectores de significado</td><td><code>bge-m3</code>, multilingüe, bueno en español</td></tr>
+    <tr><td><strong>Base vectorial</strong></td><td>Guarda los fragmentos y busca por parecido</td><td>Qdrant</td></tr>
+    <tr><td><strong>Reordenador (<abbr title="Reranker: modelo que reordena resultados por relevancia">reranker</abbr>)</strong></td><td>Afina el orden de los resultados</td><td><code>bge-reranker-v2-m3</code></td></tr>
+    <tr><td><strong>Motor</strong></td><td>Orquesta las siete etapas</td><td>un script propio</td></tr>
+    <tr><td><strong>Puerta de entrada</strong></td><td>Por dónde preguntas</td><td>el propio asistente de IA, o una interfaz de chat</td></tr>
+  </table></div>
+
+  <div class="box key">
+    <span class="lbl">Cinco decisiones de diseño que merece la pena copiar</span>
+    <ol>
+      <li><strong>Todo local.</strong> Ninguna consulta sale de tu red y el coste de preguntar
+      es cero.</li>
+      <li><strong>Determinista.</strong> La misma pregunta devuelve el mismo resultado. En
+      normativa, que sea reproducible vale más que que sea «listo»: es lo que te permite
+      auditarlo.</li>
+      <li><strong>La vigencia es una capa, no un campo.</strong> Las normas derogadas no se
+      esconden —la consulta histórica es legítima—: se muestran marcadas.</li>
+      <li><strong>Lo que no es norma, se rotula.</strong> Para que nadie cite una nota del
+      editor como si fuera la ley.</li>
+      <li><strong>Vive en el ambiente.</strong> No hay que ir a buscarlo: el asistente lo
+      consulta antes de afirmar cualquier dato normativo.</li>
+    </ol>
+  </div>
+
+  <div class="box tip">
+    <span class="lbl">Una buena práctica de ingeniería</span>
+    <p>Si una pieza puede fallar de forma brusca —el reordenador, por ejemplo—, <strong>aíslala
+    en su propio proceso</strong>. Si cae, el sistema no se cae: esa consulta se resuelve con el
+    orden de la búsqueda básica y la siguiente vuelve a funcionar. El sistema se degrada, no
+    se rompe.</p>
+  </div>
+</section>
+
+<!-- ════════════ 3 · Tipos de RAG ════════════ -->
+<section role="tabpanel" id="r7" hidden>
+  <h2>Tipos de <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> y qué aporta cada uno</h2>
+
+  <p>Cuando empiezas a leer sobre el tema aparecen muchos apellidos: híbrido, correctivo, de grafo,
+  agéntico… No son productos rivales entre los que haya que elegir uno. <strong>Casi todos son
+  piezas que se añaden encima de un RAG básico</strong> para resolver un problema concreto. La
+  pregunta útil no es «¿cuál es el mejor?», sino <strong>«¿qué problema tengo yo, y qué pieza lo
+  resuelve?»</strong>.</p>
+
+  <p>La última columna dice qué hay de cada tipo en el sistema de ejemplo de esta guía, tal como
+  estaba medido el 15/09/2026. Incluye también lo que <em>no</em> tiene, y por qué.</p>
+
+  <div class="tblwrap"><table style="min-width:760px">
+    <tr><th>Tipo</th><th>Qué aporta</th><th>Cuándo compensa</th><th>En nuestro sistema</th></tr>
+
+    <tr><td><strong>RAG básico</strong><br><span class="gl">búsqueda por parecido</span></td>
+        <td>Busca los fragmentos cuyo <em>significado</em> se parece más a tu pregunta y responde a
+        partir de ellos. <em>Ejemplo:</em> preguntas «¿qué aislamiento hace falta entre dos
+        viviendas?» y encuentra el apartado aunque la norma no use ninguna de tus palabras.</td>
+        <td>Siempre. Es el punto de partida y lo que traen las interfaces de chat con documentos.</td>
+        <td><strong>Sí.</strong> Búsqueda vectorial con <em>embeddings</em> <code>bge-m3</code> en
+        Qdrant, con filtros por metadatos: jurisdicción, rango y «solo vigentes».</td></tr>
+
+    <tr><td><strong>Con reordenador</strong><br><span class="gl">dos etapas</span></td>
+        <td>Una primera búsqueda rápida trae muchos candidatos. Después, un segundo modelo, más lento
+        pero más fino, lee <em>pregunta y fragmento juntos</em> y los reordena. <em>Ejemplo:</em>
+        entre veinte fragmentos que mencionan las tomas de telecomunicación, sube arriba el que
+        fija cuántas hacen falta por estancia, no el que solo las nombra.</td>
+        <td>Cuando el fragmento bueno aparece entre los candidatos, pero no en los primeros
+        puestos. Cuesta tiempo por consulta; con muchos candidatos, una tarjeta gráfica lo hace llevadero.</td>
+        <td><strong>Sí.</strong> <code>bge-reranker-v2-m3</code>, aislado en su propio proceso: si
+        falla, la consulta sale con el orden de la búsqueda básica y un aviso.</td></tr>
+
+    <tr><td><strong>Híbrido</strong><br><span class="gl">significado + palabras clave</span></td>
+        <td>Combina la búsqueda por significado con una búsqueda clásica por palabras exactas
+        (<abbr title="BM25: Best Matching 25: búsqueda clásica por palabras clave que puntúa coincidencias exactas de términos">BM25</abbr><span class="gl"> (Best Matching 25: búsqueda clásica por palabras clave)</span>).
+        <em>Ejemplo:</em> un código como «DnT,w» o una referencia como «UNE-EN ISO 717-1» no
+        tienen un «significado» que el modelo capte bien; una búsqueda por palabras los encuentra
+        a la primera.</td>
+        <td>En corpus con muchos códigos, símbolos y referencias exactas. <strong>Mídelo antes de
+        adoptarlo</strong>: puede subir fragmentos que desplazan al que traía la cifra (pestaña
+        «Medir si funciona»).</td>
+        <td><strong>No en producción</strong> (medido el 15/09/2026: la base solo guarda el vector
+        de significado, sin el de palabras clave). Se ha estudiado como mejora para códigos
+        exactos del tipo «DnT,w».</td></tr>
+
+    <tr><td><strong><abbr title="CRAG: Corrective RAG: RAG que comprueba lo recuperado antes de responder">CRAG</abbr></strong><span class="gl"> (Corrective RAG: comprueba lo recuperado antes de responder)</span></td>
+        <td>Antes de responder, <strong>evalúa lo que ha recuperado</strong> y actúa si no es
+        bueno. En la versión publicada, un modelo pequeño puntúa los documentos y, si no sirven,
+        el sistema busca en otra parte (incluso en internet). <em>Ejemplo:</em> recupera un
+        artículo de un reglamento ya sustituido y, en lugar de citarlo como si estuviera en vigor,
+        lo marca y nombra el vigente.</td>
+        <td>Cuando citar mal tiene consecuencias: normativa, informes firmados, dictámenes. Con
+        prudencia: un evaluador genérico puede puntuar mal en un dominio muy especializado, y salir
+        a internet no es buena idea si tu corpus es la fuente autorizada.</td>
+        <td><strong>Sí, en variante determinista</strong> (reglas, no un modelo que juzgue):
+        <br>· <em>de vigencia</em>: marca cada fragmento como vigente, sustituida, pendiente o
+        derogada; si está derogada o sustituida y la sucesora vigente está en el corpus, avisa
+        «vigente hoy: X; citar para histórico». No oculta nada.
+        <br>· <em>de atribución</em>: avisa si el texto no es la voz de la norma (nota editorial,
+        recomendación de producto, marca de «pendiente de verificar», documentación interna).
+        <br>Además, filtro temporal (qué estaba vigente en una fecha dada) y anotación de
+        jerarquía normativa. El CRAG «de libro» usa un modelo evaluador y puede buscar fuera; el
+        nuestro es, a propósito, reproducible.</td></tr>
+
+    <tr><td><strong>GraphRAG</strong><br><span class="gl">RAG sobre un grafo</span></td>
+        <td>Además de fragmentos de texto, organiza el conocimiento como <strong>entidades y
+        relaciones</strong> y recupera siguiendo esas relaciones. <em>Ejemplo:</em> «¿qué normas
+        remiten a la UNE-EN ISO 717-1, y cuáles de ellas siguen vigentes?» es una pregunta sobre
+        relaciones entre documentos, no sobre el contenido de un párrafo.</td>
+        <td>Cuando las preguntas importantes cruzan muchos documentos o dependen de relaciones.
+        Construir el grafo completo es caro, así que conviene tener claro que se necesita.</td>
+        <td><strong>No en el RAG normativo.</strong> Hay aparte un grafo de hechos del equipo
+        (entidades y relaciones: qué hace qué, qué decisión depende de qué), que se consulta por
+        separado y no es GraphRAG. En vigilancia: la variante LazyGraphRAG de Microsoft, cuando
+        haya versión abierta confirmada.</td></tr>
+
+    <tr><td><strong>RAG agéntico</strong></td>
+        <td>Un asistente (un «agente») <strong>decide cuándo buscar, dónde y cuántas veces</strong>,
+        y vuelve a buscar si lo encontrado no basta. <em>Ejemplo:</em> para redactar un informe,
+        consulta la norma, ve que remite a otra, consulta esa, y después revisa el expediente del
+        cliente.</td>
+        <td>En tareas de varios pasos. A cambio, el recorrido cambia de una vez a otra y es más
+        difícil de auditar que una búsqueda fija.</td>
+        <td><strong>El motor de recuperación no tiene capa agéntica</strong>: es una decisión de
+        diseño, para que sea determinista. En la práctica, los asistentes que trabajan con él sí
+        deciden cuándo consultar el RAG, el grafo de hechos del equipo y los ficheros, varias
+        veces por tarea.</td></tr>
+
+    <tr><td><strong><abbr title="RAFT: Retrieval-Augmented Fine-Tuning: afinar un modelo enseñándole a responder con documentos delante">RAFT</abbr></strong><span class="gl"> (Retrieval-Augmented Fine-Tuning: afinar un modelo para usar mejor lo recuperado)</span></td>
+        <td>No es una forma de buscar, sino de <strong>entrenar al modelo que responde</strong>.
+        Cada ejemplo de entrenamiento lleva el documento con la respuesta mezclado con documentos
+        que no la tienen, y el modelo aprende a apoyarse en el bueno e ignorar el resto. Una
+        variante añade ejemplos donde ningún documento tiene la respuesta, para enseñarle a decir
+        «esto no está en el contexto». <em>Ejemplo:</em> un modelo local pequeño que, ante tres
+        fragmentos de ordenanzas, cita el que corresponde y dice «no consta» si ninguno lo
+        contiene.</td>
+        <td>Cuando ya tienes un RAG que funciona y quieres que un modelo local use mejor lo que se
+        le entrega. Complementa al RAG; no lo sustituye. Hay que comprobar que sigue sabiendo
+        abstenerse: está documentado que este tipo de afinado puede empujar a responder incluso
+        con documentos que no sirven.</td>
+        <td><strong>Probado, no en producción.</strong> Se han hecho afinados ligeros
+        (<abbr title="LoRA: Low-Rank Adaptation: afinado ligero que añade un adaptador pequeño al modelo sin reentrenarlo entero">LoRA</abbr><span class="gl"> (Low-Rank Adaptation: afinado ligero con un adaptador pequeño)</span>)
+        de modelos pequeños, de 7 000 y 8 000 millones de parámetros, con material propio. Ninguno ha
+        dado una mejora medible y publicable frente al modelo base con RAG. Conclusión que se sostiene:
+        <strong>el RAG es el motor anti-alucinación</strong> y el modelo afinado, por sí solo, no es
+        fiable para cifras.</td></tr>
+  </table></div>
+
+  <div class="box key">
+    <span class="lbl">Otros nombres que oirás</span>
+    <ul>
+      <li><strong>Self-RAG.</strong> Entrena al propio modelo que responde para que decida cuándo
+      necesita buscar y señale si lo que afirma está respaldado. A diferencia de CRAG, exige
+      afinar ese modelo.</li>
+      <li><strong><abbr title="HyDE: Hypothetical Document Embeddings: busca a partir de una respuesta hipotética generada antes">HyDE</abbr></strong><span class="gl"> (Hypothetical Document Embeddings: busca a partir de una respuesta hipotética)</span>.
+      El modelo redacta primero una respuesta imaginaria y se busca por el parecido con ella. Puede
+      ayudar en preguntas vagas o conceptuales, pero en dominios de datos exactos —umbrales,
+      fórmulas— tiende a colar invenciones y añade tiempo. Para normativa, mejor no.</li>
+      <li><strong>Adaptive-RAG.</strong> Un clasificador pequeño decide, antes de nada, si la
+      pregunta necesita buscar, basta con una búsqueda o hacen falta varias encadenadas. Ahorra
+      tiempo en las preguntas sencillas.</li>
+      <li><strong>Mejoras del troceado</strong> (<em>Contextual Retrieval</em>, <em>late
+      chunking</em>). No cambian la búsqueda: dan a cada fragmento contexto del documento entero
+      antes de guardarlo, para que un párrafo suelto no pierda de qué norma o apartado habla.</li>
+    </ul>
+  </div>
+
+  <div class="box warn">
+    <span class="lbl">RAG o afinar: no es lo mismo</span>
+    <p><strong>RAG</strong> no cambia el modelo: en cada pregunta le pone delante el texto que
+    necesita. Si una norma cambia, cambias el documento y ya está.</p>
+    <p><strong>Afinar</strong> (<em>fine-tuning</em>; LoRA es su versión ligera) cambia el propio
+    modelo reentrenándolo con ejemplos. Sirve para enseñarle <em>cómo</em> trabajar —un formato,
+    un estilo, a apoyarse en el contexto—, pero <strong>no es una forma fiable de meterle hechos
+    nuevos</strong>: la investigación publicada indica que, al forzarle datos que no conocía, tiende
+    a sonar más seguro y a inventar más. Y cada cambio de norma obligaría a reentrenar.</p>
+    <p><strong>RAFT</strong> está en medio: afina, pero para que el modelo <em>use mejor</em> lo
+    que el RAG le entrega. Sigue necesitando el RAG.</p>
+  </div>
+
+  <div class="box tip">
+    <span class="lbl">Por dónde empezar</span>
+    <p><strong>RAG básico con reordenador y diez preguntas cuya respuesta ya conoces.</strong>
+    Después, las capas correctivas de vigencia y atribución, que en normativa son las que más
+    rinden. El híbrido, solo si lo mides y mejora. Grafos, agentes y afinados, cuando tengas un
+    problema concreto que los pida, no antes.</p>
+  </div>
+</section>
+
+<!-- ════════════ 4 · Que no se invente nada ════════════ -->
+<section role="tabpanel" id="r3" hidden>
+  <h2>Que no se invente nada: el sistema anti-alucinación</h2>
+
+  <p>En un <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> normativo, una respuesta inventada no es un error simpático: puede acabar en un
+  informe que sostiene una licencia de actividad o un dictamen. Por eso el diseño <strong>no
+  confía en que el modelo se porte bien</strong>. Pone tres capas.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Capa</th><th>Qué hace</th><th>Quién decide</th></tr>
+    <tr><td><strong>1 · Anclaje</strong></td><td>Cada fragmento arrastra su procedencia: norma,
+        artículo, página. Sin fuente no hay afirmación.</td><td>la estructura de los datos</td></tr>
+    <tr><td><strong>2 · Vigencia</strong></td><td>Si el fragmento es de una norma derogada o
+        sustituida, se marca y se nombra la sucesora.</td><td>una tabla, no el modelo</td></tr>
+    <tr><td><strong>3 · Atribución</strong></td><td>Detecta que un fragmento es cabecera, nota o
+        resumen, y avisa: «esto no es texto de la norma».</td><td>una regla, con su límite declarado</td></tr>
+  </table></div>
+
+  <h3>Por qué la tercera capa es la más sutil</h3>
+  <p>Un fragmento puede estar perfectamente anclado —viene del fichero de la norma X,
+  página 34— y aun así <strong>no ser la norma</strong>: puede ser la portada del documento o una
+  nota de quien lo preparó. Si se cita como normativo, tiene toda la apariencia de una cita
+  legítima y es falso. Es la peor alucinación posible: <strong>la que suena a ley</strong>.</p>
+
+  <div class="box warn">
+    <span class="lbl">La cita caducada</span>
+    <p>Hay un tipo de error que la literatura especializada nombra expresamente: <strong>una
+    fuente válida pero desfasada, presentada como vigente</strong>. Es especialmente traicionera
+    porque el lector baja la guardia justo al ver una cita. La capa de vigencia existe para eso,
+    y es algo que los asistentes generalistas no suelen hacer.</p>
+  </div>
+
+  <div class="box key">
+    <span class="lbl">El principio que gobierna todo</span>
+    <p><strong>No mentir nunca no es lo mismo que acertar siempre.</strong> El objetivo no es
+    responder a todo: es que, cuando responda, lo que diga sea trazable, y que cuando no sepa,
+    lo diga. Un <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> que contesta siempre es exactamente el problema que se quiere evitar.</p>
+  </div>
+</section>
+
+<!-- ════════════ 5 · Cómo se construye ════════════ -->
+<section role="tabpanel" id="r4" hidden>
+  <h2>Cómo se construye: de un PDF a un fragmento fiable</h2>
+
+  <p>El trabajo de verdad no está en el motor: está en <strong>preparar bien el corpus</strong>.
+  Convertir una norma en PDF en fragmentos consultables y fiables pasa por nueve etapas, y la
+  pregunta que gobierna el diseño es: <strong>¿qué puede hacer una máquina gratis, y dónde
+  hace falta juicio?</strong></p>
+
+  <div class="stats">
+    <div class="stat"><span class="n">9</span><span class="l">etapas del proceso</span></div>
+    <div class="stat"><span class="n">6</span><span class="l">sin coste: Python o modelos locales</span></div>
+    <div class="stat"><span class="n">2</span><span class="l">requieren juicio (modelo de pago)</span></div>
+    <div class="stat"><span class="n">1</span><span class="l">decisión humana: qué norma entra</span></div>
+  </div>
+
+  <div class="tblwrap"><table>
+    <tr><th>#</th><th>Etapa</th><th>Quién o qué</th><th>Coste</th></tr>
+    <tr><td>0</td><td>Elegir qué norma entra</td><td>la persona responsable</td><td>—</td></tr>
+    <tr><td>1</td><td>Localizar la fuente oficial</td><td>búsqueda</td><td>gratis</td></tr>
+    <tr><td>2</td><td>Extraer texto y tablas</td><td>Python</td><td>gratis</td></tr>
+    <tr><td>3</td><td>Borrador de fórmulas-imagen y tablas sin marco</td><td>modelo de visión local</td><td>gratis</td></tr>
+    <tr><td>4</td><td><strong>Redactar el fragmento final</strong></td><td>modelo de pago</td><td><strong>juicio</strong></td></tr>
+    <tr><td>5</td><td>Verificación mecánica</td><td>Python</td><td>gratis</td></tr>
+    <tr><td>6</td><td>Comparar contra el borrador</td><td>Python — mide, no decide</td><td>gratis</td></tr>
+    <tr><td>7</td><td><strong>Doble revisión: glifos y omisiones</strong></td><td>modelo de pago</td><td><strong>juicio</strong></td></tr>
+    <tr><td>8·9</td><td>Incorporar al corpus y cargar en la base</td><td>control de versiones + modelo local</td><td>gratis</td></tr>
+  </table></div>
+
+  <div class="box key">
+    <span class="lbl">La lección de método, que vale más que la herramienta</span>
+    <p><strong>Separa lo que una máquina puede verificar de lo que requiere juicio, y no pagues
+    por lo primero.</strong> Las etapas que miden no opinan; las que opinan son pocas, y ahí
+    es donde se gasta.</p>
+  </div>
+
+  <h3>Tres pautas que salen de construirlo</h3>
+
+  <p><strong>1 · La autoridad es el PDF renderizado, no su capa de texto.</strong> Al extraer
+  texto de un PDF normativo se pierden o se desordenan los símbolos de las fórmulas: subíndices,
+  letras griegas, operadores. Antes de dar un fragmento por bueno se compara <em>carácter a
+  carácter</em> contra lo que se ve en la página. Un diff, no una lectura.</p>
+
+  <p><strong>2 · Un modelo puede «corregir» en silencio.</strong> Ante un paréntesis desbalanceado
+  en el original, algún modelo de visión lo cierra y entrega un texto plausible que ya no es el
+  de la fuente. Por eso la revisión final se hace con otra herramienta que la que redactó, y
+  por eso se prueba cada modelo con un caso trampa antes de fiarse de él.</p>
+
+  <p><strong>3 · Comprueba cuánto texto ve de verdad tu modelo de <abbr title="Embedding: texto convertido en números que representan su significado">embeddings</abbr>.</strong> La ficha
+  del modelo dice cuánto <em>puede</em> leer; la configuración del servidor decide cuánto
+  <em>lee</em>. Si un fragmento es más largo de lo que llega al vector, se sirve entero pero
+  solo se puede <em>encontrar</em> por su primera parte. Se comprueba con una prueba sencilla:
+  dos textos con el mismo inicio y distinto final deben dar vectores distintos.</p>
+
+  <h3>La arquitectura completa, de un vistazo</h3>
+  <p>Preparar el corpus es la primera capa. Estas son todas las del sistema de ejemplo, de la
+  fuente a la respuesta, y <strong>por qué existe cada una</strong>: casi todas nacieron de un
+  problema real que se detectó midiendo.</p>
+
+  <figure class="diag">
+    <svg viewBox="0 0 360 552" role="img" aria-labelledby="dgTit dgDesc" xmlns="http://www.w3.org/2000/svg">
+      <title id="dgTit">Arquitectura del RAG normativo, por capas</title>
+      <desc id="dgDesc">Siete capas en vertical: fuente curada, ingesta, almacén, motor de búsqueda, capas correctivas, puerta de entrada y medida.</desc>
+      <defs>
+        <marker id="dgArr" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="dg-m" d="M0,0 L10,5 L0,10 z"/>
+        </marker>
+      </defs>
+      <!-- 1 -->
+      <rect class="dg-box" x="6" y="4" width="348" height="62" rx="9"/>
+      <text class="dg-t" x="180" y="24" text-anchor="middle">1 · FUENTE CURADA</text>
+      <text class="dg-s" x="180" y="42" text-anchor="middle">Fragmentos en texto con su norma, apartado,</text>
+      <text class="dg-s" x="180" y="58" text-anchor="middle">vigencia y rango, bajo control de versiones</text>
+      <line class="dg-a" x1="180" y1="67" x2="180" y2="81" marker-end="url(#dgArr)"/>
+      <!-- 2 -->
+      <rect class="dg-box" x="6" y="84" width="348" height="62" rx="9"/>
+      <text class="dg-t" x="180" y="104" text-anchor="middle">2 · INGESTA</text>
+      <text class="dg-s" x="180" y="122" text-anchor="middle">Trocear con parámetros fijos y documentados</text>
+      <text class="dg-s" x="180" y="138" text-anchor="middle">+ embeddings bge-m3 en local (Ollama)</text>
+      <line class="dg-a" x1="180" y1="147" x2="180" y2="161" marker-end="url(#dgArr)"/>
+      <!-- 3 -->
+      <rect class="dg-box" x="6" y="164" width="348" height="62" rx="9"/>
+      <text class="dg-t" x="180" y="184" text-anchor="middle">3 · ALMACÉN</text>
+      <text class="dg-s" x="180" y="202" text-anchor="middle">Qdrant: una sola base, con los dominios</text>
+      <text class="dg-s" x="180" y="218" text-anchor="middle">separados por metadato</text>
+      <line class="dg-a" x1="180" y1="227" x2="180" y2="241" marker-end="url(#dgArr)"/>
+      <!-- 4 -->
+      <rect class="dg-box" x="6" y="244" width="348" height="62" rx="9"/>
+      <text class="dg-t" x="180" y="264" text-anchor="middle">4 · MOTOR DE BÚSQUEDA</text>
+      <text class="dg-s" x="180" y="282" text-anchor="middle">Filtrar y buscar → quitar duplicados → reordenar</text>
+      <text class="dg-s" x="180" y="298" text-anchor="middle">(bge-reranker-v2-m3, en proceso aparte)</text>
+      <line class="dg-a" x1="180" y1="307" x2="180" y2="321" marker-end="url(#dgArr)"/>
+      <!-- 5 -->
+      <rect class="dg-hl" x="6" y="324" width="348" height="62" rx="9"/>
+      <text class="dg-hl-t" x="180" y="344" text-anchor="middle">5 · CAPAS CORRECTIVAS</text>
+      <text class="dg-s" x="180" y="362" text-anchor="middle">Vigencia · atribución · jerarquía · fecha</text>
+      <text class="dg-s" x="180" y="378" text-anchor="middle">reglas fijas: siempre corren, nunca se saltan</text>
+      <line class="dg-a" x1="180" y1="387" x2="180" y2="401" marker-end="url(#dgArr)"/>
+      <!-- 6 -->
+      <rect class="dg-box" x="6" y="404" width="348" height="62" rx="9"/>
+      <text class="dg-t" x="180" y="424" text-anchor="middle">6 · PUERTA DE ENTRADA</text>
+      <text class="dg-s" x="180" y="442" text-anchor="middle">Herramientas para el asistente + instrucciones</text>
+      <text class="dg-s" x="180" y="458" text-anchor="middle">de uso: consulta antes de afirmar</text>
+      <line class="dg-a" x1="180" y1="467" x2="180" y2="481" marker-end="url(#dgArr)"/>
+      <!-- 7 -->
+      <rect class="dg-box" x="6" y="484" width="348" height="62" rx="9" stroke-dasharray="5 4"/>
+      <text class="dg-t" x="180" y="504" text-anchor="middle">7 · MEDIDA</text>
+      <text class="dg-s" x="180" y="522" text-anchor="middle">Preguntas con respuesta conocida y</text>
+      <text class="dg-s" x="180" y="538" text-anchor="middle">comprobación contra lo que se sirve de verdad</text>
+    </svg>
+    <figcaption>De arriba abajo, el camino del dato: de la fuente revisada a la respuesta citada.</figcaption>
+  </figure>
+
+  <div class="tblwrap"><table>
+    <tr><th>Capa</th><th>Qué hace</th><th>Por qué existe</th></tr>
+    <tr><td><strong>1 · Fuente curada</strong></td>
+        <td>Guarda cada fragmento como texto revisado, con sus metadatos, en un repositorio con
+        historial de cambios.</td>
+        <td>Para poder <strong>reproducir cualquier dato desde su fuente documental</strong>. Si
+        alguien corrige directamente la base de datos en lugar de la fuente, la corrección se pierde
+        en la siguiente carga y ya nadie sabe qué copia manda.</td></tr>
+    <tr><td><strong>2 · Ingesta</strong></td>
+        <td>Trocea los textos, calcula sus <em>embeddings</em> con <code>bge-m3</code> y los carga
+        en la base.</td>
+        <td>Porque la forma de trocear decide qué se puede encontrar. Se descubrió que un mismo
+        corpus se había troceado de dos maneras distintas según cómo se subió cada fichero; la
+        solución fue fijar y documentar los parámetros hasta poder <strong>reproducir el troceado
+        idéntico</strong>.</td></tr>
+    <tr><td><strong>3 · Almacén</strong></td>
+        <td>Una única base Qdrant con todos los dominios (normativa, materiales, manuales de equipo,
+        <abbr title="ICT: Infraestructura Común de Telecomunicaciones (RD 346/2011)">ICT</abbr><span class="gl"> (Infraestructura Común de Telecomunicaciones)</span>…),
+        distinguidos por un metadato.</td>
+        <td>Un solo modelo de <em>embeddings</em> y un solo sitio que mantener. La lección: si una base guarda
+        dominios que no todos deben ver, <strong>el filtro protege la consulta, no el dato</strong>.
+        Lo que no deba salir junto, guárdalo en bases separadas.</td></tr>
+    <tr><td><strong>4 · Motor de búsqueda</strong></td>
+        <td>Búsqueda por significado con filtros, eliminación de duplicados y reordenación.</td>
+        <td>Los fragmentos se solapan a propósito para no cortar frases, así que la misma respuesta
+        llega a veces dos veces. El reordenador va en un proceso aparte porque es la pieza con más riesgo
+        de quedarse sin memoria: <strong>si cae, se degrada con aviso, no se rompe</strong>.</td></tr>
+    <tr><td><strong>5 · Capas correctivas</strong></td>
+        <td>Vigencia, atribución y jerarquía normativa (pestaña «Que no se invente nada»).</td>
+        <td>Porque una cita correcta de una norma derogada, o de una nota que no es la norma, es el
+        error más peligroso. Una lección práctica: los avisos tienen que llevar <strong>una marca
+        que la regla reconozca</strong>; un «pendiente de verificar» escrito en prosa libre pasó sin
+        aviso hasta que se amplió la regla.</td></tr>
+    <tr><td><strong>6 · Puerta de entrada</strong></td>
+        <td>Un pequeño servidor
+        <abbr title="MCP: Model Context Protocol: estándar abierto para conectar herramientas a un asistente de IA">MCP</abbr><span class="gl"> (Model Context Protocol: estándar abierto para conectar herramientas a un asistente)</span>
+        ofrece al asistente unas pocas herramientas de consulta; unas instrucciones aparte le dicen
+        cuándo usarlas y cómo leer los avisos.</td>
+        <td>La herramienta da capacidad; las instrucciones dan <strong>criterio</strong>. Sin ellas,
+        el asistente tiene la herramienta pero no sabe cuándo usarla ni qué hacer si el corpus no
+        cubre la pregunta.</td></tr>
+    <tr><td><strong>7 · Medida</strong></td>
+        <td>Conjunto de preguntas de evaluación y comprobaciones periódicas.</td>
+        <td>Porque <strong>«corregido en la fuente» no es «corregido en lo que se sirve»</strong>: se
+        llegó a anunciar una norma como cerrada cuando el sistema en producción seguía devolviendo el
+        texto antiguo. Cada corrección se verifica consultando el sistema real, no el repositorio.</td></tr>
+  </table></div>
+
+  <div class="box key">
+    <span class="lbl">Dos reglas pequeñas que evitan errores grandes</span>
+    <ul>
+      <li><strong>Los metadatos no deben afirmar el estado de un proceso del que forman parte.</strong>
+      Una nota que diga «la recarga está pendiente» se vuelve falsa en cuanto se hace la recarga, y
+      se sigue sirviendo. Mejor decir <em>dónde</em> consultar ese estado.</li>
+      <li><strong>Un sello de integridad cubre lo que había al sellarlo.</strong> Si añades ficheros a
+      una carpeta sellada sin volver a sellarla entera, la verificación sigue diciendo «correcto»…
+      sobre una parte.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════════ 6 · Medir si funciona ════════════ -->
+<section role="tabpanel" id="r5" hidden>
+  <h2>Medir si funciona</h2>
+
+  <p>Sin medir, un <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> «parece que va bien». Y parecer que va bien es el estado más peligroso,
+  porque nadie lo revisa. La herramienta es sencilla: <strong>un conjunto de preguntas reales
+  cuya respuesta correcta ya conoces</strong>.</p>
+
+  <h3>El conjunto de evaluación</h3>
+  <ul>
+    <li><strong>Preguntas reales</strong>, de las que se hacen en el trabajo, no de ejemplo.</li>
+    <li><strong>Cada una con su respuesta y su fuente</strong> conocidas de antemano.</li>
+    <li><strong>Si puede ser, de varias personas</strong>: cada uno pregunta distinto, y eso
+    destapa huecos que uno solo no ve.</li>
+  </ul>
+
+  <h3>Dos métricas que se entienden sin fórmulas</h3>
+  <div class="tblwrap"><table>
+    <tr><th>Métrica</th><th>Qué responde</th><th>Ejemplo real (14/09/2026, 41 preguntas)</th></tr>
+    <tr><td><strong>recall@8</strong></td><td>¿Está el fragmento con la respuesta entre los 8
+        primeros resultados?</td><td><strong>0,966</strong> — en 96-97 de cada 100 preguntas, sí</td></tr>
+    <tr><td><strong>MRR</strong></td><td>¿En qué posición aparece? Cuanto más cerca de 1, más
+        arriba</td><td><strong>0,843</strong> — casi siempre en primera posición</td></tr>
+  </table></div>
+
+  <div class="box key">
+    <span class="lbl">Un límite que solo se ve midiendo</span>
+    <p>El modelo que convierte el texto en números solo «ve» los primeros <strong>2.055 tokens</strong>
+    de cada fragmento. En nuestro sistema, <strong>617 fragmentos</strong> largos (553 de ellos de
+    normativa) solo se pueden encontrar por su primer tramo (medido el 14/09/2026). El texto que se
+    entrega está completo; lo que puede fallar es <em>encontrar</em> una cifra escondida al final de un
+    fragmento largo. Por eso los fragmentos se trocean con cuidado y, ante una cifra concreta, se
+    contrasta con el documento oficial.</p>
+  </div>
+
+  <div class="box warn">
+    <span class="lbl">La pregunta que hay que hacer ante cualquier cifra de calidad</span>
+    <p>No basta con el nombre de la métrica. Pregunta <strong>con qué juez y con qué parámetros
+    se ha medido</strong>. Dos formas de «comprobar si la respuesta contiene el dato» pueden dar
+    cifras muy distintas: una que acepta el número como trozo de texto da por buena una respuesta
+    donde el «20» estaba dentro de «2022». La métrica honesta es la que sabría fallar.</p>
+  </div>
+
+  <h3>Antes de incorporar una mejora, mídela</h3>
+  <p>Hay técnicas que sobre el papel prometen mucho y, medidas sobre un corpus concreto,
+  <strong>empeoran el resultado que importa</strong>. La combinación de búsqueda por palabras y
+  búsqueda por significado, por ejemplo, se da por «línea base mínima» en la literatura y en un
+  corpus normativo real puede meter en los primeros puestos fragmentos que desplazan al que traía
+  la cifra. <strong>Ninguna pieza entra sin medir su efecto sobre el conjunto de evaluación.</strong></p>
+
+  <div class="box tip">
+    <span class="lbl">Lo que no se ve en las métricas</span>
+    <p>Un conjunto de evaluación mide lo que pregunta. Si hay texto que el sistema nunca llega a
+    encontrar, el conjunto no lo detectará salvo que alguna pregunta caiga ahí. <strong>«Sano» no
+    es lo mismo que «completo»</strong>: por eso además de medir calidad se revisa la cobertura.</p>
+  </div>
+</section>
+
+<!-- ════════════ 7 · Tu primer RAG ════════════ -->
+<section role="tabpanel" id="r6" hidden>
+  <h2>Tu primer <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr>, y hasta dónde puede llegar</h2>
+
+  <h3>Empezar esta semana</h3>
+  <ol>
+    <li><strong>Elige un corpus pequeño y que conozcas bien</strong>: el reglamento que más usas
+    y dos o tres normas asociadas. No empieces por todo.</li>
+    <li><strong>Consigue las fuentes oficiales</strong> en PDF, y guarda de dónde y cuándo las
+    descargaste.</li>
+    <li><strong>Usa una interfaz que ya traiga <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr>.</strong> Open WebUI permite crear una base de
+    conocimiento, subir documentos y preguntar contra ellos con un modelo local y
+    <code>bge-m3</code> como <abbr title="Embedding: texto convertido en números que representan su significado">embeddings</abbr><span class="gl"> (texto convertido en números que representan su significado)</span> (Guía 1).</li>
+    <li><strong>Escribe diez preguntas</strong> de las que ya sepas la respuesta y la fuente.
+    Pásalas. Anota cuántas acierta y, sobre todo, <strong>cómo falla</strong>.</li>
+    <li><strong>Solo entonces amplía</strong>: más normas, mejores fragmentos, un reordenador.</li>
+  </ol>
+
+  <h3>Hasta dónde se puede llegar</h3>
+  <div class="tblwrap"><table>
+    <tr><th>Nivel</th><th>Qué tienes</th></tr>
+    <tr><td><strong>1 · Chat con documentos</strong></td><td>Subes PDF a una interfaz y preguntas. Útil
+        desde el primer día; sin control fino de vigencia ni de atribución.</td></tr>
+    <tr><td><strong>2 · Corpus curado</strong></td><td>Fragmentos preparados a mano o con ayuda, con
+        su norma, apartado y edición. La calidad sube de golpe.</td></tr>
+    <tr><td><strong>3 · Capas correctivas</strong></td><td>Vigencia y atribución automáticas: sabes si
+        lo que citas sigue en vigor y si es texto de la norma.</td></tr>
+    <tr><td><strong>4 · En el ambiente</strong></td><td>El asistente lo consulta solo antes de afirmar
+        cualquier dato normativo. Deja de ser una herramienta que abres.</td></tr>
+    <tr><td><strong>5 · Medido y mantenido</strong></td><td>Conjunto de evaluación, controles
+        periódicos entre lo que está curado y lo que se sirve, y un proceso para incorporar normas
+        nuevas.</td></tr>
+  </table></div>
+
+  <h3>Lo que conviene mirar de las herramientas comerciales</h3>
+  <p><strong>NotebookLM</strong>, de Google —desde julio de 2026 llamado <strong>Gemini
+  Notebook</strong>—, se basa en el mismo principio: el modelo solo puede
+  responder con los pasajes de las fuentes que tú le das, nunca con su memoria. Hay dos cosas suyas
+  que merece la pena copiar:</p>
+  <ul>
+    <li><strong>La cita al pasaje exacto.</strong> No basta con decir «de la norma X»: la unidad
+    útil es la línea concreta de la que sale la afirmación, para que el lector pueda comprobarla
+    de un vistazo.</li>
+    <li><strong>El contexto cerrado.</strong> Sin salir a internet ni mezclar cuadernos: es lo que
+    hace fiables sus citas. Un <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> local lo tiene por construcción.</li>
+  </ul>
+  <p>Para documentación pública y formación, una herramienta así es estupenda y no exige montar
+  nada. Para documentación de clientes, la regla de la Guía 1 sigue en pie: <strong>local</strong>.</p>
+
+  <div class="box key">
+    <span class="lbl">Resumen en tres frases</span>
+    <p>Un <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> responde con tus documentos y te dice de dónde. Lo que lo hace fiable en normativa
+    es saber qué está en vigor y qué es texto de la norma. Y lo que lo mantiene fiable es medirlo
+    con preguntas cuya respuesta ya conoces.</p>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Guía 4 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  profesional» · Colegio Oficial de Ingenieros de Telecomunicación.<br>
+  Cifras del sistema de ejemplo medidas el 14/09/2026 (dossier técnico del <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr>, v04) y el 15/09/2026 (tipos de RAG). Las métricas
+  de calidad corresponden a un conjunto de 41 preguntas reales.</p>
+  <p><a href="Glosario.html">¿Una sigla que no conoces? Consulta el glosario</a></p>
+</footer>
+
+</div>
+<script>
+  const tabs=[...document.querySelectorAll('nav.tabs button')];
+  const paneles=[...document.querySelectorAll('section[role=tabpanel]')];
+  tabs.forEach(b=>b.addEventListener('click',()=>{
+    tabs.forEach(x=>x.setAttribute('aria-selected', x===b?'true':'false'));
+    paneles.forEach(p=>p.hidden = (p.id!==b.dataset.p));
+    window.scrollTo({top:0,behavior:'smooth'});
+  }));
+</script>
+</body>
+</html>

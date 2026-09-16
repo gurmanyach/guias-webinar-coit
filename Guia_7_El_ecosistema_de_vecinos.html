@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía 7 · El ecosistema de vecinos — Webinar COIT</title>
+<style>
+  :root{
+    --bg:#ffffff; --ink:#1F2A37; --muted:#6B7785; --line:#D9E1EC;
+    --accent:#2E6DA4; --navy:#1B3A6B; --amber:#B5650A; --amber-bg:#FBEEDC;
+    --green:#2F7D4F; --green-bg:#E9F3EC; --card:#F3F6FB;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+      --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+      --green:#7BC49A; --green-bg:#16241C;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+    --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+    --green:#7BC49A; --green-bg:#16241C;
+  }
+  body{background:var(--bg);color:var(--ink);
+    font:16px/1.65 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    margin:0;padding:0 16px 80px}
+  .wrap{max-width:900px;margin:0 auto}
+  header.top{padding:34px 0 10px;border-bottom:1px solid var(--line)}
+  .eyebrow{font:600 12.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--amber);margin:0 0 10px}
+  h1{font-size:2.05rem;line-height:1.2;margin:0 0 10px;font-weight:650;letter-spacing:-.02em}
+  .sub{color:var(--muted);margin:0 0 18px;max-width:70ch}
+  nav.tabs{position:sticky;top:0;z-index:20;background:var(--bg);
+    border-bottom:1px solid var(--line);margin:0 0 30px;display:flex;gap:2px;
+    overflow-x:auto;padding-top:10px}
+  nav.tabs button{flex:0 0 auto;background:none;border:0;border-bottom:3px solid transparent;
+    padding:12px 15px;font:600 13.5px/1 ui-sans-serif,system-ui,sans-serif;color:var(--muted);
+    cursor:pointer;white-space:nowrap}
+  nav.tabs button:hover{color:var(--ink)}
+  nav.tabs button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+  section[role=tabpanel]{animation:fade .18s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+  h2{font-size:1.6rem;margin:34px 0 8px;font-weight:620;letter-spacing:-.01em}
+  h2:first-child{margin-top:0}
+  h3{font-size:1.14rem;margin:28px 0 8px;font-weight:620}
+  p{margin:0 0 14px;max-width:78ch}
+  ul,ol{max-width:78ch;padding-left:22px;margin:0 0 14px} li{margin-bottom:7px}
+  code{font:13.5px/1.5 ui-monospace,Menlo,Consolas,monospace;background:var(--card);
+    padding:2px 6px;border-radius:4px;border:1px solid var(--line)}
+  .tblwrap{overflow-x:auto;margin:0 0 18px}
+  table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+  th{background:var(--navy);color:#fff;text-align:left;padding:9px 11px;font-weight:600}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) th{color:#12161C}}
+  :root[data-theme="dark"] th{color:#12161C}
+  td{border-bottom:1px solid var(--line);padding:9px 11px;vertical-align:top}
+  .box{border-radius:10px;padding:16px 18px;margin:0 0 18px;border:1px solid var(--line)}
+  .box p:last-child{margin-bottom:0}
+  .tip{background:var(--green-bg);border-color:transparent}
+  .warn{background:var(--amber-bg);border-color:transparent}
+  .key{background:var(--card)}
+  .lbl{font:600 11.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.1em;
+    text-transform:uppercase;display:block;margin-bottom:8px}
+  .tip .lbl{color:var(--green)} .warn .lbl{color:var(--amber)} .key .lbl{color:var(--accent)}
+  .flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:0 0 18px}
+  .flow div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
+  .flow b{display:block;color:var(--accent);font-size:13px;margin-bottom:4px}
+  .flow span{font-size:14px}
+  footer{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13.5px}
+  .pill{display:inline-block;background:var(--card);border:1px solid var(--line);
+    border-radius:999px;padding:2px 10px;font-size:12.5px;color:var(--muted);margin-right:6px}
+  abbr[title]{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}
+  .gl{color:var(--muted);font-size:.86em}
+  figure.diag{margin:0 0 18px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
+  figure.diag svg{display:block;width:100%;height:auto}
+  figure.diag figcaption{font-size:13.5px;color:var(--muted);margin-top:8px}
+  .d-box{fill:var(--bg);stroke:var(--line);stroke-width:1.5}
+  .d-key{fill:var(--bg);stroke:var(--accent);stroke-width:2}
+  .d-t{fill:var(--ink);font:600 14px ui-sans-serif,system-ui,sans-serif}
+  .d-s{fill:var(--muted);font:12px ui-sans-serif,system-ui,sans-serif}
+  .d-n{fill:var(--amber);font:700 12px ui-sans-serif,system-ui,sans-serif}
+  .d-a{stroke:var(--accent);stroke-width:2;fill:none}
+  .d-r{stroke:var(--green);stroke-width:2;fill:none;stroke-dasharray:6 5}
+  .d-ah{fill:var(--accent)} .d-rh{fill:var(--green)}
+  .lesson{border-left:4px solid var(--amber);padding:2px 0 2px 14px;margin:0 0 20px}
+  .lesson h4{margin:0 0 6px;font-size:1.02rem}
+  .lesson p{margin:0 0 6px}
+
+  .home{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;
+    border:0;border-radius:10px;padding:11px 20px;margin:18px 0 0;
+    font:700 15px/1 ui-sans-serif,system-ui,sans-serif;text-decoration:none;
+    box-shadow:0 1px 2px rgba(0,0,0,.12)}
+  .home:hover{filter:brightness(1.08)}
+  .home svg{flex:0 0 auto}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .home{color:#12161C}}
+  :root[data-theme="dark"] .home{color:#12161C}
+
+  a{color:var(--accent)}
+  a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="home" href="index.html"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M6 10.5V20h5v-5h2v5h5v-9.5"/></svg><span>Índice de guías</span></a>
+
+
+<header class="top">
+  <p class="eyebrow">Webinar COIT · Guía 7 de 14</p>
+  <h1>El ecosistema de vecinos</h1>
+  <p class="sub">Cuando un solo asistente no basta, se trabaja con varios. En nuestro sistema hay más
+  de veinte agentes de IA repartidos por cuatro máquinas, y los llamamos <strong>vecinos</strong>:
+  cada uno vive en su casa, tiene su oficio y se comunica con los demás por un tablón común. Esta
+  guía explica quién hace qué, cómo se coordinan y cómo arrancan y cierran cada jornada sin perder
+  el hilo.</p>
+  <p><span class="pill">Nivel: divulgativo</span><span class="pill">Lectura: ~45 min</span>
+  <span class="pill">Sistema en uso real, septiembre de 2026</span></p>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" data-p="e1">1 · El vecindario</button>
+  <button role="tab" aria-selected="false" data-p="e2">2 · Los papeles</button>
+  <button role="tab" aria-selected="false" data-p="e3">3 · El Patio</button>
+  <button role="tab" aria-selected="false" data-p="e4">4 · Reunión, Sala y Laboratorio</button>
+  <button role="tab" aria-selected="false" data-p="e5">5 · Arrancar la jornada</button>
+  <button role="tab" aria-selected="false" data-p="e6">6 · Cerrar la jornada</button>
+  <button role="tab" aria-selected="false" data-p="e8">7 · La infraestructura por dentro</button>
+  <button role="tab" aria-selected="false" data-p="e7">8 · Pautas</button>
+</nav>
+
+<!-- ════════════ 1 ════════════ -->
+<section role="tabpanel" id="e1">
+  <h2>El vecindario: quién vive en cada máquina</h2>
+
+  <p>Cada máquina es una <strong>escalera</strong> de la comunidad, y en cada una viven varios
+  agentes. Hay dos tipos: <strong>Claude Code</strong> (<abbr title="CC · CD: Claude Code · Claude Desktop">CC</abbr><span class="gl"> (Claude Code · Claude Desktop)</span>), que trabaja directamente sobre ficheros,
+  terminal y servidores, y <strong>Claude Desktop</strong> (<abbr title="CC · CD: Claude Code · Claude Desktop">CD</abbr>), la aplicación de escritorio, más
+  orientada a análisis, planificación y revisión.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Escalera</th><th>Vecinos principales</th><th>A qué se dedican</th></tr>
+    <tr><td><strong>PC de despacho</strong> (Windows)</td><td>CC_BM · CCHESC27 · CD27 · y especialistas por proyecto (<abbr title="ICT: Infraestructura Común de Telecomunicaciones (RD 346/2011)">ICT</abbr><span class="gl"> (Infraestructura Común de Telecomunicaciones (RD 346/2011))</span>, acústica de edificios, fotografía…)</td><td>Supervisión y coordinación, lo que solo funciona en Windows (Office, <abbr title="VBA: Visual Basic for Applications, macros de Office">VBA</abbr><span class="gl"> (Visual Basic for Applications, macros de Office)</span>, aplicaciones de ingeniería), auditoría transversal y MATLAB</td></tr>
+    <tr><td><strong>Servidor Linux</strong> (<abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr><span class="gl"> (Graphics Processing Unit, tarjeta gráfica)</span> de 16 GB)</td><td>CC_220 · CCHESC220 · CCH27</td><td>Motor de IA: modelos locales, <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr><span class="gl"> (Retrieval-Augmented Generation: busca en tus documentos y responde citándolos)</span>, contenedores, el servicio que reparte los mensajes; instalación del ecosistema; Manual de Calidad</td></tr>
+    <tr><td><strong>Mac Studio</strong> (128 GB unificada)</td><td>CC_OSX55 · CDH55 · CD55 · CC55 · CCK55 · CCPY55 · CC_PAT55</td><td>Modelos grandes, generación del <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> normativo, verificación carácter a carácter, realidad virtual y campo, memoria de contexto, herramientas del Mac y mantenimiento del Patio</td></tr>
+    <tr><td><strong>Portátil</strong></td><td>CC26 · CD26</td><td>Ayudantes y trabajo de campo</td></tr>
+  </table></div>
+
+  <h3>Cómo leer los nombres</h3>
+  <ul>
+    <li><strong><abbr title="CC · CD: Claude Code · Claude Desktop">CC</abbr></strong> = Claude Code · <strong><abbr title="CC · CD: Claude Code · Claude Desktop">CD</abbr></strong> = Claude Desktop.</li>
+    <li><strong>H</strong> = <em>help</em>, ayudante · <strong>ESC</strong> = escudero de otro vecino.</li>
+    <li>El <strong>número final</strong> es la máquina donde vive. En una misma máquina puede haber
+    varios Claude Code; se distinguen por la carpeta de trabajo de cada uno.</li>
+  </ul>
+
+  <div class="box key">
+    <span class="lbl">Por qué tantos</span>
+    <p>No es por tener más potencia: es por <strong>separar papeles</strong>. El que construye no es
+    el que revisa, y cada uno conoce bien su terreno. Exactamente como en un despacho con varias
+    personas.</p>
+  </div>
+</section>
+
+<!-- ════════════ 2 ════════════ -->
+<section role="tabpanel" id="e2" hidden>
+  <h2>Los papeles: quién lidera, quién ayuda, quién revisa</h2>
+
+  <div class="tblwrap"><table>
+    <tr><th>Capa</th><th>Quién</th><th>Qué hace</th></tr>
+    <tr><td><strong>Árbitro</strong></td><td>Kim, el ingeniero</td><td>Decide lo importante y firma. Tiene la última palabra</td></tr>
+    <tr><td><strong>Cúspide</strong></td><td>Los agentes principales del servidor y del Mac, con Kim</td><td>Decisiones de arquitectura del sistema, con veto</td></tr>
+    <tr><td><strong>Supervisor</strong></td><td>CC_BM, en el PC de despacho</td><td>Traduce las decisiones en encargos para los especialistas y coordina</td></tr>
+    <tr><td><strong>Especialistas</strong></td><td>Un agente por proyecto o dominio</td><td>Hacen el trabajo de su terreno</td></tr>
+    <tr><td><strong>Soporte</strong></td><td>Claude Desktop y otros</td><td>Análisis, planificación, segunda opinión</td></tr>
+  </table></div>
+
+  <h3>Quien inicia y lidera un proyecto</h3>
+  <p>El que lo convoca (o Kim), que define objetivo y criterio de cierre. En el <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> normativo, por
+  ejemplo, un único agente <strong>integra</strong> los cambios: los demás proponen, él decide qué
+  entra, para que no haya dos versiones de la verdad.</p>
+
+  <h3>Ayudantes y escuderos</h3>
+  <p>Algunos vecinos tienen un <strong>escudero</strong>: otro agente en su misma máquina que le
+  ayuda con tareas y, sobre todo, <strong>revisa su trabajo</strong>.</p>
+
+  <h3>Segundas lentes y verificación</h3>
+  <p>Una <strong>segunda lente</strong> es un agente que mira lo mismo con un instrumento o un enfoque
+  distinto. Ningún trabajo importante se da por bueno con la palabra de quien lo hizo; pasa por la
+  <strong>doble puerta</strong>:</p>
+  <div class="flow">
+    <div><b>1 · Adversario</b><span>«Abogado del diablo»: intenta demostrar que está mal, probando cada sospecha.</span></div>
+    <div><b>2 · Auditor</b><span>Puerta final: referencias cruzadas, coherencia, fuentes completas. Emite SÍ o NO.</span></div>
+    <div><b>3 · Si cambia algo</b><span>El veredicto no se hereda: el fichero modificado vuelve a pasar.</span></div>
+  </div>
+
+  <h3>Altas de nuevas habilidades: tres revisores</h3>
+  <p>Antes de dar de alta un agente o una habilidad nueva, lo revisan tres: un
+  <strong>especialista</strong> (que declara cuándo <em>no</em> debe activarse), un
+  <strong>auditor</strong> (que comprueba que no duplica algo existente) y un
+  <strong>adversario</strong> (que busca falsos positivos).</p>
+
+  <h3>Oficios automáticos</h3>
+  <p>Además de los agentes, hay pequeños procesos con nombre de oficio: el <strong>vigía</strong>
+  (avisa de mensajes), el <strong>cronista</strong> (indexa las conversaciones), el
+  <strong>sereno</strong> (ronda de salud)… Norma: <em>los oficios duermen con su vecino</em>: si la
+  sesión está cerrada, no corren gastando recursos.</p>
+</section>
+
+<!-- ════════════ 3 ════════════ -->
+<section role="tabpanel" id="e3" hidden>
+  <h2>El Patio de Vecinos: el tablón común</h2>
+
+  <p>Es el <strong>único canal</strong> entre agentes. Vive en una carpeta compartida por red y es,
+  literalmente, un fichero de texto con una tabla a la que todos añaden filas.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Pieza</th><th>Cómo funciona</th></tr>
+    <tr><td><strong>El tablón (<abbr title="BUS: tablón común de mensajes entre agentes">BUS</abbr>)</strong></td><td>Cada mensaje es una fila: fecha y hora, quién, para quién, tipo y contenido. <strong>Solo se añade, nunca se edita ni se borra</strong>: es el registro de todo lo que ha pasado.</td></tr>
+    <tr><td><strong>Buzones (INBOX)</strong></td><td>Un servicio en el servidor lee el tablón cada 15 segundos y copia cada mensaje al buzón de su destinatario, con aviso al móvil.</td></tr>
+    <tr><td><strong>Tipos de mensaje</strong></td><td>Aviso, informe, tarea, consulta, acuse, hallazgo, propuesta, decisión para Kim… Separar <em>lo que he medido</em> de <em>lo que propongo</em> evita mezclar diagnóstico y decisión.</td></tr>
+    <tr><td><strong>Vigía</strong></td><td>Cada agente, mientras su sesión está abierta, tiene un vigía que le avisa en cuanto llega algo para él.</td></tr>
+    <tr><td><strong>Firma</strong></td><td>Cada agente escribe solo en su propio nombre.</td></tr>
+  </table></div>
+
+  <div class="box tip">
+    <span class="lbl">Una guarda que no depende de acordarse</span>
+    <p>Si un agente intenta publicar una <strong>propuesta o una decisión</strong> sin decir quién es
+    responsable, quién aprueba, a quién se consulta y a quién se informa (<abbr title="RACI: Responsable · Aprueba · Consultado · Informado">RACI</abbr><span class="gl"> (Responsable · Aprueba · Consultado · Informado)</span>), la herramienta de
+    publicación <strong>la rechaza</strong>. No hace falta recordarlo: el sistema no deja.</p>
+  </div>
+
+  <div class="box warn">
+    <span class="lbl">Lo aprendido escribiendo en un fichero compartido</span>
+    <p>Dos agentes escribiendo a la vez en el mismo fichero pueden corromperlo. Por eso las escrituras
+    se hacen con <strong>candado exclusivo</strong> y se <strong>verifican releyendo</strong>; y los
+    ficheros que se reescriben enteros solo se sustituyen si nadie los cambió mientras se preparaba el
+    cambio.</p>
+  </div>
+</section>
+
+<!-- ════════════ 4 ════════════ -->
+<section role="tabpanel" id="e4" hidden>
+  <h2>Reunión de Vecinos, Sala de Debate y Laboratorio</h2>
+
+  <p>El tablón sirve para el día a día. Cuando hace falta algo más, hay tres espacios, cada uno con
+  un propósito distinto:</p>
+
+  <div class="tblwrap"><table>
+    <tr><th></th><th>Reunión de Vecinos</th><th>Sala de Debate</th><th>El Laboratorio</th></tr>
+    <tr><td><strong>Para qué</strong></td><td>Resolver una <strong>contradicción</strong>: dos vecinos discrepan sobre un hecho medido, o algo va a escalar a Kim</td><td>Que 2–5 vecinos <strong>decidan</strong> juntos algo sin llenar el tablón</td><td><strong>Ejecutar</strong> hasta el final un plan ya decidido</td></tr>
+    <tr><td><strong>Ficheros</strong></td><td>Reunión activa + acta</td><td>Historial (solo se añade) + pizarra (estado vivo)</td><td>Plan (no se reescribe) + lista de tareas + historial</td></tr>
+    <tr><td><strong>Papeles</strong></td><td>Convocante, presidente, secretario (<strong>distinto del presidente</strong>), asistentes y adversario con turno obligatorio</td><td>Participantes que reclaman cada tarea antes de empezar</td><td>Coordinador, escriba y «blindaje de ruido», que filtra lo que llega de fuera</td></tr>
+    <tr><td><strong>Cómo termina</strong></td><td>Por quórum, no por reloj. Mejor un cierre parcial que uno falso</td><td>Marcada como cerrada, con el resultado en una línea</td><td>Cuando se cumple el criterio de cierre verificable</td></tr>
+  </table></div>
+
+  <h3>Reglas de la Reunión que valen para cualquier comité</h3>
+  <ul>
+    <li><strong>No se convoca para informar</strong>, solo para decidir un conflicto.</li>
+    <li><strong>Ausente no es conforme.</strong> Quien no ha votado, no ha aprobado.</li>
+    <li><strong>No se cierra con casillas vacías.</strong> Se escribe «aprobada 3 de 4, pendiente» antes que fingir unanimidad.</li>
+    <li><strong>El adversario habla antes del consenso</strong>, no después.</li>
+    <li>Quien preside ordena el debate; <strong>no decide el fondo</strong>.</li>
+  </ul>
+
+  <div class="box key">
+    <span class="lbl">Resumen</span>
+    <p>La Reunión <strong>resuelve conflictos</strong>, la Sala <strong>decide</strong>, el Laboratorio
+    <strong>ejecuta</strong>, y el Patio <strong>cuenta lo que pasa</strong>.</p>
+  </div>
+</section>
+
+<!-- ════════════ 5 ════════════ -->
+<section role="tabpanel" id="e5" hidden>
+  <h2>Arrancar la jornada</h2>
+
+  <p>Como un agente empieza cada sesión sin memoria (Guía 8), el arranque es un
+  <strong>protocolo fijo</strong> que le devuelve el contexto en orden:</p>
+
+  <div class="flow">
+    <div><b>1 · El vigía, lo primero</b><span>Si se arma tarde, otros agentes hablan al aire sin que nadie se entere.</span></div>
+    <div><b>2 · Ponerse al día</b><span>Lee lo que llegó al tablón con la sesión cerrada, desde el último punto guardado.</span></div>
+    <div><b>3 · Conectar</b><span>Acceso al servidor y a las carpetas compartidas.</span></div>
+    <div><b>4 · Hoja de ruta</b><span>Lee la más reciente: es el plan vigente, no lo que recuerde.</span></div>
+    <div><b>5 · Pendientes y buzón</b><span>Panel de preguntas pendientes y mensajes sin procesar.</span></div>
+  </div>
+
+  <h3>La hoja de ruta, con fecha</h3>
+  <p>Cada vez que el plan cambia de verdad, se escribe una <strong>hoja de ruta nueva</strong> con fecha
+  y hora, sin borrar la anterior. Así queda trazado cómo evolucionó el plan, y siempre se actúa sobre
+  la más reciente. Nació de un día en que la sesión se desvió tanto con urgencias que se perdió de
+  vista el plan original.</p>
+
+  <div class="box warn">
+    <span class="lbl">Comprobar que sigue vivo, no solo que arrancó</span>
+    <p>Un vigía que arrancó bien puede morir en silencio una hora después. Por eso se comprueba que
+    el proceso existe y que su registro avanza. <strong>«Arrancó sin error» no es «funciona»</strong>.</p>
+  </div>
+</section>
+
+<!-- ════════════ 6 ════════════ -->
+<section role="tabpanel" id="e6" hidden>
+  <h2>Cerrar la jornada: cómo se mantiene la memoria</h2>
+
+  <p>Hay <strong>dos niveles</strong> de cierre:</p>
+  <div class="tblwrap"><table>
+    <tr><th>Nivel</th><th>Cuándo</th><th>Qué se hace</th></tr>
+    <tr><td><strong>Punto de control ligero</strong></td><td>Pausas dentro de una sesión larga</td><td>Tres a cinco líneas de estado en la memoria del proyecto. El detalle fino se puede recuperar después del historial indexado</td></tr>
+    <tr><td><strong>Cierre formal</strong></td><td>Fin de jornada, traspaso a otro agente, antes de varios días</td><td>El protocolo completo de abajo</td></tr>
+  </table></div>
+
+  <h3>El cierre formal, paso a paso</h3>
+  <ol>
+    <li><strong>Informe de jornada</strong> en una página con pestañas: qué se hizo, qué queda, qué
+    decisiones esperan a Kim con la opción recomendada, y el estado del Manual de Calidad.</li>
+    <li><strong>Mirar el Patio y contestar</strong> lo que esté pendiente: el tablón no despierta a
+    nadie, y cerrar sin mirar deja a otros esperando.</li>
+    <li><strong>Escribir la memoria</strong>: lecciones nuevas, estado del proyecto y la hoja de ruta.</li>
+    <li><strong>Indexar las conversaciones</strong> de la sesión, para poder consultarlas después.</li>
+    <li><strong>Publicar el cierre</strong> en el tablón.</li>
+    <li><strong>Texto de arranque</strong>: un bloque para pegar al abrir la próxima sesión, con número de
+    sesión, descripción, plan numerado por prioridad y contexto.</li>
+  </ol>
+
+  <div class="box key">
+    <span class="lbl">«Cerrar es parar»</span>
+    <p>Una vez presentado el texto de arranque, la sesión ha terminado. Lo que aparezca después —aunque
+    sea un hallazgo importante— se convierte en el <strong>primer punto de la sesión siguiente</strong>,
+    no en una excusa para seguir tocando ficheros.</p>
+  </div>
+
+  <div class="box warn">
+    <span class="lbl">Lo que el cierre no puede salvar</span>
+    <p>El historial indexado recupera <strong>hechos y decisiones escritos</strong>, no el razonamiento
+    que nunca se escribió. Por eso el cierre formal escribe a mano lo que de verdad importa.</p>
+  </div>
+</section>
+
+<!-- ════════════ 7 · Infraestructura ════════════ -->
+<section role="tabpanel" id="e8" hidden>
+  <h2>La infraestructura por dentro</h2>
+
+  <p>La pestaña 3 cuenta <em>qué</em> es el Patio. Esta cuenta <em>cómo</em> está construido y, sobre
+  todo, <strong>por qué</strong> cada pieza es como es. Casi todas las decisiones nacieron de un fallo
+  real que se midió, no de un diseño en pizarra. Si quieres montar algo parecido, aquí está lo que nos
+  costó aprender.</p>
+
+  <h3>La idea de partida: un fichero, no una centralita</h3>
+  <p>En vez de conectar los agentes entre sí por programas que se llaman unos a otros, se les da
+  <strong>un sitio compartido</strong>: una carpeta de red que todas las máquinas leen y escriben, con
+  un tablón de texto en el centro. El único contrato entre agentes es <strong>un fichero de texto con
+  columnas fijas</strong>. Por eso funciona igual entre procesos, entre máquinas y entre sistemas
+  operativos distintos (Windows, Linux y macOS conviven en el mismo vecindario).</p>
+
+  <h3>Las piezas y su papel</h3>
+  <div class="tblwrap"><table>
+    <tr><th>Pieza</th><th>Qué hace</th><th>Por qué es así</th></tr>
+    <tr><td><strong>Tablón compartido</strong> (<abbr title="BUS: tablón común de mensajes entre agentes">BUS</abbr><span class="gl"> (tablón común de mensajes entre agentes)</span>)</td>
+      <td>Un fichero de texto donde cada línea es un mensaje. Solo se añaden filas al final.</td>
+      <td>La norma de <strong>solo añadir</strong> es que nadie borra ni reescribe lo que otro escribió (es una convención: blindarlo técnicamente tiene trampas, lección 5): el historial <em>es</em> la coordinación, y cualquiera puede reconstruir qué pasó aunque la sesión de otro agente muera sin cerrar.</td></tr>
+    <tr><td><strong>Esquema de campos</strong></td>
+      <td>Fecha y hora · emisor · destinatarios · tipo · contenido · estado.</td>
+      <td>Filtrar por <strong>campos</strong> es estable; filtrar por palabras del texto no lo es. El carácter separador de columnas está <strong>prohibido</strong> dentro del contenido, porque una columna de más deja la fila sin repartir.</td></tr>
+    <tr><td><strong>Repartidor automático</strong></td>
+      <td>Un proceso en el servidor lee el tablón cada 15 segundos, copia cada fila al buzón de sus destinatarios y manda un aviso al móvil.</td>
+      <td>Así cada agente no tiene que leer el tablón entero para saber qué le toca, y existe <strong>un único</strong> repartidor: dos repartidores a la vez duplicarían o pisarían entregas.</td></tr>
+    <tr><td><strong>Buzón por agente</strong></td>
+      <td>Un fichero por destinatario con los mensajes que le han llegado.</td>
+      <td>Cada uno trabaja sobre su propia cola; nadie edita el buzón de otro.</td></tr>
+    <tr><td><strong>Carpetas de entregables</strong></td>
+      <td>Una carpeta por agente para ficheros grandes.</td>
+      <td>El tablón es para hablar: el agente deja el fichero en su carpeta y en el tablón solo anuncia «lo dejé ahí». Así el tablón sigue siendo legible.</td></tr>
+    <tr><td><strong>Vigías</strong></td>
+      <td>Mientras la sesión de un agente está abierta, un pequeño proceso vigila lo que llega dirigido a él y lo despierta.</td>
+      <td>El tablón no despierta a nadie: sin vigía, un encargo espera para siempre. Lee <strong>solo lo nuevo</strong> desde la última posición, y al arrancar se pone al día desde un punto guardado en disco (pestaña 5).</td></tr>
+    <tr><td><strong>Fichas de conocimiento</strong></td>
+      <td>Cuando alguien resuelve un fallo que otro podría repetir, deja una ficha; después se revisa y se integra en un libro de la Biblioteca.</td>
+      <td>Regla de admisión dura: <strong>incidente real, medido, con fecha y evidencia</strong>. Nunca una recomendación genérica. Cada ficha tiene los mismos campos: síntoma, cómo se detectó, solución, riesgo, estado, ejemplo literal, comprobación sugerida, relacionadas y fuente.</td></tr>
+  </table></div>
+
+  <p>Un ejemplo de fila (inventado para ilustrar el formato):</p>
+  <p><code>| 2026-09-14 10:32 | agente-A | agente-B | TAREA | Revisa el informe que dejé en mi carpeta | pendiente |</code></p>
+
+  <h3>El recorrido de un mensaje</h3>
+  <figure class="diag">
+    <svg viewBox="0 0 660 330" role="img" aria-labelledby="dgT dgD">
+      <title id="dgT">Recorrido de un mensaje entre dos agentes</title>
+      <desc id="dgD">El agente A escribe una fila en el tablón; el repartidor la lee y la copia al buzón del agente B; el vigía de B lo avisa; B lee, actúa y responde con una fila nueva en el tablón.</desc>
+      <defs>
+        <marker id="mA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="d-ah"/></marker>
+        <marker id="mR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="d-rh"/></marker>
+      </defs>
+      <!-- fila superior -->
+      <rect class="d-box" x="10" y="30" width="190" height="96" rx="10"/>
+      <text class="d-n" x="24" y="54">1</text><text class="d-t" x="40" y="54">Agente A escribe</text>
+      <text class="d-s" x="24" y="80">una fila, con candado</text>
+      <text class="d-s" x="24" y="100">y relee para verificar</text>
+
+      <rect class="d-key" x="235" y="30" width="190" height="96" rx="10"/>
+      <text class="d-n" x="249" y="54">2</text><text class="d-t" x="265" y="54">El tablón</text>
+      <text class="d-s" x="249" y="80">fichero de texto</text>
+      <text class="d-s" x="249" y="100">solo se añaden filas</text>
+
+      <rect class="d-box" x="460" y="30" width="190" height="96" rx="10"/>
+      <text class="d-n" x="474" y="54">3</text><text class="d-t" x="490" y="54">El repartidor</text>
+      <text class="d-s" x="474" y="80">lee cada 15 s y copia</text>
+      <text class="d-s" x="474" y="100">según «para quién»</text>
+
+      <!-- fila inferior -->
+      <rect class="d-box" x="460" y="200" width="190" height="96" rx="10"/>
+      <text class="d-n" x="474" y="224">4</text><text class="d-t" x="490" y="224">Buzón de B</text>
+      <text class="d-s" x="474" y="250">copia del mensaje</text>
+      <text class="d-s" x="474" y="270">+ aviso al móvil</text>
+
+      <rect class="d-box" x="235" y="200" width="190" height="96" rx="10"/>
+      <text class="d-n" x="249" y="224">5</text><text class="d-t" x="265" y="224">Vigía de B</text>
+      <text class="d-s" x="249" y="250">detecta lo dirigido a B</text>
+      <text class="d-s" x="249" y="270">y lo despierta</text>
+
+      <rect class="d-box" x="10" y="200" width="190" height="96" rx="10"/>
+      <text class="d-n" x="24" y="224">6</text><text class="d-t" x="40" y="224">Agente B</text>
+      <text class="d-s" x="24" y="250">lee, actúa y responde</text>
+      <text class="d-s" x="24" y="270">con una fila nueva</text>
+
+      <!-- flechas -->
+      <path class="d-a" d="M200 78 H229" marker-end="url(#mA)"/>
+      <path class="d-a" d="M425 78 H454" marker-end="url(#mA)"/>
+      <path class="d-a" d="M555 126 V194" marker-end="url(#mA)"/>
+      <path class="d-a" d="M460 248 H431" marker-end="url(#mA)"/>
+      <path class="d-a" d="M235 248 H206" marker-end="url(#mA)"/>
+      <path class="d-r" d="M105 200 V163 H300 V132" marker-end="url(#mR)"/>
+      <text class="d-s" x="150" y="156">la respuesta vuelve al tablón</text>
+    </svg>
+    <figcaption>El agente nunca escribe en el buzón de otro: escribe en el tablón, y el reparto es
+    automático. La respuesta es otra fila más, así que la conversación completa queda en un solo
+    sitio.</figcaption>
+  </figure>
+
+  <h3>Los tipos de máquina y qué hace cada una</h3>
+  <div class="tblwrap"><table>
+    <tr><th>Tipo de máquina</th><th>Papel en el vecindario</th></tr>
+    <tr><td><strong>Servidor Linux con <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr><span class="gl"> (Graphics Processing Unit, tarjeta gráfica)</span></strong></td>
+      <td>Motor de IA: modelos locales, la base de datos del <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr><span class="gl"> (Retrieval-Augmented Generation: busca en tus documentos y responde citándolos)</span> normativo, servicios en contenedores, el repartidor y los avisos al móvil. También aloja máquinas virtuales de laboratorio.</td></tr>
+    <tr><td><strong>Estación Mac con memoria unificada</strong></td>
+      <td>Modelos grandes en local (la memoria compartida entre procesador y gráfica permite cargar modelos que no caben en una tarjeta de 16 GB), un modelo «evaluador» que usan los demás agentes, y la carpeta compartida del tablón.</td></tr>
+    <tr><td><strong>PC de despacho Windows</strong></td>
+      <td>No es un nodo de cálculo pesado: es el <strong>puesto de mando</strong>. Desde aquí trabaja la persona, coordina el supervisor y se hace lo que solo existe en Windows (Office, tareas programadas, aplicaciones de ingeniería). Incluye un Linux integrado que comparte su tarjeta gráfica.</td></tr>
+    <tr><td><strong>Portátil de campo</strong></td>
+      <td>Ayudante con las mismas herramientas que el PC de despacho, Windows más Linux integrado con GPU propia. El cálculo pesado lo delega en el servidor.</td></tr>
+    <tr><td><strong>Máquinas virtuales de auditoría</strong></td>
+      <td>Linux de seguridad sin tarjeta gráfica, para laboratorio de auditoría, aislado del resto. Orquestan; el cálculo lo piden al servidor.</td></tr>
+  </table></div>
+
+  <div class="box key">
+    <span class="lbl">El nombre no dice dónde vive</span>
+    <p>Un agente cuyo nombre sugiere una máquina puede estar ejecutándose en otra, y un servicio con un
+    nombre genérico («el evaluador») puede existir en dos sitios. Una noche el servidor se cayó y varios
+    agentes dieron por parado todo el trabajo de evaluación —uno dejó 20 de 70 revisiones sin aplicar—
+    mientras el evaluador del Mac llevaba toda la noche funcionando. Regla: antes de declarar que algo
+    «no está» o «se ha caído», pregunta <strong>sobre qué máquina y por qué camino lo has medido</strong>.
+    Y un <em>ping</em> que responde no prueba que un servidor esté vivo: la prueba es conectar con un
+    servicio que debería contestar.</p>
+  </div>
+
+  <h3>Qué sobrevive cuando una sesión se cierra</h3>
+  <p>La ventana de contexto de un agente es finita: cuando crece, se resume con pérdida, y si la sesión
+  se cae, lo que había en memoria desaparece. No se puede evitar que eso ocurra, pero sí que se pierda
+  algo <strong>de forma irrecuperable</strong>. Hacen falta tres piezas, porque cada una cubre un fallo
+  distinto:</p>
+  <div class="tblwrap"><table>
+    <tr><th>Pieza</th><th>Qué fallo cubre</th><th>Cómo</th></tr>
+    <tr><td><strong>Historial de conversaciones indexado</strong></td><td>El resumen automático dentro de una sesión larga</td><td>La transcripción completa ya se guarda en disco; un indexador la clasifica y devuelve bajo demanda el trozo mínimo relevante, con cifras y decisiones <strong>literales</strong> y citando de dónde salen.</td></tr>
+    <tr><td><strong>Memoria curada</strong></td><td>Olvidar lo aprendido entre una sesión y la siguiente</td><td>El propio agente decide qué escribir (reglas, lecciones, estado). Nunca se resume porque nunca estuvo en la conversación.</td></tr>
+    <tr><td><strong>Bitácora y tablón</strong></td><td>Perder el estado compartido entre agentes distintos</td><td>Dossier de cierre, texto de arranque y la fila de cierre en el tablón: texto plano que cualquier persona o agente puede leer sin herramientas especiales.</td></tr>
+  </table></div>
+  <p>Límite honesto: lo que nunca se escribió —el razonamiento que no quedó en ningún sitio— no lo
+  recupera ninguna de las tres.</p>
+
+  <h3>Cinco lecciones de fallos reales</h3>
+  <p>Todas medidas en el sistema en uso, entre julio y agosto de 2026. Se cuentan porque cualquiera que
+  monte un tablón compartido se las va a encontrar.</p>
+
+  <div class="lesson">
+    <h4>1 · Dos escrituras a la vez dejaron bytes nulos, y la cuenta seguía cuadrando</h4>
+    <p><strong>Qué pasó.</strong> Un agente recortó su buzón reescribiéndolo más corto mientras el
+    repartidor añadía una fila en la posición del final antiguo. El sistema de ficheros rellenó el hueco
+    con 3.571 bytes nulos. En otro caso, apareció un agujero de 918 bytes nulos en mitad de un mensaje
+    del tablón, con el texto cortado a media palabra.</p>
+    <p><strong>Cómo se detectó.</strong> La comprobación que se hizo —filas que quedan más filas
+    archivadas igual a filas originales (636 + 149 = 785)— <strong>cuadraba exacta con el fichero ya
+    corrupto</strong>, porque las líneas de nulos no cuentan como filas. La única pista fue que el
+    fichero no había encogido.</p>
+    <p><strong>Regla que quedó.</strong> Escribir con candado. Si hay que reescribir entero un fichero
+    que otros leen por red, avisar antes a quien lo lee: sustituirlo por una copia nueva puede dejar a
+    los lectores remotos viendo la versión vieja (lección 5). Y verificar con
+    <strong>tres</strong> comprobaciones, no una: cero bytes nulos, el tamaño cambió como debía y la fila
+    está presente. Una fila dañada del tablón no se edita: su autor la vuelve a publicar como fila
+    nueva.</p>
+  </div>
+
+  <div class="lesson">
+    <h4>2 · Vigías que parecían vivos y estaban muertos</h4>
+    <p><strong>Qué pasó.</strong> El vigía de una sesión no sobrevivió a que la sesión se reanudara:
+    dejó de existir sin dejar rastro, dos veces en la misma sesión, y el agente se creía vigilado. En
+    otro caso, un vigía que contaba líneas de un registro vio 0 bytes durante 8 minutos con el proceso
+    perfectamente vivo (la salida se acumulaba en memoria antes de escribirse); y la condición «ha
+    terminado si existe el fichero de resultados» dio un final falso con el trabajo al 33 %, porque ese
+    fichero venía de una prueba anterior.</p>
+    <p><strong>Cómo se detectó.</strong> Comprobando que el proceso existía, no que «había arrancado
+    bien».</p>
+    <p><strong>Regla que quedó.</strong> «Arrancó sin error» no es «funciona». Tras cada arranque o
+    reanudación se comprueba que el proceso está y que su registro avanza; y el final de un trabajo se
+    decide por la muerte del proceso o comparando con el estado previo, nunca por la mera existencia de
+    un fichero.</p>
+  </div>
+
+  <div class="lesson">
+    <h4>3 · Escribir «para todos» dejó sin mensajes a los destinatarios nombrados</h4>
+    <p><strong>Qué pasó.</strong> Cuando una fila llevaba «todos» junto a nombres concretos, el
+    repartidor <strong>sustituía</strong> la lista por el censo general en vez de sumarla, y los
+    nombrados que no estaban en ese censo no recibían nada. De 225 filas dirigidas a dos agentes
+    concretos, llegaron 0. El buzón de Kim pasó siete horas sin recibir nada, incluida la fila que
+    avisaba del propio problema.</p>
+    <p><strong>Cómo se detectó.</strong> Ejecutando el reparto sobre filas reales: al quitar la palabra,
+    la misma fila llegó a los tres buzones en 5 segundos.</p>
+    <p><strong>Regla que quedó.</strong> Destinatarios nombrados uno a uno; «todos» solo para normas
+    que afecten de verdad a toda la comunidad.</p>
+  </div>
+
+  <div class="lesson">
+    <h4>4 · Un cero que no era un cero</h4>
+    <p><strong>Qué pasó.</strong> El fichero de huellas que certifica que los documentos de la
+    Biblioteca no se han alterado se escribía unas veces con la convención de Windows y otras con la de
+    Linux. El lector esperaba una sola: leyó <strong>0 de 546 entradas sin dar ningún error</strong>, y
+    el recuento declaró la Biblioteca entera sin sellar. Y con un mismo recurso de red montado por dos
+    caminos, un script que fije uno de ellos mide cero en cuanto ese camino se cae.</p>
+    <p><strong>Cómo se detectó.</strong> Con una comprobación que dice de antemano cuántas
+    coincidencias <em>deberían</em> salir: si esperas 3 y salen 0, salta.</p>
+    <p><strong>Regla que quedó.</strong> Un cero solo es un resultado si has comprobado que el
+    instrumento podía ver algo. Aceptar las dos convenciones, conservar la de cada línea, y que un
+    formato desconocido dé un aviso impreso, nunca un cero silencioso.</p>
+  </div>
+
+  <div class="lesson">
+    <h4>5 · Arreglar el tablón por el propio tablón</h4>
+    <p><strong>Qué pasó.</strong> Para frenar una reescritura destructiva se blindó el tablón para que
+    solo admitiera añadidos. Pero quien escribe a través de la red no puede «solo añadir» a nivel de
+    protocolo, así que seis agentes pasaron 2 h 20 min sin poder publicar <strong>ni avisar de que no
+    podían</strong>: el único canal para avisar era el bloqueado. Otra noche, reparar el tablón
+    sustituyéndolo por una copia limpia dejó a los lectores remotos viendo una foto antigua; uno de
+    ellos, al escribir, restauró la versión dañada y se perdieron al menos 7 filas.</p>
+    <p><strong>Cómo se detectó.</strong> El bloqueo, porque un agente avisó a Kim por fuera del Patio;
+    la reversión, comparando la huella del fichero desde las dos máquinas en el mismo instante (la fecha
+    de modificación no servía: la foto vieja era coherente consigo misma).</p>
+    <p><strong>Regla que quedó.</strong> Toda protección se prueba desde <strong>cada camino</strong> de
+    escritura (local y por red) antes de aplicarla; antes de reparar un fichero compartido se avisa a
+    quien lo lee y se remontan primero los lectores; y tiene que existir un canal de emergencia que no
+    dependa del tablón.</p>
+  </div>
+
+  <div class="box warn">
+    <span class="lbl">El Patio no es el trabajo</span>
+    <p>Una infraestructura así puede comerse a sí misma. Una noche se midieron 164 filas en el tablón:
+    el 96 % hablaba de la maquinaria del propio Patio y el avance real del trabajo fue cero. Otro día,
+    un solo vigía que releía el tablón entero cada 25 segundos para contar líneas movía unos 4 GB
+    por hora en reposo, y esa noche había cuatro o cinco a la vez. De ahí salieron normas: un agente por frente, los procesos automáticos solo
+    escriben cuando cambia algo (nunca un «sigo vivo» periódico), al tablón solo lo verificado, y el
+    vigía compara primero el <strong>tamaño</strong> del fichero y solo lee el contenido si ha
+    crecido.</p>
+  </div>
+
+  <div class="box tip">
+    <span class="lbl">Si lo montas tú: lo mínimo</span>
+    <ol>
+      <li><strong>Un fichero de texto de solo añadir con columnas fijas</strong>, y un carácter separador
+      que nunca aparezca dentro del texto. Antes de publicar, cuenta los separadores; después, relee la
+      fila publicada y compárala con lo que querías escribir.</li>
+      <li><strong>Candado con tiempo máximo</strong>: si no lo consigues en unos segundos, no escribas.
+      Un candado que espera sin límite sobre una carpeta de red se cuelga sin dar error.</li>
+      <li><strong>Verifica por tres lados</strong>: cero bytes nulos, tamaño coherente y la fila presente.
+      Una sola comprobación que cuadra no demuestra nada.</li>
+      <li><strong>Destinatarios con nombre</strong> y entregables grandes fuera del tablón, en una carpeta
+      por agente.</li>
+      <li><strong>Un vigía que se sabe muerto</strong>: lee solo lo nuevo, filtra por campos y no por
+      palabras, reconstruye los mensajes de varias líneas y deja un registro cuyo avance puedas
+      comprobar.</li>
+      <li><strong>Un canal de emergencia fuera del sistema</strong> y la costumbre de preguntar
+      «¿desde qué máquina y por qué camino lo he medido?» antes de concluir que algo falta.</li>
+    </ol>
+  </div>
+
+  <p class="gl">Fuente: libros internos de infraestructura, vecindario, inventario de máquinas y
+  preservación de contexto de nuestra Biblioteca, construidos a partir de fichas de incidentes medidos
+  (julio–agosto de 2026). Cifras tal como constan en esas fichas.</p>
+</section>
+
+<!-- ════════════ 8 · Pautas ════════════ -->
+<section role="tabpanel" id="e7" hidden>
+  <h2>Pautas para montar tu propio vecindario</h2>
+
+  <ol>
+    <li><strong>Empieza con dos</strong>: uno que construye y otro que revisa. Es la mayor parte del valor.</li>
+    <li><strong>Un canal único y escrito</strong>, aunque sea un fichero compartido. Nada de acuerdos que
+    solo vivan en una conversación.</li>
+    <li><strong>Solo añadir</strong> en el registro de mensajes: nunca reescribir la historia.</li>
+    <li><strong>Separa medido de propuesto</strong> en cada mensaje.</li>
+    <li><strong>El revisor no hereda veredictos</strong>: si el trabajo cambia, se revisa otra vez.</li>
+    <li><strong>Protocolo de arranque y de cierre</strong>, iguales siempre, con la hoja de ruta fechada.</li>
+    <li><strong>Las decisiones importantes suben a la persona</strong>, con opciones, recomendación y su
+    porqué.</li>
+    <li><strong>Procesos que duermen con la sesión</strong>: nada corriendo con todo cerrado.</li>
+  </ol>
+
+  <div class="box tip">
+    <span class="lbl">La idea de fondo</span>
+    <p>Un sistema multiagente no vale porque cada agente acierte, sino porque <strong>la organización
+    detecta cuándo alguno se equivoca</strong>. Es la misma lógica que un buen despacho: revisión
+    cruzada, actas y responsables claros.</p>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Guía 7 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  profesional» · Colegio Oficial de Ingenieros de Telecomunicación.<br>
+  Descripción del sistema a 14/09/2026.</p>
+  <p><a href="Glosario.html">¿Una sigla que no conoces? Consulta el glosario</a></p>
+</footer>
+
+</div>
+<script>
+  const tabs=[...document.querySelectorAll('nav.tabs button')];
+  const paneles=[...document.querySelectorAll('section[role=tabpanel]')];
+  tabs.forEach(b=>b.addEventListener('click',()=>{
+    tabs.forEach(x=>x.setAttribute('aria-selected', x===b?'true':'false'));
+    paneles.forEach(p=>p.hidden = (p.id!==b.dataset.p));
+    window.scrollTo({top:0,behavior:'smooth'});
+  }));
+</script>
+</body>
+</html>

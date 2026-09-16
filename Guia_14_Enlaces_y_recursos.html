@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía 14 · Enlaces y recursos — Webinar COIT</title>
+<style>
+  :root{
+    --bg:#ffffff; --ink:#1F2A37; --muted:#6B7785; --line:#D9E1EC;
+    --accent:#2E6DA4; --navy:#1B3A6B; --amber:#B5650A; --amber-bg:#FBEEDC;
+    --green:#2F7D4F; --green-bg:#E9F3EC; --card:#F3F6FB;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+      --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+      --green:#7BC49A; --green-bg:#16241C;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+    --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+    --green:#7BC49A; --green-bg:#16241C;
+  }
+  body{background:var(--bg);color:var(--ink);
+    font:16px/1.65 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    margin:0;padding:0 16px 80px}
+  .wrap{max-width:900px;margin:0 auto}
+  header.top{padding:34px 0 10px;border-bottom:1px solid var(--line)}
+  .eyebrow{font:600 12.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--amber);margin:0 0 10px}
+  h1{font-size:2.05rem;line-height:1.2;margin:0 0 10px;font-weight:650;letter-spacing:-.02em}
+  .sub{color:var(--muted);margin:0 0 18px;max-width:70ch}
+  nav.tabs{position:sticky;top:0;z-index:20;background:var(--bg);
+    border-bottom:1px solid var(--line);margin:0 0 30px;display:flex;gap:2px;
+    overflow-x:auto;padding-top:10px}
+  nav.tabs button{flex:0 0 auto;background:none;border:0;border-bottom:3px solid transparent;
+    padding:12px 15px;font:600 13.5px/1 ui-sans-serif,system-ui,sans-serif;color:var(--muted);
+    cursor:pointer;white-space:nowrap}
+  nav.tabs button:hover{color:var(--ink)}
+  nav.tabs button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+  section[role=tabpanel]{animation:fade .18s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+  h2{font-size:1.6rem;margin:34px 0 8px;font-weight:620;letter-spacing:-.01em}
+  h2:first-child{margin-top:0}
+  h3{font-size:1.14rem;margin:28px 0 8px;font-weight:620}
+  p{margin:0 0 14px;max-width:78ch}
+  ul,ol{max-width:78ch;padding-left:22px;margin:0 0 14px} li{margin-bottom:7px}
+  code{font:13.5px/1.5 ui-monospace,Menlo,Consolas,monospace;background:var(--card);
+    padding:2px 6px;border-radius:4px;border:1px solid var(--line)}
+  .tblwrap{overflow-x:auto;margin:0 0 18px}
+  table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+  th{background:var(--navy);color:#fff;text-align:left;padding:9px 11px;font-weight:600}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) th{color:#12161C}}
+  :root[data-theme="dark"] th{color:#12161C}
+  td{border-bottom:1px solid var(--line);padding:9px 11px;vertical-align:top}
+  .box{border-radius:10px;padding:16px 18px;margin:0 0 18px;border:1px solid var(--line)}
+  .box p:last-child{margin-bottom:0}
+  .tip{background:var(--green-bg);border-color:transparent}
+  .warn{background:var(--amber-bg);border-color:transparent}
+  .key{background:var(--card)}
+  .lbl{font:600 11.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.1em;
+    text-transform:uppercase;display:block;margin-bottom:8px}
+  .tip .lbl{color:var(--green)} .warn .lbl{color:var(--amber)} .key .lbl{color:var(--accent)}
+  .flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:0 0 18px}
+  .flow div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
+  .flow b{display:block;color:var(--accent);font-size:13px;margin-bottom:4px}
+  .flow span{font-size:14px}
+  footer{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13.5px}
+  .pill{display:inline-block;background:var(--card);border:1px solid var(--line);
+    border-radius:999px;padding:2px 10px;font-size:12.5px;color:var(--muted);margin-right:6px}
+  abbr[title]{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}
+  .gl{color:var(--muted);font-size:.86em}
+  a{color:var(--accent)}
+  td a{word-break:break-word}
+
+  .home{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;
+    border:0;border-radius:10px;padding:11px 20px;margin:18px 0 0;
+    font:700 15px/1 ui-sans-serif,system-ui,sans-serif;text-decoration:none;
+    box-shadow:0 1px 2px rgba(0,0,0,.12)}
+  .home:hover{filter:brightness(1.08)}
+  .home svg{flex:0 0 auto}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .home{color:#12161C}}
+  :root[data-theme="dark"] .home{color:#12161C}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="home" href="index.html"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M6 10.5V20h5v-5h2v5h5v-9.5"/></svg><span>Índice de guías</span></a>
+
+
+<header class="top">
+  <p class="eyebrow">Webinar COIT · Guía 14 de 14</p>
+  <h1>Enlaces y recursos</h1>
+  <p class="sub">Todo lo que se nombra en el webinar, reunido y con su dirección oficial: las guías
+  para releer con calma y las herramientas que puedes descargar, probar o contratar tú mismo. Cada
+  una con qué es, para qué le sirve a un ingeniero y dónde está. Si solo te llevas una pestaña,
+  que sea la última: «Por dónde empezar».</p>
+  <p><span class="pill">Nivel: cualquiera</span><span class="pill">Lectura: ~15 min</span>
+  <span class="pill">Direcciones revisadas en septiembre de 2026</span></p>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" data-p="r1">1 · Las guías</button>
+  <button role="tab" aria-selected="false" data-p="r2">2 · Asistentes comerciales</button>
+  <button role="tab" aria-selected="false" data-p="r3">3 · Modelos locales</button>
+  <button role="tab" aria-selected="false" data-p="r4">4 · Interfaces y contenedores</button>
+  <button role="tab" aria-selected="false" data-p="r5">5 · RAG y bases vectoriales</button>
+  <button role="tab" aria-selected="false" data-p="r6">6 · Automatización y despacho</button>
+  <button role="tab" aria-selected="false" data-p="r7">7 · GPU en la nube</button>
+  <button role="tab" aria-selected="false" data-p="r8">8 · Ingeniería y mapas</button>
+  <button role="tab" aria-selected="false" data-p="r9">9 · Diagramas y formatos</button>
+  <button role="tab" aria-selected="false" data-p="r10">10 · Por dónde empezar</button>
+</nav>
+
+<!-- ════════════ 1 ════════════ -->
+<section role="tabpanel" id="r1">
+  <h2>Las guías del webinar</h2>
+
+  <p>Este material está pensado para leerse <strong>después</strong> de la sesión, en el orden que
+  te convenga. Cada guía es una página con pestañas; si estás leyendo esto en tu ordenador con la
+  carpeta descargada, los enlaces de abajo abren directamente cada una.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Guía</th><th>De qué trata</th></tr>
+    <tr><td><a href="Glosario.html">Glosario</a></td><td>Todas las siglas y palabras del webinar explicadas sin tecnicismos. Empieza por aquí si algo no te suena</td></tr>
+    <tr><td><a href="Guia_1_Tu_propia_IA_desde_cero.html">Guía 1 · Tu propia IA, desde cero</a></td><td>Por qué tener una IA propia, qué equipo hace falta, qué modelos y cómo montarla</td></tr>
+    <tr><td><a href="Guia_2_Herramientas_comerciales.html">Guía 2 · Herramientas comerciales</a></td><td>Qué hace cada asistente de pago, cuánto cuesta y dónde está el límite con los datos de clientes</td></tr>
+    <tr><td><a href="Guia_3_Lo_que_hemos_construido.html">Guía 3 · Lo que hemos construido</a></td><td>Un sistema real en funcionamiento: modelos propios, herramientas de ingeniería, imagen y voz</td></tr>
+    <tr><td><a href="Guia_4_El_RAG_tu_normativa_con_fuente.html">Guía 4 · El <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr></a><span class="gl"> (busca en tus documentos y responde citándolos)</span></td><td>Tu normativa respondida con la cita y su vigencia; cómo se construye y cómo se mide</td></tr>
+    <tr><td><a href="Guia_5_El_despacho_automatizado.html">Guía 5 · El despacho automatizado</a></td><td>Correo, hojas de cálculo, macros, documentos y tareas que se hacen solas</td></tr>
+    <tr><td><a href="Guia_6_Construir_tu_IA_con_una_IA_comercial.html">Guía 6 · Construir tu IA con una IA comercial</a></td><td>Usar un asistente de pago para montar y mantener tu propio sistema</td></tr>
+    <tr><td><a href="Guia_7_El_ecosistema_de_vecinos.html">Guía 7 · El ecosistema de vecinos</a></td><td>Varios agentes trabajando a la vez: quién lidera, quién audita y cómo se coordinan</td></tr>
+    <tr><td><a href="Guia_8_Saber_y_aprender_de_verdad.html">Guía 8 · Saber y aprender de verdad</a></td><td>El problema de la memoria y por qué tener algo escrito no garantiza aplicarlo</td></tr>
+    <tr><td><a href="Guia_9_El_metodo.html">Guía 9 · El método</a></td><td>Las piezas que hacen fiable trabajar con una IA: doble puerta, verificación, vuelta atrás</td></tr>
+    <tr><td><a href="Guia_10_La_caja_de_herramientas.html">Guía 10 · La caja de herramientas</a></td><td>Cómo el asistente toca de verdad tus ficheros, tus máquinas y tus programas de ingeniería</td></tr>
+    <tr><td><a href="Guia_11_Catalogo_de_marcos.html">Guía 11 · Catálogo de marcos</a></td><td>47 marcos para pensar, diagnosticar, priorizar y decidir, cada uno con ficha y ejemplo real</td></tr>
+    <tr><td><a href="Guia_12_Formatos_y_representaciones.html">Guía 12 · Formatos y representaciones</a></td><td>Cuándo una tabla, cuándo un esquema y cuándo un diagrama; los formatos que la IA maneja mejor</td></tr>
+    <tr><td><a href="Guia_13_Librerias_Python.html">Guía 13 · Librerías de Python</a></td><td>Qué es una librería, por qué unas chocan con otras y cuáles se usan de verdad en un despacho de ingeniería</td></tr>
+    <tr><td>Guía 14 · Enlaces y recursos</td><td>Esta página</td></tr>
+  </table></div>
+
+  <div class="box key">
+    <span class="lbl">Todas las guías en un solo <abbr title="PDF: Portable Document Format, documento que se ve igual en cualquier equipo">PDF</abbr></span>
+    <p>Si prefieres imprimirlo o leerlo en el móvil, el material está también en <strong>dos
+    PDF</strong>, con las pestañas ya desplegadas, junto a la carpeta de guías y descargables desde
+    la misma página que estas guías:</p>
+    <ul>
+      <li><code>Guias_y_glosario_Webinar_IA.pdf</code> — las catorce guías y el glosario
+      (203 páginas). El catálogo de marcos aparece aquí <em>enunciado</em>: los 47 con su autor y
+      una línea de resumen.</li>
+      <li><code>Catalogo_de_marcos_Webinar_IA.pdf</code> — la Guía 11 completa (412 páginas), con la
+      ficha, la anatomía, el taller y la evidencia de cada uno de los 47 marcos.</li>
+    </ul>
+    <p>Van separados por tamaño: con todo desplegado en un solo fichero eran 619 páginas, y 424 de
+    ellas eran el catálogo.</p>
+  </div>
+
+  <div class="box tip">
+    <span class="lbl">Se leen sin internet</span>
+    <p>Las guías no cargan nada de fuera: descargadas en una carpeta, se abren y navegan entre ellas
+    sin conexión. Lo único que necesita internet son los enlaces a páginas externas de las pestañas
+    siguientes.</p>
+  </div>
+</section>
+
+<!-- ════════════ 2 ════════════ -->
+<section role="tabpanel" id="r2" hidden>
+  <h2>Asistentes comerciales</h2>
+
+  <p>Los de uso inmediato: no hay que instalar nada, se pagan por mes y sirven desde el primer día.
+  Detalle de precios, ejemplos y privacidad en la <a href="Guia_2_Herramientas_comerciales.html">Guía 2</a>.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Herramienta</th><th>Qué es</th><th>Para qué te sirve</th><th>Dirección oficial</th></tr>
+    <tr><td><strong>Gemini Notebook</strong> (antes NotebookLM)</td><td>Cuaderno de Google que solo responde con los documentos que tú le cargas</td><td>Un <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> ya montado sin instalar nada: carga un reglamento o la ordenanza de un municipio y pregunta con cita del pasaje</td><td><a href="https://notebooklm.google.com" target="_blank" rel="noopener">notebooklm.google.com</a></td></tr>
+    <tr><td><strong>Gemini</strong></td><td>Asistente de Google, integrado en su paquete ofimático</td><td>Redactar en el correo y en documentos, resumir reuniones, tablas en hojas de cálculo</td><td><a href="https://gemini.google.com" target="_blank" rel="noopener">gemini.google.com</a></td></tr>
+    <tr><td><strong>Microsoft Copilot</strong></td><td>Asistente de Microsoft, dentro de su ofimática</td><td>Trabajar sobre tus documentos y hojas sin sacarlos de la suite que ya usas</td><td><a href="https://copilot.microsoft.com" target="_blank" rel="noopener">copilot.microsoft.com</a></td></tr>
+    <tr><td><strong>ChatGPT</strong></td><td>Asistente generalista de OpenAI</td><td>Revisar la coherencia de un pliego, analizar una tabla de mediciones con código que puedes leer, plantillas de ofertas</td><td><a href="https://chatgpt.com" target="_blank" rel="noopener">chatgpt.com</a></td></tr>
+    <tr><td><strong>Claude</strong></td><td>Asistente generalista de Anthropic, con versión de línea de órdenes para trabajar sobre tus carpetas</td><td>Revisar un proyecto entero contra una lista de comprobación, escribir un script de cálculo o una macro</td><td><a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a></td></tr>
+    <tr><td><strong>Perplexity</strong></td><td>Buscador que responde citando las fuentes</td><td>Vigilancia normativa, comparar fichas técnicas de fabricantes, estado del arte antes de informar</td><td><a href="https://www.perplexity.ai" target="_blank" rel="noopener">perplexity.ai</a></td></tr>
+  </table></div>
+
+  <div class="box warn">
+    <span class="lbl">Antes de subir nada de un cliente</span>
+    <p>Los planes personales no son todos iguales en lo que hacen con tus datos, y algunos permiten
+    revisión humana de las conversaciones que valoras. Para datos de clientes, periciales o
+    personales: plan de empresa o IA en local. Para normativa pública, cualquier plan con el
+    entrenamiento desactivado. La tabla comparativa está en la <a href="Guia_2_Herramientas_comerciales.html">Guía 2</a>.</p>
+  </div>
+
+  <div class="box tip">
+    <span class="lbl">Una comparación honesta cuesta media hora</span>
+    <p>Coge una tarea real tuya —no un ejemplo de juguete— y hazla en dos de ellos con el plan
+    gratuito antes de pagar ninguno. Para casi todo sirven varios; la diferencia la marca tu tipo de
+    trabajo.</p>
+  </div>
+</section>
+
+<!-- ════════════ 3 ════════════ -->
+<section role="tabpanel" id="r3" hidden>
+  <h2>Modelos locales: la IA que se queda en tu equipo</h2>
+
+  <p>Lo que hace posible que un despacho pequeño tenga IA propia sin enviar nada a la nube. Cómo
+  elegir modelo y equipo, en la <a href="Guia_1_Tu_propia_IA_desde_cero.html">Guía 1</a>.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Herramienta</th><th>Qué es</th><th>Para qué te sirve</th><th>Dirección oficial</th></tr>
+    <tr><td><strong>Ollama</strong></td><td>Programa gratuito que descarga y ejecuta modelos de lenguaje en tu propio equipo</td><td>Es el punto de partida: se instala en minutos y con una orden tienes un modelo respondiendo sin conexión y sin coste por consulta</td><td><a href="https://ollama.com" target="_blank" rel="noopener">ollama.com</a></td></tr>
+    <tr><td><strong>Catálogo de Ollama</strong></td><td>Lista de los modelos que puedes descargar con un solo comando</td><td>Ver qué tamaños hay y cuánta memoria pide cada uno antes de bajarlo</td><td><a href="https://ollama.com/library" target="_blank" rel="noopener">ollama.com/library</a></td></tr>
+    <tr><td><strong>Hugging Face</strong></td><td>El gran catálogo de modelos abiertos, con su ficha, su licencia y sus ficheros</td><td>Comprobar la licencia antes de usar un modelo en trabajo profesional, y encontrar variantes comprimidas que caben en tu tarjeta gráfica</td><td><a href="https://huggingface.co" target="_blank" rel="noopener">huggingface.co</a></td></tr>
+    <tr><td><strong>llama.cpp</strong></td><td>El motor de ejecución que hay debajo de casi todo lo anterior</td><td>Hacer funcionar modelos comprimidos en equipos modestos, incluso sin tarjeta gráfica dedicada</td><td><a href="https://github.com/ggml-org/llama.cpp" target="_blank" rel="noopener">github.com/ggml-org/llama.cpp</a></td></tr>
+    <tr><td><strong>Whisper</strong></td><td>Modelo de transcripción de voz a texto</td><td>Pasar a texto una visita de obra, una reunión o una declaración, sin subir el audio a ningún servicio</td><td><a href="https://github.com/openai/whisper" target="_blank" rel="noopener">github.com/openai/whisper</a></td></tr>
+    <tr><td><strong>faster-whisper</strong></td><td>Versión optimizada del anterior</td><td>La misma transcripción, varias veces más rápida en el mismo equipo</td><td><a href="https://github.com/SYSTRAN/faster-whisper" target="_blank" rel="noopener">github.com/SYSTRAN/faster-whisper</a></td></tr>
+  </table></div>
+
+  <div class="box key">
+    <span class="lbl">La cifra que decide qué modelo te cabe</span>
+    <p>Lo que manda es la memoria de tu tarjeta gráfica (la <abbr title="VRAM: memoria de la tarjeta gráfica">VRAM</abbr><span class="gl"> (memoria de la tarjeta gráfica)</span>). Una tarjeta de 12 GB ya da
+    mucho juego; con 16 GB se cubre un uso intensivo. Y si no tienes tarjeta, un equipo normal
+    ejecuta modelos pequeños a ritmo razonable. Las equivalencias, en la
+    <a href="Guia_1_Tu_propia_IA_desde_cero.html">Guía 1</a>.</p>
+  </div>
+</section>
+
+<!-- ════════════ 4 ════════════ -->
+<section role="tabpanel" id="r4" hidden>
+  <h2>Interfaces y contenedores</h2>
+
+  <p>Un modelo suelto no es un producto. Estas piezas lo convierten en algo que se usa a diario:
+  una ventana de chat, un empaquetado que funciona igual en cualquier máquina y una puerta para que
+  tus programas lo llamen.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Herramienta</th><th>Qué es</th><th>Para qué te sirve</th><th>Dirección oficial</th></tr>
+    <tr><td><strong>Open WebUI</strong></td><td>Interfaz web de chat, parecida a las comerciales, conectada a tus modelos locales</td><td>Que cualquier persona del despacho use la IA propia sin tocar una consola: subir un <abbr title="PDF: Portable Document Format, documento que se ve igual en cualquier equipo">PDF</abbr> y preguntar sobre él</td><td><a href="https://openwebui.com" target="_blank" rel="noopener">openwebui.com</a></td></tr>
+    <tr><td><strong>Docker</strong></td><td>Empaqueta cada programa con todo lo que necesita para que funcione igual en cualquier equipo</td><td>Instalar y desinstalar herramientas sin romper nada de lo que ya tenías; casi todo lo de esta guía se levanta así con una orden</td><td><a href="https://www.docker.com" target="_blank" rel="noopener">docker.com</a></td></tr>
+    <tr><td><strong>FastAPI</strong></td><td>Librería de Python para exponer algo como servicio interno</td><td>Que tu hoja de cálculo, tu aplicación de proyectos o un script llamen a tu IA como si fuera una función más</td><td><a href="https://fastapi.tiangolo.com" target="_blank" rel="noopener">fastapi.tiangolo.com</a></td></tr>
+    <tr><td><strong>ComfyUI</strong></td><td>Editor visual de flujos para generar imágenes con modelos abiertos</td><td>Ilustrar una propuesta o un informe divulgativo sin problemas de derechos de imagen y sin coste por imagen</td><td><a href="https://www.comfy.org" target="_blank" rel="noopener">comfy.org</a></td></tr>
+  </table></div>
+
+  <div class="box tip">
+    <span class="lbl">La cadena típica</span>
+    <div class="flow">
+      <div><b>1 · Entra</b><span>un documento o un dato de medida</span></div>
+      <div><b>2 · Procesa</b><span>tu modelo local, en tu equipo</span></div>
+      <div><b>3 · Sale</b><span>el borrador del informe, para revisar y firmar</span></div>
+    </div>
+    <p>Ninguna de las tres piezas sustituye al ingeniero: el último paso siempre es revisar y firmar.</p>
+  </div>
+</section>
+
+<!-- ════════════ 5 ════════════ -->
+<section role="tabpanel" id="r5" hidden>
+  <h2><abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> y bases vectoriales</h2>
+
+  <p>Es lo que convierte a la IA en útil para un técnico: en vez de responder de memoria, busca en
+  <em>tus</em> normas y <em>tus</em> proyectos y responde citando de dónde lo saca. La explicación
+  completa está en la <a href="Guia_4_El_RAG_tu_normativa_con_fuente.html">Guía 4</a>.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Herramienta</th><th>Qué es</th><th>Para qué te sirve</th><th>Dirección oficial</th></tr>
+    <tr><td><strong>LlamaIndex</strong></td><td>Estructura de trabajo para construir la cadena completa: leer documentos, trocearlos, indexarlos y consultarlos</td><td>Montar tu propio buscador de normativa sin programar la fontanería desde cero</td><td><a href="https://www.llamaindex.ai" target="_blank" rel="noopener">llamaindex.ai</a></td></tr>
+    <tr><td><strong>LangChain</strong></td><td>Alternativa a la anterior, más orientada a encadenar pasos y herramientas</td><td>Lo mismo, cuando la tarea no es solo buscar sino también decidir y llamar a otras herramientas</td><td><a href="https://www.langchain.com" target="_blank" rel="noopener">langchain.com</a></td></tr>
+    <tr><td><strong>Qdrant</strong></td><td>Base de datos vectorial: guarda los fragmentos de tus documentos por significado, no por palabra exacta</td><td>Encontrar el artículo que habla de lo que preguntas aunque no uses sus mismas palabras</td><td><a href="https://qdrant.tech" target="_blank" rel="noopener">qdrant.tech</a></td></tr>
+    <tr><td><strong>ChromaDB</strong></td><td>Base vectorial más ligera, pensada para empezar</td><td>Probar la idea con cien documentos antes de montar nada serio</td><td><a href="https://www.trychroma.com" target="_blank" rel="noopener">trychroma.com</a></td></tr>
+    <tr><td><strong>Comparativa de modelos de <abbr title="Embedding: representación numérica de un texto que permite compararlo por significado">embedding</abbr><span class="gl"> (representación numérica de un texto que permite compararlo por significado)</span></strong></td><td>Tabla pública que compara la calidad de los modelos que convierten texto en números</td><td>Elegir con criterio el modelo que indexa tus normas, y comprobar que rinde en español</td><td><a href="https://huggingface.co/spaces/mteb/leaderboard" target="_blank" rel="noopener">huggingface.co/spaces/mteb/leaderboard</a></td></tr>
+    <tr><td><strong><abbr title="MCP: Model Context Protocol: estándar para conectar un asistente con herramientas">MCP</abbr><span class="gl"> (Model Context Protocol)</span></strong></td><td>Estándar abierto para dar a un asistente herramientas concretas con permisos acotados</td><td>Que tu asistente consulte tu <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr>, tu base de datos o tu programa de cálculo, en vez de improvisar la respuesta</td><td><a href="https://modelcontextprotocol.io" target="_blank" rel="noopener">modelcontextprotocol.io</a></td></tr>
+  </table></div>
+
+  <div class="box warn">
+    <span class="lbl">Lo que distingue un <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> profesional de uno de demostración</span>
+    <p>No es la tecnología: es saber si la norma que te cita <strong>sigue vigente</strong> y si el
+    fragmento dice de verdad lo que la respuesta afirma. Un buscador que no controla la vigencia
+    puede darte, con toda la confianza del mundo, un umbral derogado.</p>
+  </div>
+</section>
+
+<!-- ════════════ 6 ════════════ -->
+<section role="tabpanel" id="r6" hidden>
+  <h2>Automatización y despacho</h2>
+
+  <p>La parte menos vistosa y la que más horas devuelve: transcribir, archivar, avisar y encadenar
+  tareas que hoy haces a mano. Desarrollado en la <a href="Guia_5_El_despacho_automatizado.html">Guía 5</a>.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Herramienta</th><th>Qué es</th><th>Para qué te sirve</th><th>Dirección oficial</th></tr>
+    <tr><td><strong>n8n</strong></td><td>Automatización por flujos visuales: se arrastran cajas y se unen con flechas</td><td>«Entra un correo con un anexo → lo resume un modelo local → me llega un aviso al móvil», sin programar y sin que el contenido salga de tu red</td><td><a href="https://n8n.io" target="_blank" rel="noopener">n8n.io</a></td></tr>
+    <tr><td><strong>Paperless-ngx</strong></td><td>Archivo documental que digitaliza, reconoce el texto y etiqueta solo</td><td>Dejar de buscar facturas y certificados por carpetas: se busca por contenido, como en un buscador</td><td><a href="https://docs.paperless-ngx.com" target="_blank" rel="noopener">docs.paperless-ngx.com</a></td></tr>
+    <tr><td><strong>Scriberr</strong></td><td>Transcripción de audio con marcas de tiempo, en tu propio equipo</td><td>Convertir la grabación de una visita o una reunión en un acta con tiempos, sin subir el audio a un servicio ajeno</td><td><a href="https://github.com/rishikanthc/Scriberr" target="_blank" rel="noopener">github.com/rishikanthc/Scriberr</a></td></tr>
+    <tr><td><strong>ntfy</strong></td><td>Avisos al móvil desde cualquier programa o script</td><td>Que un cálculo largo te avise al terminar, o que un flujo automático te notifique lo urgente</td><td><a href="https://ntfy.sh" target="_blank" rel="noopener">ntfy.sh</a></td></tr>
+    <tr><td><strong>Tailscale</strong></td><td>Red privada cifrada entre tus propios dispositivos</td><td>Llegar a tu equipo del despacho desde la obra o desde casa sin abrir ningún puerto al exterior</td><td><a href="https://tailscale.com" target="_blank" rel="noopener">tailscale.com</a></td></tr>
+    <tr><td><strong>Langfuse</strong></td><td>Registro de lo que se preguntó a un modelo, qué respondió y cuánto costó</td><td>Saber en qué se te va el dinero de la <abbr title="API: Application Programming Interface: puerta para que un programa hable con otro">API</abbr><span class="gl"> (puerta para que un programa hable con otro)</span> y poder reconstruir cómo se generó un resultado</td><td><a href="https://langfuse.com" target="_blank" rel="noopener">langfuse.com</a></td></tr>
+  </table></div>
+
+  <div class="box tip">
+    <span class="lbl">Por dónde empieza casi todo el mundo</span>
+    <p>Por la transcripción y por los avisos: se montan en una tarde, el beneficio se nota la
+    primera semana y no tocan ningún dato delicado.</p>
+  </div>
+</section>
+
+<!-- ════════════ 7 ════════════ -->
+<section role="tabpanel" id="r7" hidden>
+  <h2><abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr><span class="gl"> (tarjeta gráfica)</span> en la nube, por horas</h2>
+
+  <p>Antes de gastarte el dinero en una tarjeta gráfica, alquila una por horas y comprueba si lo que
+  quieres hacer te sirve de verdad. Es la forma más barata de equivocarse.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Herramienta</th><th>Qué es</th><th>Para qué te sirve</th><th>Dirección oficial</th></tr>
+    <tr><td><strong>RunPod</strong></td><td>Alquiler de máquinas con tarjeta gráfica por horas, con imágenes ya preparadas</td><td>Probar un modelo grande una tarde, o lanzar un cálculo puntual que tu equipo no aguanta</td><td><a href="https://www.runpod.io" target="_blank" rel="noopener">runpod.io</a></td></tr>
+    <tr><td><strong>Vast.ai</strong></td><td>Mercado de tarjetas gráficas de terceros, normalmente más barato</td><td>Experimentar con presupuesto corto, aceptando que la máquina es de un particular</td><td><a href="https://vast.ai" target="_blank" rel="noopener">vast.ai</a></td></tr>
+    <tr><td><strong>Hugging Face Spaces</strong></td><td>Demostraciones ejecutables de modelos, muchas gratuitas</td><td>Ver qué hace un modelo antes de instalar nada, directamente en el navegador</td><td><a href="https://huggingface.co/spaces" target="_blank" rel="noopener">huggingface.co/spaces</a></td></tr>
+  </table></div>
+
+  <div class="box warn">
+    <span class="lbl">Dos avisos que salen caros</span>
+    <p><strong>Apágala al terminar.</strong> Se factura por tiempo encendido, no por uso: una máquina
+    olvidada un fin de semana cuesta más que la prueba entera.</p>
+    <p><strong>No es «tu» equipo.</strong> Lo que subes a una máquina alquilada sale de tu despacho.
+    Para probar, usa documentos públicos o inventados; los datos de cliente se quedan en local.</p>
+  </div>
+</section>
+
+<!-- ════════════ 8 ════════════ -->
+<section role="tabpanel" id="r8" hidden>
+  <h2>Ingeniería, mapas y datos públicos</h2>
+
+  <p>Programas libres de nivel profesional que un asistente puede manejar por ti, y las fuentes de
+  datos públicas con las que se alimentan. Su uso real, en la
+  <a href="Guia_10_La_caja_de_herramientas.html">Guía 10</a>.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Herramienta</th><th>Qué es</th><th>Para qué te sirve</th><th>Dirección oficial</th></tr>
+    <tr><td><strong>QGIS</strong></td><td><abbr title="SIG: Sistema de Información Geográfica">SIG</abbr><span class="gl"> (Sistema de Información Geográfica)</span> libre, equivalente a las suites comerciales del sector</td><td>Digitalizar, medir y representar sobre plano: parcelas, edificios, receptores, resultados. Se puede manejar también sin interfaz, desde un script</td><td><a href="https://qgis.org" target="_blank" rel="noopener">qgis.org</a></td></tr>
+    <tr><td><strong>NoiseModelling</strong></td><td>Motor libre de cálculo de propagación de ruido ambiental por el método europeo</td><td>Mapas de ruido de una vía o una actividad, con niveles día, tarde y noche, sin licencia comercial</td><td><a href="https://noise-planet.org/noisemodelling.html" target="_blank" rel="noopener">noise-planet.org/noisemodelling.html</a></td></tr>
+    <tr><td><strong>PostGIS</strong></td><td>Extensión geográfica de una base de datos libre</td><td>Guardar y cruzar miles de receptores y resultados con consultas, en vez de con ficheros sueltos</td><td><a href="https://postgis.net" target="_blank" rel="noopener">postgis.net</a></td></tr>
+    <tr><td><strong>OpenStreetMap</strong></td><td>Cartografía libre y editable de todo el mundo</td><td>Base cartográfica y trazado de calles y edificios cuando no hay cartografía oficial suficiente</td><td><a href="https://www.openstreetmap.org" target="_blank" rel="noopener">openstreetmap.org</a></td></tr>
+    <tr><td><strong>Sede Electrónica del Catastro</strong></td><td>Datos catastrales oficiales, descargables en formato normalizado europeo</td><td>Geometría real de parcelas y edificios, con alturas, como punto de partida de un cálculo</td><td><a href="https://www.sedecatastro.gob.es" target="_blank" rel="noopener">sedecatastro.gob.es</a></td></tr>
+    <tr><td><strong>Centro de Descargas del <abbr title="CNIG: Centro Nacional de Información Geográfica">CNIG</abbr><span class="gl"> (Centro Nacional de Información Geográfica)</span></strong></td><td>Ortofotos, modelos del terreno y cartografía oficial del Estado</td><td>Fondo aéreo y relieve para tus mapas, y modelo digital del terreno para el cálculo</td><td><a href="https://centrodedescargas.cnig.es" target="_blank" rel="noopener">centrodedescargas.cnig.es</a></td></tr>
+  </table></div>
+
+  <div class="box key">
+    <span class="lbl">El reparto que funciona</span>
+    <p>El asistente <strong>prepara</strong> (descarga los datos, genera los ficheros de entrada,
+    lanza el cálculo y compara resultados); el programa de ingeniería <strong>calcula</strong>; el
+    ingeniero <strong>valida y firma</strong>. Ninguno de los tres se salta.</p>
+  </div>
+</section>
+
+<!-- ════════════ 9 ════════════ -->
+<section role="tabpanel" id="r9" hidden>
+  <h2>Diagramas y formatos</h2>
+
+  <p>Un asistente escribe mucho mejor un diagrama que lo dibuja. Si le pides el dibujo en texto,
+  puedes revisarlo, versionarlo y corregirlo como cualquier otro documento. Más sobre cuándo usar
+  cada forma, en la <a href="Guia_12_Formatos_y_representaciones.html">Guía 12</a>.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Herramienta</th><th>Qué es</th><th>Para qué te sirve</th><th>Dirección oficial</th></tr>
+    <tr><td><strong>Mermaid</strong></td><td>Lenguaje para describir diagramas escribiendo texto: flujos, secuencias, tiempos, grafos</td><td>Pedirle a la IA el esquema de un proceso y obtener algo que se dibuja solo, se guarda en el control de versiones y se corrige editando una línea</td><td><a href="https://mermaid.js.org" target="_blank" rel="noopener">mermaid.js.org</a></td></tr>
+    <tr><td><strong>Editor en línea de Mermaid</strong></td><td>Página donde pegas el texto y ves el diagrama al instante</td><td>Comprobar en segundos lo que te ha escrito el asistente y exportarlo como imagen para el informe</td><td><a href="https://mermaid.live" target="_blank" rel="noopener">mermaid.live</a></td></tr>
+    <tr><td><strong>Markdown</strong> (especificación CommonMark)</td><td>Texto plano con un formato mínimo: títulos, listas, tablas, negritas</td><td>El formato en el que mejor trabajan los asistentes; se convierte después a documento de texto o a <abbr title="PDF: Portable Document Format, documento que se ve igual en cualquier equipo">PDF</abbr> sin perder la estructura</td><td><a href="https://commonmark.org" target="_blank" rel="noopener">commonmark.org</a></td></tr>
+  </table></div>
+
+  <div class="box warn">
+    <span class="lbl">Un diagrama bonito puede decir algo distinto que el texto</span>
+    <p>Cuando la IA te dibuje un proceso, compruébalo contra lo que dice el párrafo de al lado. Es un
+    error frecuente y pasa desapercibido precisamente porque el dibujo queda convincente.</p>
+  </div>
+</section>
+
+<!-- ════════════ 10 ════════════ -->
+<section role="tabpanel" id="r10" hidden>
+  <h2>Por dónde empezar</h2>
+
+  <p>Cuatro pasos en orden. Cada uno se hace en una tarde y funciona por sí solo: si te quedas en el
+  segundo, ya habrás ganado algo.</p>
+
+  <h3>Paso 1 · Esta semana: prueba un asistente comercial con una tarea real tuya</h3>
+  <ul>
+    <li>Elige una tarea que hagas de verdad y que no lleve datos de cliente: revisar un pliego,
+    comparar tres fichas técnicas, redactar una oferta a partir de un guion.</li>
+    <li>Hazla en dos asistentes distintos con el plan gratuito y compara (pestaña 2).</li>
+    <li>Antes de subir nada, mira el ajuste de entrenamiento con tus datos y desactívalo.</li>
+  </ul>
+
+  <h3>Paso 2 · Monta tu <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> sin instalar nada</h3>
+  <ul>
+    <li>Abre <a href="https://notebooklm.google.com" target="_blank" rel="noopener">Gemini Notebook</a>
+    y crea un cuaderno con documentación pública: un reglamento, una norma, la ordenanza del
+    municipio donde más trabajas.</li>
+    <li>Pregúntale algo que sepas responder tú, y <strong>comprueba la cita</strong>. Ahí verás de
+    una vez qué es un <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> y para qué sirve.</li>
+    <li>Un cuaderno por municipio o por tipo de proyecto rinde más que uno gigante.</li>
+  </ul>
+
+  <h3>Paso 3 · Instala un modelo local en tu propio equipo</h3>
+  <ul>
+    <li>Instala <a href="https://ollama.com" target="_blank" rel="noopener">Ollama</a> y descarga un
+    modelo pequeño (de 7 a 8 mil millones de parámetros). Funciona en un portátil decente.</li>
+    <li>Añade <a href="https://openwebui.com" target="_blank" rel="noopener">Open WebUI</a> con
+    <a href="https://www.docker.com" target="_blank" rel="noopener">Docker</a> y ya tienes una ventana
+    de chat propia donde subir un <abbr title="PDF: Portable Document Format, documento que se ve igual en cualquier equipo">PDF</abbr> y preguntar.</li>
+    <li>Si dudas de si te compensa comprar tarjeta gráfica, alquila una por horas primero
+    (pestaña 7) y apágala al terminar.</li>
+  </ul>
+
+  <h3>Paso 4 · Automatiza una sola cosa de tu día</h3>
+  <ul>
+    <li>Elige la tarea repetitiva que más te canse: transcribir una visita, archivar facturas,
+    avisarte cuando termina un cálculo.</li>
+    <li>Móntala con una sola herramienta de la pestaña 6 y mídela: cuánto tardabas antes y cuánto
+    ahora.</li>
+    <li>No automatices diez cosas a la vez. Una que funcione convence más que diez a medias.</li>
+  </ul>
+
+  <div class="box tip">
+    <span class="lbl">La regla que lo sostiene todo</span>
+    <p>La IA prepara, el programa calcula y <strong>tú validas y firmas</strong>. Todo lo de esta
+    guía es para llegar antes al borrador, nunca para saltarte la revisión: la responsabilidad
+    profesional sigue siendo íntegramente tuya.</p>
+  </div>
+
+  <div class="box key">
+    <span class="lbl">Si te atascas</span>
+    <p>Casi todas las dudas de arranque están resueltas en la
+    <a href="Guia_1_Tu_propia_IA_desde_cero.html">Guía 1</a> (equipo y modelos) y en la
+    <a href="Guia_4_El_RAG_tu_normativa_con_fuente.html">Guía 4</a> (normativa con fuente). Y si
+    aparece una palabra que no conoces, está en el <a href="Glosario.html">glosario</a>.</p>
+  </div>
+</section>
+
+<a class="home" href="index.html"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M6 10.5V20h5v-5h2v5h5v-9.5"/></svg><span>Índice de guías</span></a>
+
+<footer>
+  <p><strong>Guía 14 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  profesional» · Colegio Oficial de Ingenieros de Telecomunicación.<br>
+  Direcciones revisadas el 16/09/2026. Las herramientas y sus precios cambian: comprueba siempre en
+  la página oficial antes de contratar.</p>
+  <p><a href="Glosario.html">¿Una sigla que no conoces? Consulta el glosario</a></p>
+</footer>
+
+</div>
+<script>
+  const tabs=[...document.querySelectorAll('nav.tabs button')];
+  const paneles=[...document.querySelectorAll('section[role=tabpanel]')];
+  tabs.forEach(b=>b.addEventListener('click',()=>{
+    tabs.forEach(x=>x.setAttribute('aria-selected', x===b?'true':'false'));
+    paneles.forEach(p=>p.hidden = (p.id!==b.dataset.p));
+    window.scrollTo({top:0,behavior:'smooth'});
+  }));
+</script>
+</body>
+</html>

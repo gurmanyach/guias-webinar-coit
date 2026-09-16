@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía 5 · El despacho automatizado — Webinar COIT</title>
+<style>
+  :root{
+    --bg:#ffffff; --ink:#1F2A37; --muted:#6B7785; --line:#D9E1EC;
+    --accent:#2E6DA4; --navy:#1B3A6B; --amber:#B5650A; --amber-bg:#FBEEDC;
+    --green:#2F7D4F; --green-bg:#E9F3EC; --card:#F3F6FB;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+      --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+      --green:#7BC49A; --green-bg:#16241C;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+    --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+    --green:#7BC49A; --green-bg:#16241C;
+  }
+  body{background:var(--bg);color:var(--ink);
+    font:16px/1.65 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    margin:0;padding:0 16px 80px}
+  .wrap{max-width:900px;margin:0 auto}
+  header.top{padding:34px 0 10px;border-bottom:1px solid var(--line)}
+  .eyebrow{font:600 12.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--amber);margin:0 0 10px}
+  h1{font-size:2.05rem;line-height:1.2;margin:0 0 10px;font-weight:650;letter-spacing:-.02em}
+  .sub{color:var(--muted);margin:0 0 18px;max-width:70ch}
+  nav.tabs{position:sticky;top:0;z-index:20;background:var(--bg);
+    border-bottom:1px solid var(--line);margin:0 0 30px;display:flex;gap:2px;
+    overflow-x:auto;padding-top:10px}
+  nav.tabs button{flex:0 0 auto;background:none;border:0;border-bottom:3px solid transparent;
+    padding:12px 15px;font:600 13.5px/1 ui-sans-serif,system-ui,sans-serif;color:var(--muted);
+    cursor:pointer;white-space:nowrap}
+  nav.tabs button:hover{color:var(--ink)}
+  nav.tabs button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+  section[role=tabpanel]{animation:fade .18s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+  h2{font-size:1.6rem;margin:34px 0 8px;font-weight:620;letter-spacing:-.01em}
+  h2:first-child{margin-top:0}
+  h3{font-size:1.14rem;margin:28px 0 8px;font-weight:620}
+  p{margin:0 0 14px;max-width:78ch}
+  ul,ol{max-width:78ch;padding-left:22px;margin:0 0 14px} li{margin-bottom:7px}
+  code{font:13.5px/1.5 ui-monospace,Menlo,Consolas,monospace;background:var(--card);
+    padding:2px 6px;border-radius:4px;border:1px solid var(--line)}
+  .tblwrap{overflow-x:auto;margin:0 0 18px}
+  table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+  th{background:var(--navy);color:#fff;text-align:left;padding:9px 11px;font-weight:600}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) th{color:#12161C}}
+  :root[data-theme="dark"] th{color:#12161C}
+  td{border-bottom:1px solid var(--line);padding:9px 11px;vertical-align:top}
+  .box{border-radius:10px;padding:16px 18px;margin:0 0 18px;border:1px solid var(--line)}
+  .box p:last-child{margin-bottom:0}
+  .tip{background:var(--green-bg);border-color:transparent}
+  .warn{background:var(--amber-bg);border-color:transparent}
+  .key{background:var(--card)}
+  .lbl{font:600 11.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.1em;
+    text-transform:uppercase;display:block;margin-bottom:8px}
+  .tip .lbl{color:var(--green)} .warn .lbl{color:var(--amber)} .key .lbl{color:var(--accent)}
+  .ex{background:var(--card);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;
+    padding:10px 14px;margin:0 0 10px;font-size:15px}
+  .ex b{color:var(--accent)}
+  footer{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13.5px}
+  .pill{display:inline-block;background:var(--card);border:1px solid var(--line);
+    border-radius:999px;padding:2px 10px;font-size:12.5px;color:var(--muted);margin-right:6px}
+  abbr[title]{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}
+  .gl{color:var(--muted);font-size:.86em}
+
+  .home{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;
+    border:0;border-radius:10px;padding:11px 20px;margin:18px 0 0;
+    font:700 15px/1 ui-sans-serif,system-ui,sans-serif;text-decoration:none;
+    box-shadow:0 1px 2px rgba(0,0,0,.12)}
+  .home:hover{filter:brightness(1.08)}
+  .home svg{flex:0 0 auto}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .home{color:#12161C}}
+  :root[data-theme="dark"] .home{color:#12161C}
+
+  a{color:var(--accent)}
+  a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="home" href="index.html"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M6 10.5V20h5v-5h2v5h5v-9.5"/></svg><span>Índice de guías</span></a>
+
+
+<header class="top">
+  <p class="eyebrow">Webinar COIT · Guía 5 de 14</p>
+  <h1>El despacho automatizado</h1>
+  <p class="sub">El proyecto es lo que se factura; el correo, los documentos, las hojas de
+  cálculo, las cuentas y las mil tareas pequeñas son lo que se come las horas. Aquí es donde la
+  IA se nota antes, y donde menos riesgo tiene empezar.</p>
+  <p><span class="pill">Nivel: práctico</span><span class="pill">Lectura: ~25 min</span>
+  <span class="pill">Vale con herramientas comerciales o locales</span></p>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" data-p="d1">1 · Por dónde empezar</button>
+  <button role="tab" aria-selected="false" data-p="d2">2 · Correo y documentos</button>
+  <button role="tab" aria-selected="false" data-p="d3">3 · Excel y VBA</button>
+  <button role="tab" aria-selected="false" data-p="d4">4 · Cálculo</button>
+  <button role="tab" aria-selected="false" data-p="d5">5 · Cuentas y presupuestos</button>
+  <button role="tab" aria-selected="false" data-p="d6">6 · Tareas repetitivas</button>
+  <button role="tab" aria-selected="false" data-p="d7">7 · Pautas</button>
+</nav>
+
+<!-- ════════════ 1 ════════════ -->
+<section role="tabpanel" id="d1">
+  <h2>Por dónde empezar</h2>
+
+  <p>La mejor primera automatización no es la más espectacular: es <strong>la tarea repetitiva que
+  más te molesta</strong> y cuyo resultado sabes comprobar de un vistazo.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Tarea</th><th>Cómo se ataca</th><th>Dificultad</th><th>Lo que ahorra</th></tr>
+    <tr><td><strong>Normativa</strong>: encontrar el artículo que aplica</td><td><abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr><span class="gl"> (Retrieval-Augmented Generation: busca en tus documentos y responde citándolos)</span> sobre tu corpus (Guía 4) o un cuaderno de fuentes (Guía 2)</td><td>media</td><td>el que más cambia el día a día</td></tr>
+    <tr><td><strong>Correo</strong>: clasificar, redactar, hacer seguimiento</td><td>Asistente dentro del gestor de correo</td><td>fácil</td><td>minutos varias veces al día</td></tr>
+    <tr><td><strong>Excel y <abbr title="VBA: Visual Basic for Applications, macros de Office">VBA</abbr></strong>: fórmulas, macros, limpieza de datos</td><td>La IA escribe; tú revisas y pruebas</td><td>fácil</td><td>mucho, y desde el primer día</td></tr>
+    <tr><td><strong>Cálculo</strong>: repetir un cálculo con datos nuevos</td><td>Un script que la IA prepara</td><td>media</td><td>horas, y menos errores de tecleo</td></tr>
+    <tr><td><strong>Documentos</strong>: informes a partir de plantilla y datos</td><td>Plantilla + datos → documento</td><td>media</td><td>la parte mecánica del informe</td></tr>
+    <tr><td><strong>Archivo</strong>: renombrar, clasificar, encontrar</td><td>Scripts pequeños y un gestor documental</td><td>fácil</td><td>el tiempo de buscar</td></tr>
+  </table></div>
+
+  <div class="box key">
+    <span class="lbl">La regla de reparto</span>
+    <p><strong>La IA prepara, redacta y localiza. El cálculo lo hace un programa. La decisión y la
+    firma son tuyas.</strong> Cada automatización de esta guía respeta ese reparto.</p>
+  </div>
+</section>
+
+<!-- ════════════ 2 ════════════ -->
+<section role="tabpanel" id="d2" hidden>
+  <h2>Correo y documentos</h2>
+
+  <h3>Correo</h3>
+  <div class="ex"><b>Triaje:</b> «de estos correos, ¿cuáles piden algo con plazo y cuál es el plazo?».</div>
+  <div class="ex"><b>Borrador:</b> «redacta la respuesta al requerimiento, con tono formal, citando el
+  informe adjunto»; la revisas y la envías tú.</div>
+  <div class="ex"><b>Seguimiento:</b> «resume el hilo con el constructor y lista lo que queda pendiente
+  de cada parte».</div>
+  <p>Con Gmail o Outlook, las herramientas comerciales ya lo hacen dentro del propio correo (Guía 2).
+  Si el correo contiene datos de cliente, recuerda la regla: <strong>plan de empresa o IA local</strong>.</p>
+
+  <h3>Documentos</h3>
+  <ul>
+    <li><strong>Digitalizar y encontrar:</strong> un gestor documental con <abbr title="OCR: Optical Character Recognition: convertir imagen o PDF escaneado en texto">OCR</abbr><span class="gl"> (Optical Character Recognition: convertir imagen o PDF escaneado en texto)</span> (por ejemplo
+    Paperless-ngx, libre) lee los PDF escaneados, los etiqueta y los hace buscables. Es además la
+    base perfecta para un <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> más adelante.</li>
+    <li><strong>Convertir para la IA:</strong> pasar Word, Excel y PDF a texto estructurado
+    (Markdown) hace que cualquier modelo los entienda mucho mejor que el fichero original.</li>
+    <li><strong>Generar desde plantilla:</strong> la estructura, los logotipos y los textos fijos en
+    una plantilla; los datos del encargo, aparte. El documento se <em>regenera</em>, no se edita a
+    mano cada vez.</li>
+  </ul>
+
+  <div class="box tip">
+    <span class="lbl">Un hábito que se paga solo</span>
+    <p>Guarda las <strong>notas de visita en audio</strong> y pásalas por un transcriptor. Una nota
+    de voz de dos minutos en obra se convierte en el borrador del apartado de antecedentes.</p>
+  </div>
+</section>
+
+<!-- ════════════ 3 ════════════ -->
+<section role="tabpanel" id="d3" hidden>
+  <h2>Excel y <abbr title="VBA: Visual Basic for Applications, macros de Office">VBA</abbr>: la automatización más rentable</h2>
+
+  <p>Casi todos los despachos tienen hojas de cálculo críticas. La IA es especialmente buena
+  escribiendo <strong>fórmulas, macros <abbr title="VBA: Visual Basic for Applications, macros de Office">VBA</abbr> y scripts</strong> que las manejan.</p>
+
+  <h3>Cómo pedirlo bien</h3>
+  <ol>
+    <li><strong>Describe la hoja</strong>: qué hay en cada columna, en qué fila empiezan los datos,
+    qué formato tienen las fechas y los decimales.</li>
+    <li><strong>Describe el resultado</strong> con un ejemplo: «para esta fila, el resultado debe ser
+    este».</li>
+    <li><strong>Pide que explique</strong> la macro línea a línea antes de ejecutarla.</li>
+    <li><strong>Pruébala sobre una copia</strong>, nunca sobre la hoja original.</li>
+    <li><strong>Compara con un caso que ya tengas calculado a mano.</strong> Si coincide, confías;
+    si no, has encontrado el error sin coste.</li>
+  </ol>
+
+  <div class="ex"><b>Ejemplo:</b> «Tengo en la columna B niveles en dB y en la C la franja horaria (día,
+  tarde, noche). Escribe una macro que marque en rojo las filas que superen el límite de cada franja,
+  tomando los límites de la hoja «Límites»».</div>
+
+  <h3>Entender las macros que ya tienes</h3>
+  <p>Las hojas heredadas suelen tener macros que nadie recuerda. <strong>Extraer el código <abbr title="VBA: Visual Basic for Applications, macros de Office">VBA</abbr> y
+  pedir a la IA que lo explique</strong> —qué hace, qué hojas toca, qué puede romperse— es una de las
+  tareas más útiles y menos arriesgadas: no cambia nada, solo lo documenta.</p>
+
+  <div class="box warn">
+    <span class="lbl">Cuidado con los separadores</span>
+    <p>En España el decimal es la coma y el separador de miles el punto. Una macro escrita con
+    convenciones inglesas puede leer <code>1.234</code> como «uno coma dos tres cuatro» sin dar
+    ningún error. <strong>Dilo explícitamente al pedirla y compruébalo con un número grande.</strong></p>
+  </div>
+</section>
+
+<!-- ════════════ 4 ════════════ -->
+<section role="tabpanel" id="d4" hidden>
+  <h2>Cálculo: el número lo da el programa</h2>
+
+  <p>Un modelo de lenguaje puede escribir una cifra perfectamente formada y perfectamente falsa. Por
+  eso la pauta es innegociable: <strong>la IA escribe el cálculo, y el resultado sale de ejecutarlo</strong>.</p>
+
+  <h3>Qué se puede automatizar</h3>
+  <ul>
+    <li><strong>Cálculos repetitivos por lotes:</strong> procesar de una vez todas las mediciones de
+    una campaña y obtener los parámetros normalizados, en lugar de uno a uno.</li>
+    <li><strong>Comprobación de cumplimiento:</strong> un programa que, a partir de un valor medido o
+    calculado, indica si cumple o no, con el margen y el artículo que lo exige.</li>
+    <li><strong>Predicción:</strong> estimaciones previas con modelos de cálculo abiertos, para
+    comparar soluciones antes de proyectar.</li>
+    <li><strong>Calibración:</strong> ajustar un modelo de simulación para que reproduzca lo medido.</li>
+  </ul>
+
+  <div class="ex"><b>Ejemplo:</b> «Escribe un script en Python que lea este Excel de mediciones, calcule el
+  resultado según el procedimiento que te adjunto y genere una tabla con el resultado de cada punto».
+  Luego lo ejecutas, y lo contrastas con un punto que ya tenías calculado.</div>
+
+  <div class="box key">
+    <span class="lbl">Tres comprobaciones antes de fiarte de un cálculo automatizado</span>
+    <ol>
+      <li><strong>Caso conocido:</strong> reproduce un resultado que ya tienes validado.</li>
+      <li><strong>Unidades:</strong> revisa que entradas y salidas estén en las unidades que crees.</li>
+      <li><strong>Extremos:</strong> prueba con valores límite (cero, muy grande, dato ausente) y mira
+      que no dé un resultado absurdo en silencio.</li>
+    </ol>
+  </div>
+
+  <div class="box warn">
+    <span class="lbl">La fuente del método</span>
+    <p>Si el cálculo sigue una norma, el script debe decir <strong>qué norma, qué edición y qué
+    apartado</strong> implementa. Así, cuando la norma cambie, sabes qué hay que revisar.</p>
+  </div>
+</section>
+
+<!-- ════════════ 5 ════════════ -->
+<section role="tabpanel" id="d5" hidden>
+  <h2>Cuentas y presupuestos</h2>
+
+  <h3>Facturas y gastos</h3>
+  <ul>
+    <li><strong>Extraer datos a tabla</strong>: emisor, fecha, base, IVA y total de cada factura en
+    PDF, para cuadrar con la contabilidad.</li>
+    <li><strong>Revisar, no inventar</strong>: pide que marque las facturas donde la suma no cuadre o
+    falte un dato, en lugar de que las «corrija».</li>
+    <li><strong>Datos fiscales, en local o en plan de empresa.</strong> Son exactamente el tipo de
+    información que no conviene subir a un plan personal.</li>
+  </ul>
+
+  <h3>Presupuestos y bases de precios</h3>
+  <p>Las bases de precios de construcción se intercambian en formato <strong>FIEBDC (.bc3)</strong>,
+  el que usan programas de mediciones y presupuestos habituales. Con un pequeño script se leen y se
+  llevan a una hoja de cálculo, y la IA puede ayudarte a buscar partidas o a comparar precios entre
+  bases.</p>
+
+  <div class="ex"><b>Ejemplo:</b> «De esta base de precios, lista las partidas de canalizaciones de
+  telecomunicaciones con su precio unitario, y compáralas con las del presupuesto del año pasado».</div>
+
+  <div class="box tip">
+    <span class="lbl">Donde de verdad ayuda</span>
+    <p>En la <strong>preparación</strong>: localizar, ordenar, comparar y detectar incoherencias. La
+    cifra final del presupuesto la cierra una hoja o un programa de presupuestos, y la revisas tú.</p>
+  </div>
+</section>
+
+<!-- ════════════ 6 ════════════ -->
+<section role="tabpanel" id="d6" hidden>
+  <h2>Tareas repetitivas: pequeños scripts, grandes ahorros</h2>
+
+  <p>Muchas automatizaciones útiles son programas de pocas líneas que la IA escribe en un minuto:</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Tarea</th><th>Qué hace el script</th></tr>
+    <tr><td>Renombrar por lotes</td><td>Pone a cientos de fotos o documentos el nombre con fecha, obra y tipo</td></tr>
+    <tr><td>Encontrar duplicados</td><td>Detecta ficheros repetidos aunque tengan nombres distintos</td></tr>
+    <tr><td>Ordenar por fecha</td><td>Organiza carpetas de campo en orden cronológico</td></tr>
+    <tr><td>Vigilar una carpeta</td><td>Cuando llega un fichero nuevo, lo procesa solo (convierte, extrae, archiva)</td></tr>
+    <tr><td>Avisar al móvil</td><td>Te notifica cuando termina un proceso largo o algo falla</td></tr>
+    <tr><td>Transcribir</td><td>Convierte las grabaciones de reuniones y visitas en texto</td></tr>
+    <tr><td>Convertir formatos</td><td>Word, Excel, PDF a texto estructurado; datos del instrumento a Excel</td></tr>
+  </table></div>
+
+  <h3>De script suelto a herramienta</h3>
+  <p>Cuando varios scripts se usan a menudo, compensa reunirlos en <strong>una pequeña aplicación de
+  escritorio</strong> con un botón por tarea. Es exactamente lo que se ha hecho en el sistema de
+  ejemplo de la Guía 3: una suite con dieciocho herramientas de medición acústica y gestión de
+  documentos, y otra que genera un proyecto <abbr title="ICT: Infraestructura Común de Telecomunicaciones (RD 346/2011)">ICT</abbr><span class="gl"> (Infraestructura Común de Telecomunicaciones (RD 346/2011))</span> completo —planos, cálculos y memoria— a partir de los
+  datos del edificio.</p>
+</section>
+
+<!-- ════════════ 7 ════════════ -->
+<section role="tabpanel" id="d7" hidden>
+  <h2>Pautas para automatizar sin sustos</h2>
+
+  <ol>
+    <li><strong>Copia de seguridad antes de ejecutar</strong> cualquier cosa que modifique ficheros.</li>
+    <li><strong>Primero en seco:</strong> que el programa diga qué haría antes de hacerlo.</li>
+    <li><strong>Empieza por lo que puedes comprobar de un vistazo.</strong></li>
+    <li><strong>Un caso conocido</strong> para validar cada automatización antes de usarla con trabajo real.</li>
+    <li><strong>No automatices lo que no entiendes.</strong> Si no sabes explicar qué hace, pide que te
+    lo explique antes de usarlo.</li>
+    <li><strong>Deja rastro:</strong> que cada proceso escriba qué ha hecho y cuándo.</li>
+    <li><strong>Datos de clientes y fiscales, en local o en plan de empresa.</strong></li>
+    <li><strong>Revisa lo que sale.</strong> La automatización ahorra el trabajo mecánico, no la
+    responsabilidad de revisar.</li>
+  </ol>
+
+  <div class="box key">
+    <span class="lbl">Resumen en una frase</span>
+    <p>Automatiza lo repetitivo y comprobable, deja que un programa calcule, y guarda tu tiempo
+    para lo que solo tú puedes decidir.</p>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Guía 5 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  profesional» · Colegio Oficial de Ingenieros de Telecomunicación.</p>
+  <p><a href="Glosario.html">¿Una sigla que no conoces? Consulta el glosario</a></p>
+</footer>
+
+</div>
+<script>
+  const tabs=[...document.querySelectorAll('nav.tabs button')];
+  const paneles=[...document.querySelectorAll('section[role=tabpanel]')];
+  tabs.forEach(b=>b.addEventListener('click',()=>{
+    tabs.forEach(x=>x.setAttribute('aria-selected', x===b?'true':'false'));
+    paneles.forEach(p=>p.hidden = (p.id!==b.dataset.p));
+    window.scrollTo({top:0,behavior:'smooth'});
+  }));
+</script>
+</body>
+</html>

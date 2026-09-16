@@ -1,0 +1,1860 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía 13 · Librerías de Python — Webinar COIT</title>
+<style>
+  :root{
+    --bg:#ffffff; --ink:#1F2A37; --muted:#6B7785; --line:#D9E1EC;
+    --accent:#2E6DA4; --navy:#1B3A6B; --amber:#B5650A; --amber-bg:#FBEEDC;
+    --green:#2F7D4F; --green-bg:#E9F3EC; --card:#F3F6FB;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+      --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+      --green:#7BC49A; --green-bg:#16241C;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+    --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+    --green:#7BC49A; --green-bg:#16241C;
+  }
+  body{background:var(--bg);color:var(--ink);
+    font:16px/1.65 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    margin:0;padding:0 16px 80px}
+  .wrap{max-width:900px;margin:0 auto}
+  header.top{padding:34px 0 10px;border-bottom:1px solid var(--line)}
+  .eyebrow{font:600 12.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--amber);margin:0 0 10px}
+  h1{font-size:2.05rem;line-height:1.2;margin:0 0 10px;font-weight:650;letter-spacing:-.02em}
+  .sub{color:var(--muted);margin:0 0 18px;max-width:70ch}
+  nav.tabs{position:sticky;top:0;z-index:20;background:var(--bg);
+    border-bottom:1px solid var(--line);margin:0 0 30px;display:flex;gap:2px;
+    overflow-x:auto;padding-top:10px}
+  nav.tabs button{flex:0 0 auto;background:none;border:0;border-bottom:3px solid transparent;
+    padding:12px 15px;font:600 13.5px/1 ui-sans-serif,system-ui,sans-serif;color:var(--muted);
+    cursor:pointer;white-space:nowrap}
+  nav.tabs button:hover{color:var(--ink)}
+  nav.tabs button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+  section[role=tabpanel]{animation:fade .18s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+  h2{font-size:1.6rem;margin:34px 0 8px;font-weight:620;letter-spacing:-.01em}
+  h2:first-child{margin-top:0}
+  h3{font-size:1.14rem;margin:28px 0 8px;font-weight:620}
+  p{margin:0 0 14px;max-width:78ch}
+  ul,ol{max-width:78ch;padding-left:22px;margin:0 0 14px} li{margin-bottom:7px}
+  code{font:13.5px/1.5 ui-monospace,Menlo,Consolas,monospace;background:var(--card);
+    padding:2px 6px;border-radius:4px;border:1px solid var(--line)}
+  .tblwrap{overflow-x:auto;margin:0 0 18px}
+  table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+  th{background:var(--navy);color:#fff;text-align:left;padding:9px 11px;font-weight:600}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) th{color:#12161C}}
+  :root[data-theme="dark"] th{color:#12161C}
+  td{border-bottom:1px solid var(--line);padding:9px 11px;vertical-align:top}
+  .box{border-radius:10px;padding:16px 18px;margin:0 0 18px;border:1px solid var(--line)}
+  .box p:last-child{margin-bottom:0}
+  .tip{background:var(--green-bg);border-color:transparent}
+  .warn{background:var(--amber-bg);border-color:transparent}
+  .key{background:var(--card)}
+  .lbl{font:600 11.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.1em;
+    text-transform:uppercase;display:block;margin-bottom:8px}
+  .tip .lbl{color:var(--green)} .warn .lbl{color:var(--amber)} .key .lbl{color:var(--accent)}
+  .flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:0 0 18px}
+  .flow div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
+  .flow b{display:block;color:var(--accent);font-size:13px;margin-bottom:4px}
+  .flow span{font-size:14px}
+  footer{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13.5px}
+  .pill{display:inline-block;background:var(--card);border:1px solid var(--line);
+    border-radius:999px;padding:2px 10px;font-size:12.5px;color:var(--muted);margin-right:6px}
+  abbr[title]{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}
+  .gl{color:var(--muted);font-size:.86em}
+
+  details{border:1px solid var(--line);border-radius:10px;margin:0 0 9px;background:var(--card)}
+  details>summary{cursor:pointer;padding:11px 14px;list-style:none;
+    font:600 15px/1.4 ui-sans-serif,system-ui,sans-serif}
+  details>summary::-webkit-details-marker{display:none}
+  details>summary::before{content:"▸ ";color:var(--accent);font-weight:700}
+  details[open]>summary::before{content:"▾ "}
+  details>summary:hover{color:var(--accent)}
+  details .db{padding:2px 14px 13px;border-top:1px solid var(--line);margin-top:0}
+  details .db p{margin:11px 0 0;max-width:72ch;font-size:15px}
+  .dl{font:700 11px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.09em;
+    text-transform:uppercase;color:var(--muted);margin-right:7px}
+  .tag{display:inline-block;font-size:11px;font-weight:700;border-radius:999px;
+    padding:1px 8px;margin-left:8px;vertical-align:middle;white-space:nowrap}
+  .tag.inv{background:var(--green-bg);color:var(--green)}
+  .tag.gen{background:var(--amber-bg);color:var(--amber)}
+  .fam{color:var(--muted);font-size:14px;margin:0 0 16px}
+
+  .home{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;
+    border:0;border-radius:10px;padding:11px 20px;margin:18px 0 0;
+    font:700 15px/1 ui-sans-serif,system-ui,sans-serif;text-decoration:none;
+    box-shadow:0 1px 2px rgba(0,0,0,.12)}
+  .home:hover{filter:brightness(1.08)}
+  .home svg{flex:0 0 auto}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .home{color:#12161C}}
+  :root[data-theme="dark"] .home{color:#12161C}
+
+  @media print{
+    nav.tabs{display:none}
+    section[role=tabpanel][hidden]{display:block !important}
+    details{display:block}
+    details>*{display:block}
+    details::details-content{content-visibility:visible !important;display:block !important}
+  }
+
+  a{color:var(--accent)}
+  a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="home" href="index.html"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M6 10.5V20h5v-5h2v5h5v-9.5"/></svg><span>Índice de guías</span></a>
+
+
+<header class="top">
+  <p class="eyebrow">Webinar COIT · Guía 13 de 14</p>
+  <h1>Librerías de Python</h1>
+  <p class="sub">Python no vale por sí mismo: vale por las decenas de miles de piezas ya
+  escritas que puedes montar encima. Esta guía explica qué es una librería y por qué unas
+  chocan con otras, cómo hacer que convivan sin romperse nada, y recorre por familias las que
+  de verdad se usan en un despacho de ingeniería, con un desplegable por cada una.</p>
+  <p><span class="pill">Nivel: desde cero</span><span class="pill">Lectura: ~40 min</span>
+  <span class="pill">Inventario propio: foto de julio de 2026</span></p>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" data-p="p1">1 · Qué es una librería</button>
+  <button role="tab" aria-selected="false" data-p="p2">2 · Convivir con versiones</button>
+  <button role="tab" aria-selected="false" data-p="p3">3 · Cálculo y datos</button>
+  <button role="tab" aria-selected="false" data-p="p4">4 · Acústica y señal</button>
+  <button role="tab" aria-selected="false" data-p="p5">5 · Telecomunicación y redes</button>
+  <button role="tab" aria-selected="false" data-p="p6">6 · Documentos e informes</button>
+  <button role="tab" aria-selected="false" data-p="p7">7 · Geoespacial, CAD y 3D</button>
+  <button role="tab" aria-selected="false" data-p="p8">8 · Visión e imagen</button>
+  <button role="tab" aria-selected="false" data-p="p9">9 · IA, modelos y RAG</button>
+  <button role="tab" aria-selected="false" data-p="p10">10 · Web y automatización</button>
+  <button role="tab" aria-selected="false" data-p="p11">11 · Instrumentación</button>
+</nav>
+
+<!-- ════════════ 1 ════════════ -->
+<section role="tabpanel" id="p1">
+  <h2>Qué es una librería, y por qué unas chocan con otras</h2>
+
+  <h3>Una librería es una caja de piezas ya hechas</h3>
+  <p>Cuando alguien dice «lo he hecho en Python», casi nunca quiere decir que lo haya escrito
+  todo. Quiere decir que ha <strong>ensamblado piezas que otros ya escribieron</strong> y ha
+  añadido lo poco que su problema tenía de particular.</p>
+  <p>Una <strong>librería</strong> (o <em>paquete</em>) es ese conjunto de piezas: funciones ya
+  programadas, probadas y documentadas, que resuelven un trozo de problema. Leer un fichero de
+  Excel, calcular una transformada de Fourier, dibujar una gráfica, hablar con un sonómetro,
+  generar un PDF. Nada de eso se programa desde cero: se instala la librería que ya lo hace.</p>
+
+  <div class="box key">
+    <span class="lbl">La analogía que mejor funciona</span>
+    <p>Python es el <strong>banco de trabajo</strong>. Las librerías son las <strong>cajas de
+    herramientas</strong> que pones encima. El banco vacío no sirve para nada; con las cajas
+    adecuadas montas en una tarde lo que a mano sería un mes. Y, como en un taller de verdad,
+    el problema no es que falten herramientas: es que algunas <strong>no caben a la vez en el
+    mismo banco</strong>.</p>
+  </div>
+
+  <h3>Qué es <code>pip</code> y qué es <abbr title="PyPI: Python Package Index, el repositorio público oficial de paquetes de Python">PyPI</abbr><span class="gl"> (Python Package Index, el repositorio público oficial de paquetes de Python)</span></h3>
+  <p><strong><abbr title="PyPI: Python Package Index, el repositorio público oficial de paquetes de Python">PyPI</abbr></strong> es el almacén público donde viven esas cajas: cientos de miles de
+  paquetes, subidos por sus autores, gratuitos y de código abierto en su inmensa mayoría.
+  <strong><code>pip</code></strong> es el programa que va al almacén, se trae la caja que le
+  pidas y la deja instalada en tu equipo. Una sola orden:</p>
+  <p><code>pip install pandas</code></p>
+  <p>Y a partir de ese momento tus programas pueden usar <code>pandas</code>. Esa facilidad es
+  la gran virtud de Python… y el origen de casi todos sus líos.</p>
+
+  <h3>Qué significa una versión</h3>
+  <p>Cada librería se publica muchas veces a lo largo de los años. Cada publicación lleva un
+  número de <strong>versión</strong> con tres cifras, del tipo <code>2.4.1</code>:</p>
+  <div class="tblwrap"><table>
+    <tr><th>Cifra</th><th>Qué indica</th><th>Qué significa para ti</th></tr>
+    <tr><td><strong>Mayor</strong> (el <code>2</code>)</td><td>Cambio profundo</td><td>Puede haber
+    dejado de existir algo que tú usabas. <strong>Aquí es donde se rompen las cosas.</strong></td></tr>
+    <tr><td><strong>Menor</strong> (el <code>4</code>)</td><td>Funciones nuevas</td><td>Lo que ya
+    tenías debería seguir funcionando</td></tr>
+    <tr><td><strong>Parche</strong> (el <code>1</code>)</td><td>Correcciones de fallos</td><td>Actualizar
+    es casi siempre buena idea</td></tr>
+  </table></div>
+  <p>La convención se respeta bastante, pero <strong>no es una ley</strong>: hay proyectos que
+  rompen cosas en una versión menor. Por eso la regla de oro de cualquier trabajo entregable es
+  <strong>anotar con qué versiones se calculó</strong>, igual que se anota el número de serie
+  del sonómetro con el que se midió.</p>
+
+  <h3>Y ahora, el choque: por qué dos librerías no se llevan bien</h3>
+  <p>Aquí está el asunto que da nombre a esta guía. Cuando instalas una librería,
+  <strong>no instalas una: instalas un árbol entero</strong>. Porque esa librería, a su vez,
+  necesita otras para funcionar, y esas necesitan otras. Son las
+  <strong>dependencias</strong>.</p>
+  <p>Y cada una declara <strong>qué versiones de sus dependencias acepta</strong>. Literalmente
+  dice cosas como «necesito <code>numpy</code> igual o posterior a la 1.24, pero anterior a la
+  2». Mientras todos los árboles sean compatibles, no pasa nada. El problema aparece cuando no
+  lo son:</p>
+
+  <div class="flow">
+    <div><b>Librería A</b><span>«Necesito la versión <strong>1</strong> de <code>numpy</code>»</span></div>
+    <div><b>Librería B</b><span>«Necesito la versión <strong>2</strong> de <code>numpy</code>»</span></div>
+    <div><b>Tu equipo</b><span>Solo puede tener instalada <strong>una</strong> versión de <code>numpy</code> a la vez</span></div>
+    <div><b>Resultado</b><span>Instalar B <strong>rompe</strong> A. Y no siempre avisa</span></div>
+  </div>
+
+  <p>Eso es todo. No hay malicia ni chapuza: son dos equipos de desarrollo independientes, con
+  calendarios distintos, que dependen de la misma pieza en momentos distintos de su evolución.
+  En el mundo del software a esto se le llama, medio en broma, el <em>infierno de las
+  dependencias</em>.</p>
+
+  <div class="box warn">
+    <span class="lbl">Lo peor: el choque puede ser silencioso</span>
+    <p>Lo esperable sería que <code>pip</code> se negase a instalar algo incompatible. A veces lo
+    hace. Pero otras veces <strong>lo instala y, de paso, cambia la versión de una tercera
+    librería sin decírtelo</strong>. Tú ves «instalado correctamente», y lo que se ha roto es un
+    programa distinto, que no vas a ejecutar hasta dentro de dos semanas. De ahí una de las
+    pautas de la Guía 10: <strong>foto del estado antes y después de cada instalación</strong>.</p>
+  </div>
+
+  <h3>La escala real del problema</h3>
+  <p>Un dato medido en tres equipos nuestros el <strong>16 de septiembre de 2026</strong>, para que
+  se vea el tamaño. La cuenta la puedes repetir en tu máquina en diez segundos: <code>pip list</code>
+  dice todo lo que hay instalado, y <code>pip list --not-required</code> dice solo lo que no es
+  dependencia de ningún otro, es decir, lo que alguien pidió a propósito.</p>
+  <div class="tblwrap"><table>
+    <tr><th>Equipo</th><th>Instalados</th><th>Pedidos a propósito</th><th>Llegaron de acompañantes</th></tr>
+    <tr><td>Portátil de trabajo</td><td>254</td><td>57</td><td>78 %</td></tr>
+    <tr><td>Servidor de cálculo</td><td>3.230</td><td>947</td><td>71 %</td></tr>
+    <tr><td>Linux dentro de Windows</td><td>2.286</td><td>623</td><td>73 %</td></tr>
+  </table></div>
+  <p>Es decir: <strong>entre el 70 % y el 80 % de lo que hay instalado en un equipo de trabajo nadie
+  lo pidió</strong>; llegó de acompañante. Y fíjate en el salto entre la primera fila y las otras dos:
+  un equipo donde se ha trabajado en serio acumula miles de piezas sin que nadie lo decida.</p>
+  <p>Con ese volumen, que dos árboles se pisen no es mala suerte: es lo normal. Y es la razón de
+  que exista la pestaña siguiente.</p>
+
+  <div class="box tip">
+    <span class="lbl">Tres ideas para quedarse</span>
+    <p><strong>1.</strong> Una librería es una caja de piezas ya hechas; <code>pip</code> las trae
+    del almacén público. <strong>2.</strong> Al traer una, vienen decenas de acompañantes.
+    <strong>3.</strong> Como solo puede haber una versión de cada pieza a la vez, tarde o temprano
+    dos proyectos pedirán versiones incompatibles. No se evita: <strong>se aísla</strong>.</p>
+  </div>
+</section>
+
+<!-- ════════════ 2 ════════════ -->
+<section role="tabpanel" id="p2" hidden>
+  <h2>Cómo convivir con versiones incompatibles</h2>
+
+  <p>La solución a todo lo anterior cabe en una frase: <strong>deja de instalar cosas «en el
+  ordenador» y empieza a instalarlas «en un sitio»</strong>. Ese sitio puede ser una carpeta, un
+  contenedor o un ordenador entero simulado. Cambia el precio y cambia cuánto aísla, pero la
+  idea es siempre la misma: que cada proyecto tenga su propio juego de versiones y no vea el de
+  los demás.</p>
+
+  <h3>Las cinco formas, de la más ligera a la más pesada</h3>
+
+  <h4 style="margin:22px 0 6px;font-size:1.05rem">1 · Entorno virtual (<code>venv</code>)</h4>
+  <p>Es el mecanismo que trae Python de fábrica, y el que resuelve el 80 % de los casos. Creas
+  una carpeta —normalmente dentro del propio proyecto— y le dices a Python que instale ahí. Esa
+  carpeta contiene su propia copia de las librerías. Dos proyectos, dos carpetas, dos juegos de
+  versiones que no se conocen entre sí.</p>
+  <p>Cuesta dos órdenes y ocupa unos megas. <strong>Si solo te llevas una cosa de esta guía, que
+  sea esta.</strong></p>
+
+  <h4 style="margin:22px 0 6px;font-size:1.05rem">2 · Gestores de entornos (conda, <code>uv</code>, <code>pipx</code>)</h4>
+  <p>Hacen lo mismo que <code>venv</code>, mejor. <strong>conda</strong> (y su versión rápida,
+  <em>mamba</em>) sabe además instalar cosas que <em>no</em> son Python —compiladores, librerías
+  de sistema, bases de datos— y permite que cada entorno tenga <strong>hasta una versión
+  distinta del propio Python</strong>. Es el camino habitual cuando algo necesita cálculo
+  científico pesado o aceleración por <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr><span class="gl"> (Graphics Processing Unit, tarjeta gráfica)</span>.</p>
+  <p><strong><code>uv</code></strong> es la generación nueva: hace lo de <code>pip</code> y lo de
+  <code>venv</code> juntos y muchísimo más rápido. <strong><code>pipx</code></strong> resuelve un
+  caso muy concreto y muy útil: instalar <em>programas</em> escritos en Python (no librerías),
+  cada uno en su propio entorno invisible, para que no se estorben.</p>
+
+  <h4 style="margin:22px 0 6px;font-size:1.05rem">3 · Contenedores de software</h4>
+  <p>Se les conoce por el nombre del programa que los popularizó,
+  <strong><abbr title="Docker: empaqueta un programa con todo lo que necesita para funcionar igual en cualquier máquina">Docker</abbr></strong><span class="gl"> (empaqueta un programa con todo lo que necesita para funcionar igual en cualquier máquina)</span>.
+  Aquí el aislamiento deja de ser solo de librerías. Un contenedor lleva dentro el sistema
+  operativo entero en miniatura: la versión de Linux, las librerías de sistema, la versión de
+  Python y las librerías de Python. Se describe en un fichero de texto y se reconstruye idéntico
+  en cualquier máquina.</p>
+  <p>Es la respuesta cuando algo <strong>no hay forma de que conviva</strong>: se le da su propia
+  burbuja y se le habla desde fuera por red. Casi todos los servicios de despacho de la Guía 3
+  —archivo documental, transcripción, wiki, base de datos del <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr><span class="gl"> (Retrieval-Augmented Generation: busca en tus documentos y responde citándolos)</span>— funcionan así.</p>
+
+  <h4 style="margin:22px 0 6px;font-size:1.05rem">4 · Máquina virtual</h4>
+  <p>Un ordenador completo simulado dentro del tuyo, con su propio sistema operativo instalado de
+  verdad. Aísla todo, incluido el núcleo del sistema. A cambio pesa gigas y hay que administrarlo
+  como una máquina más: actualizaciones, copias de seguridad, disco.</p>
+  <p>Se justifica cuando necesitas <strong>otro sistema operativo</strong> (software que solo
+  existe para Windows, o herramientas que solo existen para Linux), cuando lo que vas a ejecutar
+  no te fías de él, o cuando quieres poder tirarlo entero y empezar de cero sin tocar tu equipo.</p>
+
+  <h4 style="margin:22px 0 6px;font-size:1.05rem">5 · Otra máquina, por red</h4>
+  <p>La opción que más se olvida y la que mejor escala: lo que choca <strong>no se instala en tu
+  equipo</strong>. Vive en un servidor y se le pregunta por red. Así es como usamos los modelos
+  de lenguaje locales: en el servidor con <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr> hay un montaje enorme y delicado, y desde el
+  resto de equipos solo se le habla por una dirección. Ningún portátil necesita tener instalado
+  nada de eso.</p>
+
+  <h3>Comparativa</h3>
+  <div class="tblwrap"><table>
+    <tr><th>Mecanismo</th><th>Aislamiento</th><th>Peso</th><th>Dificultad</th><th>Cuándo usarlo</th><th>Trampa habitual</th></tr>
+    <tr>
+      <td><strong>Entorno virtual</strong> (<code>venv</code>)</td>
+      <td>Solo librerías de Python</td>
+      <td>Megas</td>
+      <td>Muy baja</td>
+      <td>Por defecto, <strong>siempre</strong>: un entorno por proyecto</td>
+      <td>Olvidarse de activarlo e instalar «fuera», en el Python general del sistema</td>
+    </tr>
+    <tr>
+      <td><strong>conda / mamba</strong></td>
+      <td>Librerías de Python <em>y</em> de sistema, y la propia versión de Python</td>
+      <td>Cientos de megas</td>
+      <td>Media</td>
+      <td>Cálculo científico, <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr>, o cuando un paquete necesita compilarse</td>
+      <td>Mezclar <code>conda install</code> y <code>pip install</code> en el mismo entorno sin orden: el resultado deja de ser reproducible</td>
+    </tr>
+    <tr>
+      <td><strong><code>uv</code> / <code>pipx</code></strong></td>
+      <td>El mismo que <code>venv</code>, gestionado mejor</td>
+      <td>Megas</td>
+      <td>Baja</td>
+      <td><code>uv</code> para proyectos nuevos; <code>pipx</code> para instalar utilidades de línea de órdenes</td>
+      <td>Son jóvenes: no todos los tutoriales que encuentres hablan su idioma</td>
+    </tr>
+    <tr>
+      <td><strong>Contenedor</strong> (<abbr title="Docker: empaqueta un programa con todo lo que necesita para funcionar igual en cualquier máquina">Docker</abbr>)</td>
+      <td>Sistema operativo entero en miniatura</td>
+      <td>Cientos de megas a varios gigas</td>
+      <td>Media-alta</td>
+      <td>Servicios que corren siempre, y cualquier cosa que sea imposible de encajar en tu equipo</td>
+      <td>Creer que los datos de dentro están a salvo: si no los sacas fuera a propósito, desaparecen al recrear el contenedor</td>
+    </tr>
+    <tr>
+      <td><strong>Máquina virtual</strong></td>
+      <td>Total, incluido el sistema operativo</td>
+      <td>Gigas, y memoria reservada</td>
+      <td>Alta</td>
+      <td>Otro sistema operativo, pruebas arriesgadas, entornos que quieres poder tirar enteros</td>
+      <td>Se queda encendida consumiendo memoria del equipo anfitrión, y hay que mantenerla como un ordenador más</td>
+    </tr>
+    <tr>
+      <td><strong>Otra máquina, por red</strong></td>
+      <td>Total: ni siquiera está en tu equipo</td>
+      <td>El de un servidor</td>
+      <td>Media</td>
+      <td>Modelos de <abbr title="IA: Inteligencia Artificial">IA</abbr><span class="gl"> (Inteligencia Artificial)</span>, cálculos pesados, cualquier cosa compartida por varias personas</td>
+      <td>Depender de que esté encendida y accesible; y no anotar qué versiones tiene instaladas</td>
+    </tr>
+  </table></div>
+
+  <div class="box tip">
+    <span class="lbl">La regla práctica, en dos líneas</span>
+    <p><strong>Un entorno por proyecto.</strong> Siempre, aunque el proyecto sea un script de
+    treinta líneas. Y si algo pide versiones imposibles de conciliar con el resto,
+    <strong>no negocies: aíslalo en un contenedor</strong> y háblale desde fuera.</p>
+  </div>
+
+  <h3>Cómo se ve esto en la práctica</h3>
+  <p>Tres situaciones reales de nuestro propio parque de máquinas, que ilustran las tres escalas:</p>
+  <ul>
+    <li><strong>El servidor con <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr>:</strong> el Python que trae el sistema operativo se deja
+    casi vacío a propósito. Todo el arsenal de trabajo vive en un entorno gestionado aparte. Así,
+    una actualización del sistema no puede llevarse por delante el entorno de cálculo.</li>
+    <li><strong>La estación de trabajo de un compañero:</strong> veinticinco entornos separados,
+    <strong>uno por cada conector</strong> que atiende. Cada conector puede exigir lo que quiera
+    sin afectar a los demás.</li>
+    <li><strong>Un equipo de auditoría de seguridad:</strong> al instalar un lote de ochenta y
+    nueve librerías, cuatro de ellas —las de análisis de binarios, con dependencias compiladas
+    pesadas— se pusieron <strong>en un entorno aislado aparte</strong>, precisamente por riesgo
+    de conflicto de versión con piezas del sistema. Decisión tomada y anotada <em>antes</em> de
+    instalar, no después de romper nada.</li>
+  </ul>
+
+  <div class="box warn">
+    <span class="lbl">Dos avisos que ahorran tardes enteras</span>
+    <p><strong>La versión de Python también es una versión.</strong> Una librería recién salida
+    puede no existir todavía para la última versión de Python, y una antigua puede no funcionar
+    ya en ella. Cuando algo «no se instala y no entiendo por qué», mira primero qué versión de
+    Python estás usando.</p>
+    <p><strong>Anota lo que instalaste.</strong> Un fichero de texto con la lista exacta de
+    librerías y versiones convierte tu entorno en algo reconstruible. Sin él, un cálculo que
+    firmaste hace dos años puede ser irrepetible.</p>
+  </div>
+</section>
+
+<!-- ════════════ 3 ════════════ -->
+<section role="tabpanel" id="p3" hidden>
+  <h2>Cálculo y datos</h2>
+  <p class="fam">La base sobre la que se apoya todo lo demás: números, tablas, gráficas y
+  matemáticas. Si vienes de hojas de cálculo, esta familia es la traducción directa —y sin
+  límite de filas.</p>
+  <p><span class="tag inv">del inventario</span> aparece en nuestro inventario de máquinas ·
+  <span class="tag gen">de uso común</span> estándar del sector, se describe sin cifras</p>
+
+  <details>
+    <summary>NumPy <span class="tag gen">de uso común</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Trabajar con vectores y matrices de números a gran
+      velocidad. Es el cimiento: prácticamente todas las librerías científicas de Python están
+      construidas encima de ella, y por eso es la que más conflictos de versión provoca.</p>
+      <p><span class="dl">Ejemplo</span>Cargar las 21 bandas de tercio de octava de cien medidas y
+      promediarlas en energía de una sola operación, sin bucles.</p>
+      <p><span class="dl">Se combina con</span>Absolutamente todo lo de esta guía.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>SciPy <span class="tag gen">de uso común</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>La caja de matemáticas aplicadas: filtros digitales,
+      transformada de Fourier, interpolación, ajuste de curvas, estadística, optimización,
+      integración numérica.</p>
+      <p><span class="dl">Ejemplo</span>Diseñar los filtros de tercio de octava de una norma,
+      aplicarlos a una grabación y obtener el nivel por banda.</p>
+      <p><span class="dl">Se combina con</span>NumPy debajo; las librerías de acústica de la
+      pestaña 4 la usan por dentro.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>pandas <span class="tag gen">de uso común</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Tablas con nombre de columna, como una hoja de
+      cálculo pero programable: filtrar, agrupar, cruzar tablas, series temporales, leer y escribir
+      Excel y <abbr title="CSV: Comma-Separated Values, fichero de texto con datos separados por comas o puntos y coma">CSV</abbr><span class="gl"> (Comma-Separated Values, fichero de texto con datos separados por comas)</span>.</p>
+      <p><span class="dl">Ejemplo</span>Volcar 24 horas de registro de un sonómetro, agrupar por
+      periodo día/tarde/noche y calcular los índices que pide el reglamento.</p>
+      <p><span class="dl">Se combina con</span>openpyxl para escribir el Excel final, matplotlib
+      para la gráfica, GeoPandas para llevarlo al mapa.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Polars y DuckDB <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Los relevos modernos de pandas cuando la tabla es
+      grande. <strong>Polars</strong> hace lo mismo mucho más rápido y con menos memoria.
+      <strong>DuckDB</strong> permite lanzar consultas <abbr title="SQL: Structured Query Language, el lenguaje estándar para consultar bases de datos">SQL</abbr><span class="gl"> (Structured Query Language, el lenguaje estándar para consultar bases de datos)</span> directamente sobre ficheros de tu
+      disco, sin montar ninguna base de datos.</p>
+      <p><span class="dl">Ejemplo</span>Consultar con una sola sentencia todos los registros de
+      medida de una campaña de meses, repartidos en cientos de ficheros.</p>
+      <p><span class="dl">Se combina con</span>pandas (se pasan datos entre ellos sin copiarlos),
+      cuadros de mando y procesos nocturnos.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Matplotlib <span class="tag gen">de uso común</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>La librería de gráficas de referencia. Poco
+      vistosa por defecto, pero controlas cada milímetro: ejes logarítmicos, bandas de tercio de
+      octava, rótulos, formato exacto para un informe firmado.</p>
+      <p><span class="dl">Ejemplo</span>Generar automáticamente las 40 figuras de un informe con
+      idéntico estilo, tipografía y tamaño, listas para insertar en Word.</p>
+      <p><span class="dl">Se combina con</span>pandas, NumPy, python-docx (para incrustar las
+      figuras), windrose (rosas de viento).</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>SymPy <span class="tag gen">de uso común</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Matemáticas <em>simbólicas</em>: trabajar con la
+      fórmula, no con el número. Despejar una variable, derivar, simplificar, y luego exportar la
+      expresión a <abbr title="LaTeX: sistema de composición de textos científicos, el estándar para escribir fórmulas">LaTeX</abbr><span class="gl"> (sistema de composición de textos científicos, estándar para escribir fórmulas)</span> para el anexo de cálculo.</p>
+      <p><span class="dl">Ejemplo</span>Despejar el espesor necesario de una capa a partir de la
+      expresión del aislamiento, y dejar el desarrollo escrito en el informe.</p>
+      <p><span class="dl">Se combina con</span>lcapy (circuitos), las herramientas de documentación
+      de la pestaña 6.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Pint y uncertainties <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span><strong>Pint</strong> mete las <strong>unidades
+      físicas</strong> dentro de los números: si sumas metros con segundos, da error en vez de dar
+      un resultado falso. <strong>uncertainties</strong> propaga automáticamente la
+      <strong>incertidumbre</strong> a lo largo de toda la cadena de cálculo.</p>
+      <p><span class="dl">Ejemplo</span>Arrastrar la incertidumbre del calibrador, la del
+      micrófono y la del método hasta el valor final del informe, sin hacer la propagación a mano.</p>
+      <p><span class="dl">Se combina con</span>NumPy, pandas, y cualquier cálculo que vaya a un
+      informe con declaración de incertidumbre.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>openpyxl, XlsxWriter y xlrd <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Leer y escribir Excel sin abrir Excel.
+      <strong>openpyxl</strong> lee y escribe ficheros modernos conservando formato y fórmulas;
+      <strong>XlsxWriter</strong> los crea desde cero con gráficas y formato condicional;
+      <strong>xlrd</strong> se queda para los ficheros antiguos.</p>
+      <p><span class="dl">Ejemplo</span>Rellenar la plantilla oficial de cálculos de un proyecto a
+      partir de los datos ya procesados, respetando celdas, estilos y pestañas.</p>
+      <p><span class="dl">Se combina con</span>pandas (volcado de tablas), python-docx (memoria),
+      y las aplicaciones de proyecto de la Guía 3.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>python-control y harold <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Teoría de control clásica y moderna: funciones de
+      transferencia, espacio de estados, Bode, Nyquist, lugar de las raíces, diseño de reguladores.
+      Es el equivalente libre del <em>Control System Toolbox</em> de MATLAB.</p>
+      <p><span class="dl">Ejemplo</span>Analizar la estabilidad de un lazo de control de un sistema
+      de atenuación activa, o validar un modelo heredado sin licencia de MATLAB.</p>
+      <p><span class="dl">Se combina con</span>SciPy, Matplotlib, y Octave cuando hay código
+      MATLAB antiguo que reutilizar.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Pyomo, Optuna y DEAP <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Optimizar: encontrar la mejor combinación entre
+      muchas. <strong>Pyomo</strong> plantea el problema con sus restricciones de forma matemática
+      formal; <strong>Optuna</strong> busca por ensayo inteligente; <strong>DEAP</strong> usa
+      algoritmos genéticos.</p>
+      <p><span class="dl">Ejemplo</span>Buscar la combinación de materiales absorbentes más barata
+      que alcance un tiempo de reverberación objetivo en todas las bandas a la vez.</p>
+      <p><span class="dl">Se combina con</span>las librerías de acústica de la pestaña 4, que
+      aportan la función a optimizar.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>JupyterLab, Dash y HoloViews <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span><strong>JupyterLab</strong> es el cuaderno de
+      laboratorio: código, resultados y explicación en el mismo documento, ejecutable trozo a
+      trozo. <strong>Dash</strong> y <strong>HoloViews</strong> convierten un análisis en un cuadro
+      de mando con gráficas interactivas.</p>
+      <p><span class="dl">Ejemplo</span>Explorar una campaña de medidas probando hipótesis sobre la
+      marcha, y dejar el cuaderno como memoria de cómo se llegó al resultado.</p>
+      <p><span class="dl">Se combina con</span>pandas, Matplotlib, y prácticamente cualquier
+      librería de esta guía.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ════════════ 4 ════════════ -->
+<section role="tabpanel" id="p4" hidden>
+  <h2>Acústica y señal</h2>
+  <p class="fam">La familia donde Python ha desplazado con más claridad al software de pago:
+  cálculo normativo, acústica de salas, simulación, procesado de audio y psicoacústica.
+  Casi todo lo de aquí está instalado en nuestras cuatro máquinas.</p>
+
+  <details>
+    <summary>acoustics y acoustic-toolbox <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>El cajón de sastre del cálculo acústico corriente:
+      bandas de octava y tercio de octava, ponderaciones A y C, decibelios y su aritmética,
+      absorción del aire, ley de masa, tiempo de reverberación por Sabine y Eyring, criterios de
+      ruido.</p>
+      <p><span class="dl">Ejemplo</span>Convertir un espectro medido en nivel global ponderado A y
+      comprobar el margen frente al límite del reglamento, banda a banda.</p>
+      <p><span class="dl">Se combina con</span>NumPy y SciPy debajo; pandas para la tabla del
+      informe.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>pyva-toolbox <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Simulación vibroacústica: cadenas de capas
+      (<em>layer chain</em>) para predecir el aislamiento de una partición multicapa —masa,
+      cámara, absorbente, elástico— y el comportamiento de estructuras.</p>
+      <p><span class="dl">Ejemplo</span>Predecir el índice de reducción sonora de una solución
+      constructiva propuesta <strong>antes</strong> de llevarla al programa comercial de
+      referencia, y descartar de entrada las que no llegan.</p>
+      <p><span class="dl">Se combina con</span>bempp-cl (cuando hace falta el modelo completo),
+      pandas, y la regla de oficio que atraviesa todo el webinar: <strong>no predecir sin
+      calcular</strong>.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>pyroomacoustics <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Acústica de salas por simulación: define una
+      geometría, pon absorción en las superficies, coloca fuente y receptor, y obtiene la respuesta
+      al impulso por el método de las fuentes imagen y trazado de rayos. Incluye además
+      procesado para arrays de micrófonos (<em>beamforming</em>, localización, separación).</p>
+      <p><span class="dl">Ejemplo</span>Estimar el tiempo de reverberación y la inteligibilidad de
+      una sala en fase de proyecto, antes de que exista para poder medirla.</p>
+      <p><span class="dl">Se combina con</span>gpuRIR para casos muy grandes, librosa para
+      analizar la respuesta obtenida, matplotlib para las curvas.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>gpuRIR <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Lo mismo que el trazado de fuentes imagen, pero
+      calculado en la <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr><span class="gl"> (Graphics Processing Unit, tarjeta gráfica)</span>. Permite órdenes de reflexión altísimos y generar miles de
+      respuestas al impulso en el tiempo que la <abbr title="CPU: Central Processing Unit, el procesador principal">CPU</abbr><span class="gl"> (Central Processing Unit, el procesador principal)</span> tardaría en hacer unas pocas.</p>
+      <p><span class="dl">Ejemplo</span>Generar un banco de respuestas al impulso de miles de
+      posiciones para entrenar o validar un algoritmo de medida.</p>
+      <p><span class="dl">Se combina con</span>pyroomacoustics (mismo planteamiento, otra escala) y
+      cualquier entrenamiento de modelos.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>bempp-cl <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Cálculo por <strong>elementos de contorno</strong>
+      (<abbr title="BEM: Boundary Element Method, método de los elementos de contorno">BEM</abbr><span class="gl"> (Boundary Element Method, método de los elementos de contorno)</span>): resolver la propagación del sonido alrededor de un objeto mallando solo
+      su superficie, no todo el aire que lo rodea. Aprovecha la tarjeta gráfica.</p>
+      <p><span class="dl">Ejemplo</span>Estudiar la difracción de una pantalla acústica de forma
+      complicada, donde las fórmulas simplificadas de pantalla dejan de valer.</p>
+      <p><span class="dl">Se combina con</span>mallas de la pestaña 7 (geometría), pyva-toolbox
+      (propiedades de los materiales), PyVista (para ver el resultado).</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>acoular <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span><em>Beamforming</em> acústico: con una matriz de
+      micrófonos sincronizados, producir un <strong>mapa de dónde está el ruido</strong>
+      superpuesto a una foto. Es la versión libre de las cámaras acústicas comerciales.</p>
+      <p><span class="dl">Ejemplo</span>Localizar en fachada qué elemento concreto —una rejilla, un
+      equipo de clima, una junta— está emitiendo, antes de proponer la corrección.</p>
+      <p><span class="dl">Se combina con</span>la cadena de adquisición de la pestaña 11, NumPy y
+      matplotlib para el mapa.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>MoSQITo <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span><strong>Psicoacústica</strong> normalizada: sonoridad
+      (<em>loudness</em>), aspereza, fluctuación, agudeza, tonalidad. Es decir, no cuántos
+      decibelios hay sino <strong>cuánto molesta</strong>.</p>
+      <p><span class="dl">Ejemplo</span>Justificar por qué una instalación que cumple el límite en
+      decibelios genera quejas: porque tiene una componente tonal marcada que el nivel global no
+      refleja.</p>
+      <p><span class="dl">Se combina con</span>acoustics (nivel), librosa (análisis), informes de la
+      pestaña 6.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>pyfar y spaudiopy <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span><strong>pyfar</strong> ordena el trabajo de
+      laboratorio acústico: señales, respuestas en frecuencia, coordenadas, filtros y sistemas de
+      medida, con estructuras pensadas para investigación. <strong>spaudiopy</strong> añade
+      <strong>audio espacial</strong>: ambisónica, esféricos armónicos, funciones de transferencia
+      de cabeza.</p>
+      <p><span class="dl">Ejemplo</span>Gestionar una batería de medidas de directividad y
+      reproducirla después en binaural para una demostración al cliente.</p>
+      <p><span class="dl">Se combina con</span>pyroomacoustics, soundfile, y la realidad virtual de
+      la Guía 3.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>k-Wave-python <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Simulación de propagación de ondas acústicas
+      <strong>en el dominio del tiempo</strong>, incluyendo ultrasonidos y medios no homogéneos.
+      Es el terreno donde el sonido atraviesa materiales distintos y hay que ver la onda avanzar.</p>
+      <p><span class="dl">Ejemplo</span>Estudiar cómo se transmite una onda a través de una sección
+      con varias capas de propiedades diferentes.</p>
+      <p><span class="dl">Se combina con</span>NumPy, visualización 3D de la pestaña 7,
+      aceleración por <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr>.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>librosa y audioFlux <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Análisis de audio de propósito general:
+      espectrogramas, escalas mel, detección de tono y de ataques, extracción de descriptores.
+      <strong>audioFlux</strong> cubre un terreno parecido con más tipos de transformada y pensada
+      para ir rápida.</p>
+      <p><span class="dl">Ejemplo</span>Recorrer automáticamente ocho horas de grabación ambiental
+      y marcar los tramos con eventos, para no escucharlas enteras.</p>
+      <p><span class="dl">Se combina con</span>SciPy, los modelos de transcripción, MoSQITo.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>blind_rt60 <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Estimar el <strong>tiempo de reverberación a
+      ciegas</strong>: a partir de una grabación cualquiera —voz, música, ruido de la sala— sin
+      necesidad de una respuesta al impulso medida en condiciones.</p>
+      <p><span class="dl">Ejemplo</span>Sacar una primera estimación de la reverberación de un local
+      a partir de una grabación hecha con el móvil en la visita previa, para decidir si merece la
+      pena una campaña completa.</p>
+      <p><span class="dl">Se combina con</span>pyroomacoustics y las medidas normalizadas, que son
+      las que mandan cuando el dato va a un informe.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Demucs, audio-separator y noisereduce <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Separar lo que suena a la vez.
+      <strong>Demucs</strong> y <strong>audio-separator</strong> descomponen una grabación en
+      pistas (voz, percusión, resto) con modelos de <abbr title="IA: Inteligencia Artificial">IA</abbr><span class="gl"> (Inteligencia Artificial)</span>. <strong>noisereduce</strong> quita
+      ruido de fondo estacionario.</p>
+      <p><span class="dl">Ejemplo</span>Aislar el zumbido de una máquina en una grabación tomada en
+      una calle con tráfico, para poder caracterizarlo.</p>
+      <p><span class="dl">Se combina con</span>librosa, la transcripción, y el material audiovisual
+      del despacho.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Whisper (openai-whisper) <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Transcripción de voz a texto, en local y en muchos
+      idiomas, con calidad muy alta. Existen versiones optimizadas que van varias veces más rápidas
+      sobre el mismo modelo.</p>
+      <p><span class="dl">Ejemplo</span>Transcribir la reunión con el cliente y la visita de obra,
+      y tener el acta buscable el mismo día —sin que el audio salga de tus equipos.</p>
+      <p><span class="dl">Se combina con</span>los modelos locales de la Guía 3, el archivo
+      documental, el <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr><span class="gl"> (Retrieval-Augmented Generation: busca en tus documentos y responde citándolos)</span> de la Guía 4.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Pedalboard y pydub <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Procesado de audio por lotes.
+      <strong>Pedalboard</strong> aplica efectos de calidad profesional —ecualización,
+      compresión, reverberación— y hasta puede cargar complementos de estudio.
+      <strong>pydub</strong> hace lo sencillo: cortar, unir, cambiar formato, normalizar.</p>
+      <p><span class="dl">Ejemplo</span>Normalizar de una tacada las doscientas grabaciones de una
+      campaña para que todas entren al análisis en las mismas condiciones.</p>
+      <p><span class="dl">Se combina con</span>librosa, la producción audiovisual, las demostraciones
+      de escucha.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>CREPE <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Seguimiento de <strong>tono fundamental</strong> con
+      una red neuronal: sigue la frecuencia de una voz o un sonido armónico a lo largo del tiempo
+      con mucha precisión, incluso con ruido.</p>
+      <p><span class="dl">Ejemplo</span>Seguir la frecuencia de giro de una máquina a partir de su
+      componente tonal, para relacionarla con el régimen de funcionamiento.</p>
+      <p><span class="dl">Se combina con</span>librosa, MoSQITo (análisis de tonalidad).</p>
+    </div>
+  </details>
+</section>
+
+<!-- ════════════ 5 ════════════ -->
+<section role="tabpanel" id="p5" hidden>
+  <h2>Telecomunicación y redes</h2>
+  <p class="fam">La familia más cercana al ejercicio del ingeniero de telecomunicación: teoría de
+  la comunicación, radiofrecuencia, circuitos, redes y su explotación. Casi todas están en el
+  inventario porque el despacho las necesita a diario.</p>
+
+  <details>
+    <summary>Komm <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Teoría de la comunicación digital hecha librería:
+      modulaciones, codificación de canal, códigos de bloque y convolucionales, canales con ruido,
+      curvas de tasa de error.</p>
+      <p><span class="dl">Ejemplo</span>Reproducir la curva de error de un esquema de modulación
+      frente a relación señal-ruido para justificar una elección en una memoria o en una clase.</p>
+      <p><span class="dl">Se combina con</span>NumPy, Matplotlib, Sionna cuando hace falta el
+      enlace completo.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Sionna <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Simulación de enlaces de comunicaciones inalámbricas
+      acelerada por <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr><span class="gl"> (Graphics Processing Unit, tarjeta gráfica)</span>, con modelos de canal, <abbr title="MIMO: Multiple Input Multiple Output, sistemas con varias antenas en transmisión y recepción">MIMO</abbr><span class="gl"> (Multiple Input Multiple Output, varias antenas en transmisión y recepción)</span>, <abbr title="OFDM: Orthogonal Frequency-Division Multiplexing, multiplexación por división en frecuencias ortogonales">OFDM</abbr><span class="gl"> (Orthogonal Frequency-Division Multiplexing)</span> y trazado de
+      rayos para propagación. Está pensada para investigación de sistemas móviles.</p>
+      <p><span class="dl">Ejemplo</span>Evaluar por simulación la cobertura de una configuración de
+      antenas en un escenario concreto antes de desplegar nada.</p>
+      <p><span class="dl">Se combina con</span>Komm (teoría base), las librerías geoespaciales de la
+      pestaña 7 (escenario real).</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>scikit-rf <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Ingeniería de <abbr title="RF: Radiofrecuencia">RF</abbr><span class="gl"> (Radiofrecuencia)</span> y microondas: leer ficheros de
+      parámetros S del analizador de redes, en cascada, calibrar, adaptar impedancias, dibujar
+      cartas de Smith.</p>
+      <p><span class="dl">Ejemplo</span>Encadenar las medidas de cada tramo de una instalación y
+      obtener la respuesta del conjunto, o comprobar la adaptación de una antena.</p>
+      <p><span class="dl">Se combina con</span>el instrumental de la pestaña 11 (que entrega los
+      ficheros), Matplotlib, informes.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Lcapy <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Análisis <strong>simbólico</strong> de circuitos
+      lineales: describes el circuito con texto y te devuelve la función de transferencia como
+      fórmula, no como número. Además dibuja el esquema.</p>
+      <p><span class="dl">Ejemplo</span>Obtener la expresión exacta de una red de adaptación o de un
+      filtro pasivo, y llevarla al anexo de cálculo con su desarrollo.</p>
+      <p><span class="dl">Se combina con</span>SymPy (por dentro), scikit-rf, documentación.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Scapy <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Construir, enviar, capturar y diseccionar paquetes de
+      red pieza a pieza. Es la navaja suiza del análisis de red: sirve tanto para diagnosticar como
+      para verificar que un equipo responde como debe.</p>
+      <p><span class="dl">Ejemplo</span>Comprobar el comportamiento real de una electrónica de red
+      ante tramas concretas, en una recepción de instalación.</p>
+      <p><span class="dl">Se combina con</span>PyShark, la documentación del ensayo.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>PyShark y dpkt <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Analizar capturas de tráfico ya hechas.
+      <strong>PyShark</strong> se apoya en el mismo motor de disección que Wireshark, así que
+      entiende cientos de protocolos. <strong>dpkt</strong> es minimalista y rapidísimo para
+      recorrer capturas enormes.</p>
+      <p><span class="dl">Ejemplo</span>Procesar una captura larga y extraer automáticamente las
+      estadísticas que pide el informe, en vez de mirarlas a mano en la interfaz.</p>
+      <p><span class="dl">Se combina con</span>pandas (para tabular el resultado), Matplotlib.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>NAPALM y Nornir <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Automatización de equipos de red de varios
+      fabricantes. <strong>NAPALM</strong> ofrece las mismas órdenes para marcas distintas;
+      <strong>Nornir</strong> las lanza sobre un inventario de cientos de equipos en paralelo.</p>
+      <p><span class="dl">Ejemplo</span>Recoger la configuración de toda una red, compararla con la
+      de referencia y generar el listado de desviaciones para el informe de auditoría.</p>
+      <p><span class="dl">Se combina con</span>pandas, plantillas de documento de la pestaña 6.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>PySNMP <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Hablar <abbr title="SNMP: Simple Network Management Protocol, protocolo estándar de gestión de equipos de red">SNMP</abbr><span class="gl"> (Simple Network Management Protocol, gestión de equipos de red)</span> desde Python: consultar el estado de
+      cualquier equipo que lo soporte —conmutadores, cabeceras, sistemas de alimentación
+      ininterrumpida, impresoras— y recibir sus avisos.</p>
+      <p><span class="dl">Ejemplo</span>Montar una recogida periódica de temperatura, carga y estado
+      de puertos, y guardarla como serie temporal.</p>
+      <p><span class="dl">Se combina con</span>influxdb-client (pestaña 11) para el histórico, Dash
+      para el cuadro de mando.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>python-nmap <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Lanzar exploraciones de red desde Python y recoger el
+      resultado ya estructurado: qué equipos hay, qué servicios exponen, qué versiones.</p>
+      <p><span class="dl">Ejemplo</span>Levantar el inventario real de una instalación heredada y
+      cruzarlo con la documentación que te han entregado, que casi nunca coincide.</p>
+      <p><span class="dl">Se combina con</span>pandas, informes. <strong>Con permiso escrito del
+      titular de la red</strong>: explorar una red ajena sin autorización no es una cuestión
+      técnica.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>pvlib <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Cálculo de producción fotovoltaica: posición solar,
+      irradiancia sobre plano inclinado, modelos de módulo e inversor, pérdidas, producción anual
+      hora a hora.</p>
+      <p><span class="dl">Ejemplo</span>Dimensionar la alimentación solar de un emplazamiento
+      aislado de telecomunicación y comprobar los meses críticos.</p>
+      <p><span class="dl">Se combina con</span>pandas, Matplotlib, datos meteorológicos históricos.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>PyPSA y pandapower <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Análisis de sistemas eléctricos:
+      <strong>pandapower</strong> resuelve flujos de carga y cortocircuitos en redes de
+      distribución; <strong>PyPSA</strong> modela y optimiza sistemas energéticos completos.</p>
+      <p><span class="dl">Ejemplo</span>Comprobar caídas de tensión y reparto de cargas en la
+      alimentación de un centro de proceso de datos o de una instalación distribuida.</p>
+      <p><span class="dl">Se combina con</span>pvlib (generación), Pyomo (optimización), pandas.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ════════════ 6 ════════════ -->
+<section role="tabpanel" id="p6" hidden>
+  <h2>Documentos e informes</h2>
+  <p class="fam">Donde se va la mitad del tiempo de un despacho. Estas librerías leen, convierten
+  y <strong>generan</strong> documentos: Word, Excel, PowerPoint, PDF. Es la familia con mayor
+  retorno inmediato, porque ataca trabajo repetitivo puro.</p>
+
+  <details>
+    <summary>python-docx <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Crear y modificar documentos de Word: párrafos con
+      estilo, tablas, imágenes, encabezados, saltos de sección. Sin abrir Word y sin depender de
+      Windows.</p>
+      <p><span class="dl">Ejemplo</span>Generar la memoria de un proyecto rellenando una plantilla
+      buena con los datos ya calculados. La pauta de oficio de la Guía 3 aplica aquí entera:
+      <strong>parte de una plantilla correcta y toca lo mínimo</strong>.</p>
+      <p><span class="dl">Se combina con</span>pandas (tablas), Matplotlib (figuras), Jinja2
+      (textos con variables).</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>python-pptx <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Lo mismo con PowerPoint: crear presentaciones a
+      partir de un patrón corporativo, colocar gráficas y tablas en su sitio exacto.</p>
+      <p><span class="dl">Ejemplo</span>Montar automáticamente la presentación de resultados de una
+      campaña: una diapositiva por punto de medida, con su mapa, su espectro y su veredicto.</p>
+      <p><span class="dl">Se combina con</span>Matplotlib, pandas, las librerías de mapas.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>PyMuPDF <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>La herramienta de PDF más completa y más rápida:
+      extraer texto conservando la posición, extraer imágenes, rasterizar páginas, recortar, unir,
+      dividir, anotar, buscar.</p>
+      <p><span class="dl">Ejemplo</span>Sacar de un pliego de cientos de páginas todos los párrafos
+      donde aparece una exigencia concreta, con su número de página para poder citarla.</p>
+      <p><span class="dl">Se combina con</span>pdfplumber (tablas), los modelos de visión de la
+      pestaña 8 (páginas escaneadas), el <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr><span class="gl"> (Retrieval-Augmented Generation: busca en tus documentos y responde citándolos)</span> de la Guía 4.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>pdfplumber y Camelot <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Extraer <strong>tablas</strong> de un PDF con sus
+      filas y columnas, no como un churro de texto. <strong>pdfplumber</strong> da además la
+      posición exacta de cada carácter y cada línea; <strong>Camelot</strong> está especializada en
+      tablas con y sin líneas de rejilla.</p>
+      <p><span class="dl">Ejemplo</span>Pasar a hoja de cálculo la tabla de valores de un catálogo
+      de fabricante o de un anejo normativo, sin teclearla.</p>
+      <p><span class="dl">Se combina con</span>pandas. <strong>Aviso de método:</strong> las tablas
+      numéricas densas se extraen con herramienta, <strong>nunca pidiéndole a un modelo de lenguaje
+      que las lea</strong>: ahí es donde alucinan cifras.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>MarkItDown <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Convertir casi cualquier cosa —Word, Excel,
+      PowerPoint, PDF, HTML, imágenes, audio— a texto estructurado sencillo. Es el embudo de
+      entrada cuando lo que te llega es un revoltijo de formatos.</p>
+      <p><span class="dl">Ejemplo</span>Normalizar toda la documentación recibida de un cliente a un
+      formato único antes de indexarla.</p>
+      <p><span class="dl">Se combina con</span>el <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr>, el archivo documental, los modelos locales.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Docling y PyMuPDF4LLM <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Entender la <strong>estructura</strong> de un
+      documento, no solo su texto: qué es un título, qué es una tabla, qué es un pie de figura, en
+      qué orden se lee una página a dos columnas. <strong>PyMuPDF4LLM</strong> hace la versión
+      rápida de lo mismo.</p>
+      <p><span class="dl">Ejemplo</span>Trocear una norma respetando sus artículos y apartados, para
+      que cada fragmento del <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> sea citable con su referencia exacta.</p>
+      <p><span class="dl">Se combina con</span>toda la cadena del <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> normativo de la Guía 4.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Unstructured <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Preparar documentos de cualquier formato para que los
+      procese un sistema automático: los parte en elementos con su tipo y sus metadatos.</p>
+      <p><span class="dl">Ejemplo</span>Ingerir de golpe un expediente completo —oficios, planos,
+      certificados, correos— y dejarlo listo para buscar.</p>
+      <p><span class="dl">Se combina con</span>los almacenes vectoriales de la pestaña 9.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>ReportLab y WeasyPrint <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Generar PDF desde cero. <strong>ReportLab</strong>
+      dibuja el documento elemento a elemento, con control absoluto.
+      <strong>WeasyPrint</strong> toma una página web bien maquetada y la imprime a PDF, que suele
+      ser el camino más cómodo.</p>
+      <p><span class="dl">Ejemplo</span>Emitir certificados o fichas con numeración, cajetín y
+      código de verificación, idénticos y en serie.</p>
+      <p><span class="dl">Se combina con</span>Jinja2 (plantilla), Matplotlib (figuras), qrcode.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Mammoth <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Convertir Word a <abbr title="HTML: HyperText Markup Language, el lenguaje de las páginas web">HTML</abbr><span class="gl"> (HyperText Markup Language, el lenguaje de las páginas web)</span> limpio: respeta los
+      <em>estilos</em> del documento en vez de arrastrar la maraña de formato directo que genera
+      Word.</p>
+      <p><span class="dl">Ejemplo</span>Publicar en la wiki interna procedimientos que se redactan en
+      Word, sin tener que remaquetarlos.</p>
+      <p><span class="dl">Se combina con</span>WeasyPrint, la documentación interna.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Jinja2 <span class="tag gen">de uso común</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Plantillas de texto con huecos: escribes el documento
+      una vez con marcas donde van los datos, y se rellena con cada juego de valores. Incluye
+      condiciones y repeticiones («si no cumple, añade este párrafo»; «una fila por recinto»).</p>
+      <p><span class="dl">Ejemplo</span>Redactar las conclusiones de un informe con la redacción
+      correcta según el resultado, sin copiar y pegar de informes anteriores —que es de donde salen
+      la mitad de los errores.</p>
+      <p><span class="dl">Se combina con</span>WeasyPrint, python-docx, correo automático.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>qrcode <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Generar códigos <abbr title="QR: Quick Response, código de barras bidimensional">QR</abbr><span class="gl"> (Quick Response, código de barras bidimensional)</span> como imagen.</p>
+      <p><span class="dl">Ejemplo</span>Poner en cada informe un código que lleve a la ficha de
+      verificación del documento, o etiquetar puntos de medida en campo.</p>
+      <p><span class="dl">Se combina con</span>ReportLab, python-docx, la aplicación de campo.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ════════════ 7 ════════════ -->
+<section role="tabpanel" id="p7" hidden>
+  <h2>Geoespacial, <abbr title="CAD: Computer-Aided Design, diseño asistido por ordenador">CAD</abbr> y 3D</h2>
+  <p class="fam">Todo lo que tiene coordenadas: mapas, catastro, nubes de puntos, planos y
+  modelos <abbr title="CAD: Computer-Aided Design, diseño asistido por ordenador">CAD</abbr><span class="gl"> (Computer-Aided Design, diseño asistido por ordenador)</span>.
+  Es la familia que conecta el cálculo con el territorio y con el proyecto dibujado.</p>
+
+  <details>
+    <summary>GeoPandas y Shapely <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span><strong>Shapely</strong> hace geometría: puntos,
+      líneas, polígonos, intersecciones, áreas, zonas de influencia. <strong>GeoPandas</strong> es
+      pandas con una columna de geometría: tablas de datos que además están en el mapa.</p>
+      <p><span class="dl">Ejemplo</span>Cruzar el mapa de niveles calculados con la capa de usos del
+      suelo y obtener directamente cuántas viviendas superan el límite.</p>
+      <p><span class="dl">Se combina con</span>pandas, Fiona y rasterio (lectura), Folium
+      (visualización), <abbr title="SIG: Sistema de Información Geográfica">SIG</abbr><span class="gl"> (Sistema de Información Geográfica)</span> de escritorio.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>rasterio y Fiona <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Leer y escribir los formatos <abbr title="SIG: Sistema de Información Geográfica">SIG</abbr> de verdad.
+      <strong>rasterio</strong> maneja imágenes georreferenciadas —modelos digitales del terreno,
+      ortofotos—; <strong>Fiona</strong> maneja los vectoriales —<em>shapefile</em>, GeoPackage—.</p>
+      <p><span class="dl">Ejemplo</span>Leer el modelo digital del terreno de la zona y sacar el
+      perfil de alturas entre una fuente de ruido y un receptor.</p>
+      <p><span class="dl">Se combina con</span>GeoPandas, NumPy, el cálculo de propagación.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>pyproj <span class="tag gen">de uso común</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Convertir entre sistemas de coordenadas: el
+      <abbr title="GPS: Global Positioning System, posicionamiento por satélite">GPS</abbr><span class="gl"> (Global Positioning System, posicionamiento por satélite)</span> da latitud y longitud, el catastro da coordenadas
+      proyectadas, y los metros de un cálculo exigen estar en proyección. Aquí se resuelve.</p>
+      <p><span class="dl">Ejemplo</span>Pasar los puntos anotados con el móvil en campo al mismo
+      sistema que la cartografía oficial, para que las distancias sean reales.</p>
+      <p><span class="dl">Se combina con</span>GeoPandas y rasterio, que lo usan por dentro.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Folium y leafmap <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Producir <strong>mapas web interactivos</strong> en
+      un fichero que se abre en cualquier navegador: capas, marcadores, mapas de calor, control de
+      visibilidad. <strong>leafmap</strong> añade una capa de comodidad con muchas fuentes de datos
+      ya integradas.</p>
+      <p><span class="dl">Ejemplo</span>Entregar al cliente un mapa navegable con los puntos de
+      medida, sus valores y su ficha, en vez de una lámina estática.</p>
+      <p><span class="dl">Se combina con</span>GeoPandas, resultados de propagación, informes web.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>laspy <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Leer y escribir nubes de puntos <abbr title="LiDAR: Light Detection and Ranging, medición de distancias mediante láser">LiDAR</abbr><span class="gl"> (Light Detection and Ranging, medición de distancias por láser)</span>: millones de
+      puntos con coordenada, intensidad y clasificación.</p>
+      <p><span class="dl">Ejemplo</span>Sacar de un vuelo LiDAR público la envolvente real de los
+      edificios de una manzana para alimentar el modelo de propagación, en vez de suponer alturas.</p>
+      <p><span class="dl">Se combina con</span>NumPy, PyVista, el cálculo de mapas de ruido.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>MovingPandas y elevation <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span><strong>MovingPandas</strong> analiza
+      <strong>trayectorias</strong>: recorridos con tiempo, velocidades, paradas, tramos.
+      <strong>elevation</strong> descarga modelos de elevación del terreno de cobertura mundial.</p>
+      <p><span class="dl">Ejemplo</span>Analizar el recorrido de una campaña de medida móvil y
+      asignar cada tramo a su nivel medido y a su cota.</p>
+      <p><span class="dl">Se combina con</span>GeoPandas, rasterio, Folium.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>windrose <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Dibujar <strong>rosas de los vientos</strong>: la
+      distribución de dirección y velocidad, en el gráfico circular que todo el mundo reconoce.</p>
+      <p><span class="dl">Ejemplo</span>Justificar en el informe las condiciones meteorológicas del
+      periodo de medida, que condicionan la validez del ensayo en exterior.</p>
+      <p><span class="dl">Se combina con</span>pandas, Matplotlib, datos de estación meteorológica.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>ezdxf <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Leer, modificar y crear planos en formato
+      <abbr title="DXF · DWG: formatos de dibujo técnico CAD">DXF</abbr><span class="gl"> (formatos de dibujo técnico CAD)</span>: capas, bloques, cotas, textos, atributos.</p>
+      <p><span class="dl">Ejemplo</span>Rellenar las cartelas de una serie de planos y colocar
+      automáticamente los símbolos de los elementos, partiendo de una plantilla correcta.</p>
+      <p><span class="dl">Se combina con</span>la aplicación de proyectos de la Guía 3, conversores a
+      <abbr title="DXF · DWG: formatos de dibujo técnico CAD">DWG</abbr>, GeoPandas.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>IfcOpenShell <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Trabajar con modelos <abbr title="BIM: Building Information Modeling, modelo digital del edificio con su información asociada">BIM</abbr><span class="gl"> (Building Information Modeling, modelo digital del edificio con su información)</span> en formato abierto
+      <abbr title="IFC: Industry Foundation Classes, formato abierto de intercambio BIM">IFC</abbr><span class="gl"> (Industry Foundation Classes, formato abierto de intercambio BIM)</span>: recorrer el edificio, sacar recintos, superficies, volúmenes y las
+      propiedades de cada elemento constructivo.</p>
+      <p><span class="dl">Ejemplo</span>Extraer del modelo del proyecto la superficie y el volumen de
+      cada recinto, y la composición de cada partición, para alimentar el cálculo de aislamiento sin
+      teclear nada.</p>
+      <p><span class="dl">Se combina con</span>las librerías de acústica de la pestaña 4, PyVista.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>PyVista <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Visualización 3D científica y manejo de mallas:
+      cortes, isosuperficies, mapas de color sobre geometría, animaciones. Es la cara amable de la
+      herramienta estándar de visualización científica.</p>
+      <p><span class="dl">Ejemplo</span>Enseñar el campo de presión calculado por el modelo de
+      contorno sobre la geometría real de la pantalla acústica.</p>
+      <p><span class="dl">Se combina con</span>bempp-cl, laspy, IfcOpenShell.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>CadQuery y build123d <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span><abbr title="CAD: Computer-Aided Design, diseño asistido por ordenador">CAD</abbr> paramétrico <strong>escribiendo código</strong>: la
+      pieza se describe con sus cotas como variables, y cambiar una regenera el modelo entero.
+      Exporta a los formatos estándar de fabricación.</p>
+      <p><span class="dl">Ejemplo</span>Generar la serie completa de soportes de un array de
+      micrófonos, cada uno con su ángulo, y mandarlos a imprimir en 3D.</p>
+      <p><span class="dl">Se combina con</span>PyVista, ezdxf, fabricación aditiva.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ════════════ 8 ════════════ -->
+<section role="tabpanel" id="p8" hidden>
+  <h2>Visión e imagen</h2>
+  <p class="fam">Leer lo que hay en una foto, en un plano escaneado o en un vídeo. Para un
+  despacho, el uso mayoritario no es la visión artificial espectacular: es el
+  <abbr title="OCR: Optical Character Recognition, convertir imagen o PDF escaneado en texto">OCR</abbr><span class="gl"> (Optical Character Recognition, convertir imagen o PDF escaneado en texto)</span> —recuperar el texto de documentos que llegan escaneados—.</p>
+
+  <details>
+    <summary>OpenCV <span class="tag gen">de uso común</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>La librería de visión por ordenador de referencia:
+      leer y escribir imagen y vídeo, filtrar, detectar bordes y formas, corregir la perspectiva,
+      calibrar cámaras, seguir objetos.</p>
+      <p><span class="dl">Ejemplo</span>Enderezar la foto torcida de un cuadro eléctrico o de una
+      placa de características para que el <abbr title="OCR: Optical Character Recognition, convertir imagen o PDF escaneado en texto">OCR</abbr> pueda leerla.</p>
+      <p><span class="dl">Se combina con</span>NumPy (una imagen es una matriz), los lectores de
+      texto de más abajo, los detectores.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Pillow <span class="tag gen">de uso común</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Lo cotidiano de las imágenes: abrir, convertir de
+      formato, redimensionar, recortar, rotar, escribir texto encima, leer los metadatos de la foto
+      (incluida la posición <abbr title="GPS: Global Positioning System, posicionamiento por satélite">GPS</abbr><span class="gl"> (Global Positioning System, posicionamiento por satélite)</span>).</p>
+      <p><span class="dl">Ejemplo</span>Preparar las 300 fotos del reportaje de obra: escalarlas,
+      rotarlas según el sensor y ponerles el pie con fecha y punto.</p>
+      <p><span class="dl">Se combina con</span>python-docx y ReportLab (para insertarlas), GeoPandas
+      (para situarlas en el mapa por sus metadatos).</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>scikit-image <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Procesado de imagen con enfoque científico:
+      segmentar, medir regiones, analizar texturas, registrar dos imágenes entre sí. Pensada para
+      <em>medir</em> sobre la imagen, no para retocarla.</p>
+      <p><span class="dl">Ejemplo</span>Cuantificar sobre una termografía la superficie que supera
+      una temperatura, o medir el área de una patología en una fachada.</p>
+      <p><span class="dl">Se combina con</span>NumPy, SciPy, Matplotlib.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Ultralytics y supervision <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span><strong>Ultralytics</strong> pone la detección de
+      objetos moderna al alcance de unas pocas líneas: qué hay en la imagen y dónde, con
+      posibilidad de entrenarlo con tus propias fotos. <strong>supervision</strong> aporta las
+      piezas de alrededor: contar, seguir, definir zonas, dibujar el resultado.</p>
+      <p><span class="dl">Ejemplo</span>Contar vehículos por tipo en un vídeo de aforo para
+      caracterizar la fuente de ruido de tráfico con datos propios.</p>
+      <p><span class="dl">Se combina con</span>OpenCV, pandas, el cálculo de propagación.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>pytesseract <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>El <abbr title="OCR: Optical Character Recognition, convertir imagen o PDF escaneado en texto">OCR</abbr> clásico, libre y muy asentado. Funciona bien
+      con documentos limpios y bien orientados, y es ligerísimo comparado con los basados en
+      modelos.</p>
+      <p><span class="dl">Ejemplo</span>Recuperar el texto de un expediente antiguo escaneado para
+      poder buscar dentro.</p>
+      <p><span class="dl">Se combina con</span>OpenCV (para enderezar antes), PyMuPDF, el archivo
+      documental.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>EasyOCR, RapidOCR, PaddleOCR y Surya <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>La generación de <abbr title="OCR: Optical Character Recognition, convertir imagen o PDF escaneado en texto">OCR</abbr> basada en redes neuronales:
+      aguanta fotos torcidas, con poca luz, texto girado, tablas y varios idiomas.
+      <strong>Surya</strong> añade además el análisis de la disposición de la página y el orden de
+      lectura.</p>
+      <p><span class="dl">Ejemplo</span>Leer la placa de características de una máquina fotografiada
+      de lado y en obra, o un plano escaneado con texto en varias orientaciones.</p>
+      <p><span class="dl">Se combina con</span>Docling, el <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr><span class="gl"> (Retrieval-Augmented Generation: busca en tus documentos y responde citándolos)</span> normativo, los modelos de visión de la
+      pestaña 9.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>MediaPipe <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Detección en tiempo real de personas, manos, cara y
+      postura, funcionando incluso sin <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr><span class="gl"> (Graphics Processing Unit, tarjeta gráfica)</span>. Está pensada para ir en directo sobre la cámara.</p>
+      <p><span class="dl">Ejemplo</span>Controlar por gestos una interfaz de medida sin tocar el
+      equipo cuando tienes las manos ocupadas.</p>
+      <p><span class="dl">Se combina con</span>OpenCV, interfaces de campo, realidad virtual.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>DeepFace e InsightFace <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Detección y reconocimiento facial.</p>
+      <p><span class="dl">Ejemplo</span>En un despacho, el uso legítimo y habitual es el contrario
+      del que se supone: <strong>detectar caras para difuminarlas</strong> en el reportaje
+      fotográfico antes de entregarlo.</p>
+      <p><span class="dl">Se combina con</span>OpenCV, Pillow. <strong>Aviso legal serio:</strong>
+      los datos biométricos son categoría especial en protección de datos. Difuminar es una cosa;
+      identificar personas es otra muy distinta y requiere base legal.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>OpenCLIP <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Relacionar imágenes y texto en el mismo espacio de
+      significado: permite <strong>buscar fotos describiéndolas con palabras</strong>, sin haberlas
+      etiquetado antes.</p>
+      <p><span class="dl">Ejemplo</span>Encontrar en el archivo fotográfico de años «fachada con
+      rejillas de ventilación» sin que nadie haya escrito nunca esa etiqueta.</p>
+      <p><span class="dl">Se combina con</span>los almacenes vectoriales de la pestaña 9, el archivo
+      documental.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ════════════ 9 ════════════ -->
+<section role="tabpanel" id="p9" hidden>
+  <h2><abbr title="IA: Inteligencia Artificial">IA</abbr>, modelos y <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr></h2>
+  <p class="fam"><abbr title="IA: Inteligencia Artificial">IA</abbr><span class="gl"> (Inteligencia Artificial)</span> ·
+  <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr><span class="gl"> (Retrieval-Augmented Generation: busca en tus documentos y responde citándolos)</span>.<br>
+  La familia que sostiene lo que cuentan las guías 3 y 4: ejecutar modelos en tus
+  propios equipos, buscar por significado en tu documentación y orquestar todo eso. También es
+  <strong>la familia donde más conflictos de versión hay</strong>: cambia muy deprisa y arrastra
+  dependencias pesadas y atadas a la versión de la tarjeta gráfica.</p>
+
+  <details>
+    <summary>PyTorch <span class="tag gen">de uso común</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>El motor sobre el que corre casi todo lo demás de
+      esta pestaña: cálculo con matrices sobre <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr><span class="gl"> (Graphics Processing Unit, tarjeta gráfica)</span> y entrenamiento de redes neuronales.</p>
+      <p><span class="dl">Ejemplo</span>No se usa directamente casi nunca; está debajo de la
+      transcripción, la visión, los modelos de lenguaje.</p>
+      <p><span class="dl">Se combina con</span>todo. <strong>Y es el ejemplo perfecto del problema
+      de esta guía</strong>: su versión está atada a la del sistema de cálculo de la tarjeta
+      gráfica, y por eso casi siempre vive en un entorno propio, aislado del resto.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Transformers <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Descargar y ejecutar modelos ya entrenados —de
+      lenguaje, visión o audio— con una interfaz común, desde el repositorio público donde la
+      comunidad los publica.</p>
+      <p><span class="dl">Ejemplo</span>Probar en local media docena de modelos de clasificación de
+      texto sobre tus propios documentos antes de decidir cuál merece la pena.</p>
+      <p><span class="dl">Se combina con</span>PyTorch, sentence-transformers, los servidores de
+      modelos.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Sentence Transformers <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Convertir un texto en una lista de números que
+      representa su <strong>significado</strong> (lo que la Guía 4 llama <em>embeddings</em>), para
+      poder comparar textos por sentido y no por palabras. Incluye también los modelos que
+      reordenan resultados por relevancia.</p>
+      <p><span class="dl">Ejemplo</span>Que buscar «ruido de la vecina de arriba» encuentre el
+      artículo sobre ruido aéreo entre recintos superpuestos, que no comparte ni una palabra.</p>
+      <p><span class="dl">Se combina con</span>Qdrant o Chroma (donde se guardan), el <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> entero.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Cliente de Ollama <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Hablar desde Python con los modelos de lenguaje que
+      corren <strong>en tu propio servidor</strong>. Ollama es el programa que los sirve; esta
+      librería es la forma de pedirle cosas desde un script.</p>
+      <p><span class="dl">Ejemplo</span>Clasificar automáticamente el correo entrante del despacho
+      por tipo de asunto, sin que ningún texto salga de la red local.</p>
+      <p><span class="dl">Se combina con</span>los modelos de la Guía 3, las herramientas de
+      documento, el <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr>.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>vLLM <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Servir modelos de lenguaje con mucho mejor
+      rendimiento cuando hay <strong>varias consultas a la vez</strong>, exponiéndolos con la misma
+      interfaz que los servicios comerciales.</p>
+      <p><span class="dl">Ejemplo</span>Procesar de noche un lote de cientos de documentos, en vez
+      de uno detrás de otro.</p>
+      <p><span class="dl">Se combina con</span>PyTorch, los enrutadores de modelos.
+      <strong>Dependencias muy exigentes:</strong> es un caso de libro de «esto va en su propio
+      entorno o en su propio contenedor».</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>LangChain y LlamaIndex <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Montar la tubería completa de un sistema de preguntas
+      sobre documentos: trocear, indexar, recuperar, componer la pregunta, encadenar pasos.
+      <strong>LlamaIndex</strong> está más centrada en la parte de indexar y recuperar.</p>
+      <p><span class="dl">Ejemplo</span>La cadena que responde una consulta normativa citando el
+      artículo y la vigencia, como se cuenta en la Guía 4.</p>
+      <p><span class="dl">Se combina con</span>Qdrant, Sentence Transformers, los modelos locales.
+      <strong>Evolucionan muy rápido</strong>: fija la versión o lo que funcionaba hoy dejará de
+      funcionar en la próxima actualización.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Qdrant, Chroma y FAISS <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Guardar y buscar por significado. Son
+      <strong>bases de datos vectoriales</strong>: en vez de buscar por coincidencia de texto,
+      encuentran lo más parecido en sentido. <strong>Qdrant</strong> es un servicio completo;
+      <strong>Chroma</strong> es ligera y se empotra; <strong>FAISS</strong> es la biblioteca de
+      búsqueda pura.</p>
+      <p><span class="dl">Ejemplo</span>El almacén donde vive la normativa troceada del <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr>
+      —miles de fragmentos, consultables en milisegundos y sin coste por consulta—.</p>
+      <p><span class="dl">Se combina con</span>Sentence Transformers, LangChain, Docling.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Unsloth <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span><strong>Afinar</strong> un modelo con tu propio
+      material usando mucha menos memoria y tiempo. Es lo que permite especializar un modelo
+      mediano en una tarjeta gráfica normal.</p>
+      <p><span class="dl">Ejemplo</span>Ajustar un modelo para que redacte con el vocabulario y la
+      estructura de tus informes. Recuerda la distinción de la Guía 3: <strong>afinar cambia cómo
+      habla; el <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> es el que aporta los datos con fuente</strong>.</p>
+      <p><span class="dl">Se combina con</span>PyTorch, Transformers, los servidores de modelos.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>DSPy <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Dejar de escribir instrucciones a mano y empezar a
+      <strong>optimizarlas con ejemplos</strong>: declaras qué entra y qué debe salir, das casos
+      resueltos, y la librería busca la formulación que mejor funciona.</p>
+      <p><span class="dl">Ejemplo</span>Afinar una tarea de extracción de datos de certificados
+      midiendo el acierto sobre casos cuya respuesta ya conoces —el método de la Guía 4.</p>
+      <p><span class="dl">Se combina con</span>los modelos locales, las métricas de evaluación.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Outlines, Guidance e Instructor <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Obligar al modelo a responder <strong>con una
+      estructura fija</strong> —una ficha con campos concretos, un valor de una lista cerrada— en
+      vez de un texto libre que luego hay que interpretar. La estructura se garantiza, no se pide
+      por favor.</p>
+      <p><span class="dl">Ejemplo</span>Extraer de cien certificados los mismos ocho campos, con la
+      certeza de que siempre vienen los ocho y en el mismo formato.</p>
+      <p><span class="dl">Se combina con</span>los modelos locales, pandas, la carga a base de
+      datos.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>CrewAI y Semantic Kernel <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Orquestar <strong>varios agentes</strong> que se
+      reparten un trabajo: uno investiga, otro redacta, otro revisa. Es la idea que la Guía 7
+      desarrolla con nuestro propio sistema de agentes coordinados.</p>
+      <p><span class="dl">Ejemplo</span>Un flujo en el que un agente reúne la documentación, otro
+      redacta el borrador y un tercero hace de revisor crítico antes de que lo vea una persona.</p>
+      <p><span class="dl">Se combina con</span>los modelos locales, las herramientas de documento.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>FastMCP <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Construir en pocas líneas un
+      <strong>conector <abbr title="MCP: Model Context Protocol, el estándar para conectar un asistente de IA con herramientas">MCP</abbr><span class="gl"> (Model Context Protocol, estándar para conectar un asistente con herramientas)</span></strong>: exponer tus propias funciones —consultar tu base de
+      datos, lanzar tu cálculo, leer tu inventario— para que un asistente de <abbr title="IA: Inteligencia Artificial">IA</abbr><span class="gl"> (Inteligencia Artificial)</span> pueda usarlas.</p>
+      <p><span class="dl">Ejemplo</span>Casi todos los conectores propios que describe la Guía 10
+      están hechos así.</p>
+      <p><span class="dl">Se combina con</span>cualquier librería de esta guía: el conector es solo
+      la puerta.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>MLflow y Optuna <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span><strong>MLflow</strong> lleva el registro de cada
+      experimento: qué datos, qué parámetros, qué resultado, qué versión. Es el cuaderno de
+      laboratorio del trabajo con modelos —y la única forma de poder repetir dentro de un año lo
+      que hiciste hoy—.</p>
+      <p><span class="dl">Ejemplo</span>Dejar trazado por qué se eligió una configuración y no otra,
+      con las cifras que lo respaldan.</p>
+      <p><span class="dl">Se combina con</span>Optuna (búsqueda), PyTorch, scikit-learn.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>scikit-learn y XGBoost <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Aprendizaje automático <em>clásico</em>, el que casi
+      siempre basta y casi nadie propone: regresiones, clasificadores, agrupamiento, árboles.
+      <strong>XGBoost</strong> es el que suele ganar cuando los datos son una tabla.</p>
+      <p><span class="dl">Ejemplo</span>Predecir un resultado de ensayo a partir de las variables
+      del caso, con un modelo que cabe en un fichero pequeño, se entrena en segundos y se puede
+      explicar.</p>
+      <p><span class="dl">Se combina con</span>pandas, MLflow. <strong>Regla sana:</strong> antes de
+      sacar una red neuronal, prueba con esto.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ════════════ 10 ════════════ -->
+<section role="tabpanel" id="p10" hidden>
+  <h2>Web y automatización</h2>
+  <p class="fam">Traer datos de fuera, publicar herramientas para que las usen otros, y que las
+  tareas repetitivas se hagan solas. Es la familia que convierte un script personal en algo que
+  usa todo el despacho.</p>
+
+  <details>
+    <summary>requests y HTTPX <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Pedir cosas por web desde un programa: descargar un
+      fichero, consultar una <abbr title="API: Application Programming Interface, la puerta para que un programa hable con otro">API</abbr><span class="gl"> (Application Programming Interface, puerta para que un programa hable con otro)</span> oficial, enviar datos a un servicio.
+      <strong>HTTPX</strong> es la versión moderna, que además sabe lanzar muchas peticiones a la
+      vez.</p>
+      <p><span class="dl">Ejemplo</span>Descargar automáticamente la cartografía o los datos
+      abiertos de un organismo cada vez que se publica una actualización.</p>
+      <p><span class="dl">Se combina con</span>pandas, las librerías geoespaciales, los procesos
+      programados.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Beautiful Soup y Trafilatura <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Sacar información de una página web.
+      <strong>Beautiful Soup</strong> navega su estructura; <strong>Trafilatura</strong> hace algo
+      más fino: extrae el <strong>texto útil</strong> de un artículo descartando menús, anuncios y
+      pies.</p>
+      <p><span class="dl">Ejemplo</span>Vigilar la publicación de un boletín oficial y quedarse solo
+      con el texto de las disposiciones que interesan.</p>
+      <p><span class="dl">Se combina con</span>requests, el <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr><span class="gl"> (Retrieval-Augmented Generation: busca en tus documentos y responde citándolos)</span>, los avisos al móvil.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Scrapy y Crawl4AI <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Recorrer sitios web enteros de forma ordenada.
+      <strong>Scrapy</strong> es el recolector industrial, con control de ritmo y reintentos.
+      <strong>Crawl4AI</strong> está pensada para dejar el resultado ya en el formato que consume
+      un modelo de lenguaje.</p>
+      <p><span class="dl">Ejemplo</span>Reunir el catálogo técnico completo de un fabricante para
+      construir una base de datos de materiales propia.</p>
+      <p><span class="dl">Se combina con</span>pandas, el <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr>. <strong>Con cabeza:</strong> respeta las
+      condiciones de uso del sitio y no lo satures.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Playwright <span class="tag gen">de uso común</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Manejar un navegador de verdad desde un programa:
+      rellenar formularios, pulsar botones, esperar a que cargue, hacer capturas. Sirve para lo que
+      no tiene <abbr title="API: Application Programming Interface, la puerta para que un programa hable con otro">API</abbr>, y también para comprobar automáticamente que una página funciona.</p>
+      <p><span class="dl">Ejemplo</span>Verificar que un documento web se ve bien en modo claro y
+      oscuro, en pantalla de ordenador y de móvil, y guardar las capturas como evidencia.</p>
+      <p><span class="dl">Se combina con</span>las pruebas automáticas, la generación de PDF.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>FastAPI <span class="tag gen">de uso común</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Publicar tus propias funciones como servicio web:
+      tu cálculo pasa a tener una dirección a la que cualquiera puede llamar, con documentación
+      generada sola y validación de los datos de entrada.</p>
+      <p><span class="dl">Ejemplo</span>Exponer el evaluador normativo para que lo consulten la
+      aplicación de escritorio, la hoja de campo y el asistente de <abbr title="IA: Inteligencia Artificial">IA</abbr><span class="gl"> (Inteligencia Artificial)</span>, sin triplicar el código.</p>
+      <p><span class="dl">Se combina con</span>todo el motor de cálculo; es la puerta de entrada.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Streamlit y Gradio <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Convertir un script en una <strong>aplicación web con
+      interfaz</strong> escribiendo muy poco: campos, botones, gráficas, subida de ficheros. Sin
+      saber nada de desarrollo web.</p>
+      <p><span class="dl">Ejemplo</span>Que el resto del equipo pueda usar tu calculadora sin
+      abrir un editor de código: entran a una dirección, suben el fichero y descargan el resultado.</p>
+      <p><span class="dl">Se combina con</span>pandas, Matplotlib, los modelos locales.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>schedule y watchdog <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Que las cosas pasen solas. <strong>schedule</strong>
+      ejecuta tareas a una hora («cada noche a las tres»). <strong>watchdog</strong> reacciona a los
+      cambios en una carpeta («en cuanto aparezca un fichero aquí, procésalo»).</p>
+      <p><span class="dl">Ejemplo</span>Que al dejar las medidas del día en una carpeta compartida se
+      procesen, se archiven y llegue el aviso al móvil, sin que nadie lance nada.</p>
+      <p><span class="dl">Se combina con</span>toda la cadena de proceso. <strong>Con la pauta de la
+      Guía 10:</strong> nada corriendo permanentemente si no es imprescindible.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Fabric <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Ejecutar órdenes en otras máquinas por
+      <abbr title="SSH: Secure Shell, conexión cifrada para manejar otra máquina">SSH</abbr><span class="gl"> (Secure Shell, conexión cifrada para manejar otra máquina)</span> desde Python, y copiar ficheros. Automatiza el «entra al servidor y haz
+      esto» sin entrar al servidor.</p>
+      <p><span class="dl">Ejemplo</span>Lanzar un cálculo pesado en el servidor con <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr><span class="gl"> (Graphics Processing Unit, tarjeta gráfica)</span> desde el
+      equipo de escritorio y recoger el resultado cuando termine.</p>
+      <p><span class="dl">Se combina con</span>la infraestructura de la Guía 10.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Ruff, Black y mypy <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Mantener el código sano sin discutirlo.
+      <strong>Black</strong> lo formatea siempre igual; <strong>Ruff</strong> detecta errores y
+      malas prácticas a una velocidad enorme; <strong>mypy</strong> comprueba que los tipos de
+      datos encajan antes de ejecutar nada.</p>
+      <p><span class="dl">Ejemplo</span>Cuando una parte importante del código la escribe un
+      asistente de <abbr title="IA: Inteligencia Artificial">IA</abbr> (Guía 6), estas tres herramientas son la primera red: cazan al
+      instante lo que a simple vista parece correcto.</p>
+      <p><span class="dl">Se combina con</span>pytest, el control de versiones.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>pytest <span class="tag gen">de uso común</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Escribir <strong>pruebas automáticas</strong>: casos
+      cuya respuesta correcta ya conoces, que se comprueban solos cada vez que tocas algo.</p>
+      <p><span class="dl">Ejemplo</span>Guardar diez casos de cálculo verificados a mano. Si mañana
+      una actualización de una librería cambia un resultado, te enteras en segundos y no en la
+      entrega.</p>
+      <p><span class="dl">Se combina con</span>todo. <strong>Es la contramedida directa</strong> al
+      problema de versiones de la pestaña 1: sin pruebas, una actualización silenciosa no la
+      detecta nadie.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>PyInstaller <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Empaquetar tu programa, con Python y todas sus
+      librerías dentro, en un <strong>único ejecutable</strong>. Quien lo recibe no instala nada:
+      hace doble clic.</p>
+      <p><span class="dl">Ejemplo</span>Entregar una herramienta a un compañero o a un cliente que
+      no tiene Python ni va a tenerlo. Las aplicaciones de escritorio de la Guía 3 se distribuyen
+      así.</p>
+      <p><span class="dl">Se combina con</span>las interfaces gráficas. <strong>Efecto lateral
+      útil:</strong> el ejecutable congela las versiones, así que no le afecta lo que actualices
+      después.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ════════════ 11 ════════════ -->
+<section role="tabpanel" id="p11" hidden>
+  <h2>Instrumentación y hardware</h2>
+  <p class="fam">Donde Python toca el mundo físico: sonómetros, tarjetas de adquisición,
+  autómatas, sensores y buses de campo. Es la familia que convierte un despacho en un laboratorio
+  con registro continuo.</p>
+
+  <details>
+    <summary>pySerial <span class="tag gen">de uso común</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Hablar por <strong>puerto serie</strong>, que sigue
+      siendo la vía de comunicación de media instrumentación del mundo, directamente o a través de
+      un adaptador <abbr title="USB: Universal Serial Bus, el conector estándar de periféricos">USB</abbr><span class="gl"> (Universal Serial Bus, conector estándar de periféricos)</span>.</p>
+      <p><span class="dl">Ejemplo</span>Descargar las medidas de un sonómetro o un registrador de
+      datos siguiendo el protocolo que trae su manual.</p>
+      <p><span class="dl">Se combina con</span>pandas (para tabular), watchdog (para descargar solo
+      lo nuevo).</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>PyVISA <span class="tag gen">de uso común</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>El estándar de control de instrumentación de
+      laboratorio: analizadores, generadores, osciloscopios, fuentes. Da la misma forma de hablar
+      con el equipo esté conectado por <abbr title="USB: Universal Serial Bus, el conector estándar de periféricos">USB</abbr>, red o bus de instrumentación.</p>
+      <p><span class="dl">Ejemplo</span>Automatizar un barrido completo en el analizador de redes y
+      recoger los parámetros S sin tocar el panel del equipo.</p>
+      <p><span class="dl">Se combina con</span>scikit-rf (pestaña 5), NumPy, informes.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>NI-DAQmx <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Controlar tarjetas de adquisición de datos:
+      configurar canales, ganancias, frecuencia de muestreo y disparo, y leer las muestras
+      sincronizadas.</p>
+      <p><span class="dl">Ejemplo</span>Capturar simultáneamente varios canales de acelerómetros y
+      micrófonos en un ensayo de vibraciones, con todo sincronizado.</p>
+      <p><span class="dl">Se combina con</span>NumPy, acoular, las librerías de acústica.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>PyAudio y SoundCard <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Grabar y reproducir por la tarjeta de sonido del
+      equipo o por una interfaz de audio externa, con control de dispositivo, canales y latencia.</p>
+      <p><span class="dl">Ejemplo</span>Emitir una señal de barrido por el altavoz y grabar la
+      respuesta por el micrófono calibrado, para obtener la respuesta al impulso de la sala.</p>
+      <p><span class="dl">Se combina con</span>pyroomacoustics, librosa, el motor acústico en tiempo
+      real de la Guía 3.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>pymodbus <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Hablar Modbus, el protocolo industrial más extendido:
+      leer y escribir registros de autómatas, variadores, analizadores de red eléctrica y
+      climatización.</p>
+      <p><span class="dl">Ejemplo</span>Registrar el régimen real de funcionamiento de una máquina
+      durante la campaña de medida, para poder relacionar cada nivel con su estado.</p>
+      <p><span class="dl">Se combina con</span>influxdb-client, pandas, el informe.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>asyncua (<abbr title="OPC UA: Open Platform Communications Unified Architecture, estándar de comunicación industrial">OPC UA</abbr><span class="gl"> (Open Platform Communications Unified Architecture, estándar de comunicación industrial)</span>) <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Cliente y servidor del estándar industrial moderno,
+      con modelo de datos estructurado, suscripción a cambios y seguridad. Es el sucesor de Modbus
+      en instalaciones nuevas.</p>
+      <p><span class="dl">Ejemplo</span>Suscribirse a las variables de una instalación y recibir el
+      dato solo cuando cambia, en vez de preguntar continuamente.</p>
+      <p><span class="dl">Se combina con</span>bases de datos de series temporales, cuadros de mando.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Bleak <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Comunicación con dispositivos
+      <abbr title="BLE: Bluetooth Low Energy, Bluetooth de bajo consumo">BLE</abbr><span class="gl"> (Bluetooth Low Energy, Bluetooth de bajo consumo)</span>, que es como se conectan casi todos los sensores
+      portátiles modernos. Funciona igual en Windows, Linux y macOS.</p>
+      <p><span class="dl">Ejemplo</span>Leer un sensor ambiental de campo desde el portátil, sin la
+      aplicación del fabricante y sin pasar por su nube.</p>
+      <p><span class="dl">Se combina con</span>pandas, la aplicación de campo.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>python-can <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Acceder al bus <abbr title="CAN: Controller Area Network, bus de comunicación usado en automoción e industria">CAN</abbr><span class="gl"> (Controller Area Network, bus de automoción e industria)</span>, el estándar de
+      automoción y de mucha maquinaria: leer y enviar tramas.</p>
+      <p><span class="dl">Ejemplo</span>Registrar régimen de motor y velocidad durante un ensayo de
+      ruido de vehículo, para correlacionarlos con el nivel medido.</p>
+      <p><span class="dl">Se combina con</span>pandas, las librerías de acústica.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>gpiozero, smbus2 y hidapi <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Electrónica a bajo nivel: <strong>gpiozero</strong>
+      maneja las patillas de una placa tipo Raspberry Pi; <strong>smbus2</strong> habla con sensores
+      por bus <abbr title="I2C: Inter-Integrated Circuit, bus serie de dos hilos para sensores">I2C</abbr><span class="gl"> (Inter-Integrated Circuit, bus serie de dos hilos para sensores)</span>; <strong>hidapi</strong> con dispositivos <abbr title="USB: Universal Serial Bus, el conector estándar de periféricos">USB</abbr> genéricos.</p>
+      <p><span class="dl">Ejemplo</span>Montar un registrador autónomo de bajo coste que mida y
+      envíe, para dejarlo semanas en un emplazamiento.</p>
+      <p><span class="dl">Se combina con</span>influxdb-client, avisos al móvil.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>pyadi-iio <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Control de hardware de radio definida por software
+      (<abbr title="SDR: Software Defined Radio, radio definida por software">SDR</abbr><span class="gl"> (Software Defined Radio, radio definida por software)</span>) y de convertidores de un fabricante muy extendido en instrumentación:
+      configurar frecuencia, ganancia y ancho de banda, y recibir las muestras en crudo.</p>
+      <p><span class="dl">Ejemplo</span>Montar un banco de medida de espectro radioeléctrico con
+      equipo de coste contenido y análisis propio.</p>
+      <p><span class="dl">Se combina con</span>NumPy, SciPy, Komm y scikit-rf (pestaña 5).</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>AHRS <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Calcular orientación a partir de acelerómetro,
+      giróscopo y magnetómetro: los filtros de fusión que convierten tres sensores ruidosos en un
+      dato de actitud estable.</p>
+      <p><span class="dl">Ejemplo</span>Conocer la orientación exacta de un array de micrófonos o de
+      una cámara durante una medida en campo.</p>
+      <p><span class="dl">Se combina con</span>acoular, las herramientas de escaneo 3D.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>influxdb-client <span class="tag inv">del inventario</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Guardar y consultar <strong>series temporales</strong>
+      —un valor cada segundo durante meses— en una base de datos hecha para eso, con consultas por
+      intervalos y agregaciones eficientes.</p>
+      <p><span class="dl">Ejemplo</span>Sostener un registro continuo de ruido ambiental de una
+      instalación y poder preguntar «el percentil de las noches de agosto» sin que tarde.</p>
+      <p><span class="dl">Se combina con</span>pymodbus, PySNMP, cuadros de mando, avisos.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>psutil <span class="tag gen">de uso común</span></summary>
+    <div class="db">
+      <p><span class="dl">Para qué sirve</span>Consultar el estado del propio equipo: procesador,
+      memoria, disco, red, procesos en marcha.</p>
+      <p><span class="dl">Ejemplo</span>Comprobar que hay memoria suficiente <strong>antes</strong>
+      de lanzar un cálculo grande o de cargar un modelo, en vez de descubrirlo cuando el equipo se
+      bloquea.</p>
+      <p><span class="dl">Se combina con</span>los procesos automáticos, los avisos.</p>
+    </div>
+  </details>
+
+  <div class="box tip">
+    <span class="lbl">Para terminar: por dónde empezar</span>
+    <p>Elige <strong>una</strong> tarea repetitiva que hagas cada semana. Crea un entorno virtual
+    para ella. Instala las dos o tres librerías que necesite. Anota las versiones. Escribe una
+    prueba con un caso cuya respuesta ya conoces. Eso es todo el método, y sirve igual para las
+    nueve familias de esta guía.</p>
+  </div>
+</section>
+
+<a class="home" href="index.html"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M6 10.5V20h5v-5h2v5h5v-9.5"/></svg><span>Índice de guías</span></a>
+
+<footer>
+  <p><strong>Guía 13 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  profesional» · Colegio Oficial de Ingenieros de Telecomunicación.<br>
+  Las librerías marcadas <em>del inventario</em> proceden de un censo propio de cuatro equipos
+  tomado el 14/07/2026; las marcadas <em>de uso común</em> son estándares del sector descritos sin
+  cifras ni versiones. Los números de versión cambian: comprueba siempre los tuyos.</p>
+  <p><a href="Glosario.html">¿Una sigla que no conoces? Consulta el glosario</a></p>
+</footer>
+
+</div>
+<script>
+  const tabs=[...document.querySelectorAll('nav.tabs button')];
+  const paneles=[...document.querySelectorAll('section[role=tabpanel]')];
+  tabs.forEach(b=>b.addEventListener('click',()=>{
+    tabs.forEach(x=>x.setAttribute('aria-selected', x===b?'true':'false'));
+    paneles.forEach(p=>p.hidden = (p.id!==b.dataset.p));
+    window.scrollTo({top:0,behavior:'smooth'});
+  }));
+</script>
+</body>
+</html>

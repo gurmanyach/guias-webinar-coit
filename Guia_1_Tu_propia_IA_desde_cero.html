@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía 1 · Tu propia IA desde cero — Webinar COIT</title>
+<style>
+  :root{
+    --bg:#ffffff; --ink:#1F2A37; --muted:#6B7785; --line:#D9E1EC;
+    --accent:#2E6DA4; --navy:#1B3A6B; --amber:#B5650A; --amber-bg:#FBEEDC;
+    --green:#2F7D4F; --green-bg:#E9F3EC; --card:#F3F6FB; --red:#A33A3A; --red-bg:#FBE9E9;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+      --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+      --green:#7BC49A; --green-bg:#16241C; --red:#E08585; --red-bg:#2A1A1A;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+    --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+    --green:#7BC49A; --green-bg:#16241C; --red:#E08585; --red-bg:#2A1A1A;
+  }
+  body{background:var(--bg); color:var(--ink);
+    font:16px/1.65 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    margin:0; padding:0 16px 80px;}
+  .wrap{max-width:900px;margin:0 auto}
+  header.top{padding:34px 0 10px;border-bottom:1px solid var(--line)}
+  .eyebrow{font:600 12.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--amber);margin:0 0 10px}
+  h1{font-size:2.05rem;line-height:1.2;margin:0 0 10px;font-weight:650;letter-spacing:-.02em}
+  .sub{color:var(--muted);margin:0 0 18px;max-width:70ch}
+  nav.tabs{position:sticky;top:0;z-index:20;background:var(--bg);
+    border-bottom:1px solid var(--line);margin:0 0 30px;display:flex;gap:2px;
+    overflow-x:auto;padding-top:10px}
+  nav.tabs button{flex:0 0 auto;background:none;border:0;border-bottom:3px solid transparent;
+    padding:12px 15px;font:600 13.5px/1 ui-sans-serif,system-ui,sans-serif;color:var(--muted);
+    cursor:pointer;white-space:nowrap}
+  nav.tabs button:hover{color:var(--ink)}
+  nav.tabs button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+  section[role=tabpanel]{animation:fade .18s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+  h2{font-size:1.6rem;margin:34px 0 8px;font-weight:620;letter-spacing:-.01em}
+  h2:first-child{margin-top:0}
+  h3{font-size:1.14rem;margin:28px 0 8px;font-weight:620}
+  p{margin:0 0 14px;max-width:78ch}
+  ul,ol{max-width:78ch;padding-left:22px;margin:0 0 14px} li{margin-bottom:7px}
+  code{font:13.5px/1.5 ui-monospace,Menlo,Consolas,monospace;background:var(--card);
+    padding:2px 6px;border-radius:4px;border:1px solid var(--line)}
+  pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 16px;
+    overflow-x:auto;margin:0 0 16px}
+  pre code{background:none;border:0;padding:0}
+  .tblwrap{overflow-x:auto;margin:0 0 18px}
+  table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+  th{background:var(--navy);color:#fff;text-align:left;padding:9px 11px;font-weight:600}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) th{color:#12161C}}
+  td{border-bottom:1px solid var(--line);padding:9px 11px;vertical-align:top}
+  .box{border-radius:10px;padding:16px 18px;margin:0 0 18px;border:1px solid var(--line)}
+  .box p:last-child{margin-bottom:0}
+  .tip{background:var(--green-bg);border-color:transparent}
+  .warn{background:var(--amber-bg);border-color:transparent}
+  .key{background:var(--card)}
+  .lbl{font:600 11.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.1em;
+    text-transform:uppercase;display:block;margin-bottom:8px}
+  .tip .lbl{color:var(--green)} .warn .lbl{color:var(--amber)} .key .lbl{color:var(--accent)}
+  .steps{counter-reset:s;list-style:none;padding:0}
+  .steps>li{counter-increment:s;position:relative;padding-left:44px;margin-bottom:18px}
+  .steps>li::before{content:counter(s);position:absolute;left:0;top:0;width:30px;height:30px;
+    border-radius:50%;background:var(--accent);color:var(--bg);display:grid;place-items:center;
+    font-weight:700;font-size:14px}
+  footer{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:13.5px}
+  .pill{display:inline-block;background:var(--card);border:1px solid var(--line);
+    border-radius:999px;padding:2px 10px;font-size:12.5px;color:var(--muted);margin-right:6px}
+  abbr[title]{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}
+  .gl{color:var(--muted);font-size:.86em}
+
+  .home{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;
+    border:0;border-radius:10px;padding:11px 20px;margin:18px 0 0;
+    font:700 15px/1 ui-sans-serif,system-ui,sans-serif;text-decoration:none;
+    box-shadow:0 1px 2px rgba(0,0,0,.12)}
+  .home:hover{filter:brightness(1.08)}
+  .home svg{flex:0 0 auto}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .home{color:#12161C}}
+  :root[data-theme="dark"] .home{color:#12161C}
+
+  a{color:var(--accent)}
+  a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="home" href="index.html"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M6 10.5V20h5v-5h2v5h5v-9.5"/></svg><span>Índice de guías</span></a>
+
+
+<header class="top">
+  <p class="eyebrow">Webinar COIT · Guía 1 de 14</p>
+  <h1>Tu propia IA, desde cero</h1>
+  <p class="sub">Qué necesitas de verdad para tener inteligencia artificial funcionando en tu
+  despacho, sin depender de que nadie te la aloje ni de mandar la documentación de tus clientes
+  a un servidor ajeno.</p>
+  <p><span class="pill">Nivel: desde cero</span><span class="pill">Lectura: ~20 min</span>
+  <span class="pill">Ingeniería en libre ejercicio</span></p>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" data-p="p1">1 · Por qué propia</button>
+  <button role="tab" aria-selected="false" data-p="p2">2 · Qué equipo hace falta</button>
+  <button role="tab" aria-selected="false" data-p="p3">3 · Los modelos</button>
+  <button role="tab" aria-selected="false" data-p="p4">4 · Montarlo</button>
+  <button role="tab" aria-selected="false" data-p="p5">5 · Buenas prácticas</button>
+</nav>
+
+<!-- ════════════ 1 ════════════ -->
+<section role="tabpanel" id="p1">
+  <h2>Por qué tener una IA propia</h2>
+
+  <p>Las herramientas comerciales —ChatGPT, Gemini, Copilot— son excelentes y para muchas cosas
+  son la respuesta correcta. Esta guía no va contra ellas: va de <strong>lo que solo puedes hacer
+  si el modelo corre en tu casa</strong>.</p>
+
+  <h3>Las tres razones que de verdad importan en un despacho</h3>
+
+  <div class="tblwrap"><table>
+    <tr><th>Razón</th><th>Qué significa en tu día a día</th></tr>
+    <tr><td><strong>Confidencialidad</strong></td>
+        <td>El proyecto de un cliente, un informe pericial o una medición no salen de tu equipo.
+        No hay términos de servicio que interpretar ni dudas sobre dónde acaba el documento.</td></tr>
+    <tr><td><strong>Tu conocimiento</strong></td>
+        <td>Un modelo genérico sabe de todo un poco. El tuyo puede conocer <em>tu</em> normativa,
+        <em>tus</em> plantillas y <em>tus</em> criterios. Ahí está el salto real.</td></tr>
+    <tr><td><strong>Coste predecible</strong></td>
+        <td>Pagas el equipo una vez. No hay tarifa por consulta ni sorpresas si un mes trabajas
+        el triple.</td></tr>
+  </table></div>
+
+  <div class="box key">
+    <span class="lbl">La idea que sostiene todo lo demás</span>
+    <p>Lo que cambia el ejercicio profesional no es «una IA que escribe textos». Es
+    <strong>una IA que responde sobre tus documentos y te dice de dónde ha sacado la
+    respuesta</strong>. Eso se llama <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr><span class="gl"> (Retrieval-Augmented Generation: busca en tus documentos y responde citándolos)</span> y tiene su propia guía; todo lo de aquí es la
+    preparación para llegar ahí.</p>
+  </div>
+
+  <h3>Qué NO vas a conseguir, dicho al principio</h3>
+  <ul>
+    <li><strong>No va a firmar por ti.</strong> Ni a asumir responsabilidad. Prepara y localiza;
+    tú decides, mides y firmas.</li>
+    <li><strong>No va a ser más lista que el mejor modelo comercial.</strong> Un modelo de 8B en
+    tu ordenador no es GPT-5. Es suficiente para muchísimo trabajo real, que es distinto.</li>
+    <li><strong>No se monta sola.</strong> La primera tarde se va en instalar y probar. A partir
+    de ahí es cuestión de minutos.</li>
+  </ul>
+</section>
+
+<!-- ════════════ 2 ════════════ -->
+<section role="tabpanel" id="p2" hidden>
+  <h2>Qué equipo hace falta</h2>
+
+  <p>La respuesta corta: <strong>menos del que crees para empezar, y más del que crees si quieres
+  los modelos grandes</strong>. La pieza que manda es la <strong>memoria de la tarjeta gráfica</strong>
+  (<abbr title="VRAM: memoria de la tarjeta gráfica">VRAM</abbr><span class="gl"> (memoria de la tarjeta gráfica)</span>), porque el modelo tiene que caber entero ahí para ir rápido.</p>
+
+  <h3>Qué se consigue con cada nivel de memoria, y cuánto cuesta</h3>
+  <p>No hay un equipo «correcto»: hay lo que cabe en tu memoria. Esta tabla relaciona cada nivel
+  con los modelos que admite, lo que permite hacer y lo que cuesta hoy en España. <strong>Los
+  precios son de la tarjeta sola</strong> (el ordenador que la aloja va aparte), de mercado,
+  consultados el <strong>14 de septiembre de 2026</strong>, y en este momento están muy por encima
+  del precio recomendado por la escasez de memoria.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Memoria</th><th>Ejemplos y precio orientativo</th><th>Modelo mayor que cabe (4 bits)</th><th>Qué te permite</th></tr>
+    <tr><td><strong>8 GB</strong> de <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr><span class="gl"> (Graphics Processing Unit, tarjeta gráfica)</span></td><td>RTX 5060 · ~350 €</td><td>8B (≈5 GB)</td>
+        <td>Correo, Excel y <abbr title="VBA: Visual Basic for Applications, macros de Office">VBA</abbr><span class="gl"> (Visual Basic for Applications, macros de Office)</span>, borradores, resúmenes</td></tr>
+    <tr><td><strong>12 GB</strong> de <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr></td><td>RTX 3060 · desde ~420 € · RTX 5070 · ~710 €</td><td>14B (≈9 GB)</td>
+        <td>Mejor redacción y razonamiento, y un primer <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> sobre normativa</td></tr>
+    <tr><td><strong>16 GB</strong> de <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr></td><td>RTX 5060 Ti 16 GB · ~800–860 € · RTX 5070 Ti · ~1.300 € · RTX 5080 · 1.370–1.800 €</td><td>24B (≈15 GB, justo)</td>
+        <td>Modelos de código y visión serios, varios servicios a la vez</td></tr>
+    <tr><td><strong>24–32 GB</strong> de <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr></td><td>RTX 3090 usada · 700–1.200 € · RTX 4090 · desde ~3.400 € · RTX 5090 · 4.800–5.600 €</td><td>32B (≈20 GB)</td>
+        <td>Visión de alta calidad, documentos largos con más contexto</td></tr>
+    <tr><td><strong>128 GB</strong> unificados</td><td>Mini-PC Ryzen AI Max+ 395 · desde ~4.000 € · NVIDIA DGX Spark · 4.800–6.000 € · Mac Studio M5 Max · desde 3.029 € <em>(la configuración de 128 GB cuesta más: consultar)</em></td><td>70B (≈43 GB) y 120B (≈65 GB)</td>
+        <td>Modelos de calidad cercana a los grandes comerciales, sin salir de la oficina</td></tr>
+    <tr><td><strong>96 GB</strong> de <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr> profesional</td><td>RTX PRO 6000 · desde ~12.000 €</td><td>70B holgado · 120B</td>
+        <td>Lo mismo que el anterior, pero muy rápido y con muchos usuarios a la vez</td></tr>
+  </table></div>
+
+  <div class="box key">
+    <span class="lbl">Cómo leer la tabla</span>
+    <p>Por euro de memoria, hoy lo más barato es la <strong>memoria unificada</strong> (mini-PC con
+    Ryzen AI Max+, DGX Spark o Mac): te da acceso a modelos de 70B por el precio de una sola
+    tarjeta de gama alta. A cambio, cada respuesta es más lenta que en una <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr> dedicada. <strong>Si
+    lo tuyo son muchas consultas pequeñas, <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr>; si son pocas y exigentes, memoria unificada.</strong></p>
+  </div>
+
+  <h3>Lo que cuesta tenerlo encendido, y la alternativa por horas</h3>
+  <ul>
+    <li><strong>Electricidad:</strong> con el precio medio de agosto de 2026 (0,1665 €/kWh), ocho horas
+    diarias a plena carga cuestan del orden de <strong>0,24 €/día</strong> con una tarjeta de 180 W y
+    <strong>0,77 €/día</strong> con una de 575 W, contando solo la tarjeta. En la práctica pocas veces
+    está a plena carga todo el día.</li>
+    <li><strong>Alquilar <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr> por horas</strong> para probar antes de comprar: una RTX 4090 sale por
+    unos <strong>0,34–0,74 $/hora</strong> y una H100 por unos <strong>2–2,9 $/hora</strong>.</li>
+  </ul>
+
+  <h3>Lo que tenemos nosotros, y cómo nos hemos adaptado</h3>
+  <p>El sistema que se enseña en este webinar funciona sobre <strong>los equipos que había</strong>,
+  no sobre una compra diseñada para esto: un portátil con 8 GB de <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr>, un puesto de trabajo con
+  12 GB, un servidor con una RTX 5080 de 16 GB y un Mac Studio con 128 GB de memoria unificada.
+  Cada tarea acabó en la máquina que mejor la resolvía: los servicios continuos y el <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> en el
+  servidor, los modelos grandes en el Mac. <strong>Con otros equipos el reparto sería otro, y
+  estaría igual de bien.</strong> El detalle está en la Guía 3.</p>
+
+  <div class="box key">
+    <span class="lbl">La regla de la <abbr title="VRAM: memoria de la tarjeta gráfica">VRAM</abbr></span>
+    <p>Un modelo cuantizado a 4 bits ocupa, muy aproximadamente, <strong>la mitad de su número de
+    parámetros en gigabytes</strong>: un 8B ≈ 5 GB, un 14B ≈ 9 GB, un 24B ≈ 14 GB. Si cabe en la
+    <abbr title="VRAM: memoria de la tarjeta gráfica">VRAM</abbr>, vuela. Si no cabe, se reparte con la RAM del sistema y se vuelve lento.</p>
+    <p><strong>Por eso Apple Silicon es un caso aparte:</strong> su memoria es
+    <em>unificada</em> —la comparten procesador y gráfica—, así que 128 GB permiten modelos de
+    70B que ninguna tarjeta de consumo puede sostener.</p>
+  </div>
+
+  <h3>Qué cambia con 128 GB de memoria unificada: el caso del Mac Studio</h3>
+  <p>El último peldaño de la escalera no es «una <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr> más grande»: es <strong>otra
+  arquitectura</strong>. En un Mac con chip M2 Ultra y 128 GB, procesador y gráfica comparten
+  la misma memoria, así que el techo ya no son los 16 GB de una tarjeta, sino casi todo el
+  equipo. Con el framework de Apple para IA (<strong><abbr title="MLX: librería de Apple para ejecutar modelos en la GPU del Mac">MLX</abbr></strong>) y con <abbr title="Ollama: programa gratuito para ejecutar modelos en tu equipo">Ollama</abbr><span class="gl"> (programa gratuito para ejecutar modelos en tu equipo)</span>, en un Mac así
+  funcionan hoy estos modelos:</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Modelo que corre en el Mac</th><th>Tamaño</th><th>Para qué sirve en un despacho</th></tr>
+    <tr><td><strong>Llama 3.3 70B</strong> (4 bits, <abbr title="MLX: librería de Apple para ejecutar modelos en la GPU del Mac">MLX</abbr><span class="gl"> (librería de Apple para ejecutar modelos en la GPU del Mac)</span>)</td><td>70B</td>
+        <td>Redacción y razonamiento de calidad cercana a los grandes comerciales, sin salir de la oficina</td></tr>
+    <tr><td><strong>Qwen 2.5 72B</strong> (4 bits, <abbr title="MLX: librería de Apple para ejecutar modelos en la GPU del Mac">MLX</abbr>)</td><td>72B</td>
+        <td>Lo mismo, con muy buen español y buen trabajo con documentos largos</td></tr>
+    <tr><td><strong>Qwen3-VL 32B</strong> (<abbr title="Ollama: programa gratuito para ejecutar modelos en tu equipo">Ollama</abbr>)</td><td>32B · 20 GB</td>
+        <td>Visión: leer planos, fotos de obra, fórmulas escaneadas y tablas sin marco de una norma en PDF</td></tr>
+    <tr><td><strong>Qwen 3.6 35B</strong> (4 bits, <abbr title="MLX: librería de Apple para ejecutar modelos en la GPU del Mac">MLX</abbr>, «mixture of experts»)</td><td>35B</td>
+        <td>Rápido para su tamaño: solo activa una parte del modelo en cada respuesta</td></tr>
+    <tr><td><strong>Whisper large v3 turbo</strong> (<abbr title="MLX: librería de Apple para ejecutar modelos en la GPU del Mac">MLX</abbr>)</td><td>—</td>
+        <td>Transcripción de reuniones, visitas y notas de voz</td></tr>
+  </table></div>
+
+  <div class="box tip">
+    <span class="lbl">La comparación que lo explica</span>
+    <p>En el servidor con la RTX 5080 (16 GB) el modelo más grande que se usa es de
+    <strong>24B</strong>. En el Mac corren de <strong>70B y 72B</strong>. No es que el Mac sea
+    «más potente» en todo —para servir muchas consultas a la vez, una <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr> dedicada sigue siendo
+    mejor—: es que <strong>le cabe más modelo</strong>. Por eso conviven los dos: el servidor para
+    el trabajo continuo y el <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr>, el Mac para los modelos que no caben en una tarjeta.</p>
+  </div>
+
+  <h3>Si hoy no quieres comprar nada</h3>
+  <ul>
+    <li><strong>Empieza en el portátil que ya tienes.</strong> Incluso sin <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr> dedicada, un modelo
+    de 3B corre en <abbr title="CPU: Central Processing Unit, procesador">CPU</abbr><span class="gl"> (Central Processing Unit, procesador)</span> a ritmo aceptable para redactar y resumir.</li>
+    <li><strong>Alquila por horas</strong> para experimentar y apagar al terminar (precios de
+    referencia más arriba, en «Lo que cuesta tenerlo encendido»).</li>
+    <li><strong>Empieza por las herramientas comerciales</strong> con material público (Guía 2): te
+    enseñan qué tareas merece la pena llevar después a local.</li>
+  </ul>
+
+  <div class="box warn">
+    <span class="lbl">Aviso práctico al comprar</span>
+    <p>Mira la <strong><abbr title="VRAM: memoria de la tarjeta gráfica">VRAM</abbr></strong>, no el nombre de la tarjeta. Y desconfía de lo que te diga el
+    propio sistema operativo: hay contadores de Windows que <strong>se quedan en 4 GB</strong> por
+    un límite antiguo del propio contador, y declaran lo mismo para una tarjeta de 12 GB que para
+    una de 4. Compruébalo con la herramienta del fabricante (<code>nvidia-smi</code>).</p>
+  </div>
+</section>
+
+<!-- ════════════ 3 ════════════ -->
+<section role="tabpanel" id="p3" hidden>
+  <h2>Los modelos: cuál y por qué</h2>
+
+  <h3>Tres palabras que hay que entender</h3>
+  <div class="tblwrap"><table>
+    <tr><th>Término</th><th>En cristiano</th></tr>
+    <tr><td><strong>Parámetros</strong> (3B, 8B, 70B)</td>
+        <td>El «tamaño del cerebro». Más grande suele ser mejor y siempre más lento y más pesado.</td></tr>
+    <tr><td><strong><abbr title="Cuantización: guardar el modelo con menos bits para que ocupe menos">Cuantización</abbr></strong> (Q4, Q5, 4bit)</td>
+        <td>Guardar el modelo con menos precisión para que ocupe menos. Un 14B sin cuantizar no
+        cabe en 12 GB; cuantizado a Q5, sí. Se pierde algo de calidad, casi siempre poco.</td></tr>
+    <tr><td><strong>Contexto</strong></td>
+        <td>Cuánto texto puede leer de una vez. Importa mucho si le vas a dar documentos largos.</td></tr>
+  </table></div>
+
+  <h3>Familias útiles para trabajo técnico</h3>
+  <div class="tblwrap"><table>
+    <tr><th>Para qué</th><th>Qué buscar</th></tr>
+    <tr><td>Uso general en español, razonamiento</td><td>Un modelo generalista de 8B–14B cuantizado a Q5</td></tr>
+    <tr><td>Código, macros, scripts</td><td>Un modelo específico de código de 7B–24B</td></tr>
+    <tr><td>Leer planos, fotos, PDF escaneados</td><td>Un modelo <em>de visión</em> (los que llevan «VL» en el nombre) o uno de <abbr title="OCR: Optical Character Recognition: convertir imagen o PDF escaneado en texto">OCR</abbr><span class="gl"> (Optical Character Recognition: convertir imagen o PDF escaneado en texto)</span></td></tr>
+    <tr><td>Buscar en tus documentos (<abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr>)</td><td>Un modelo de <em><abbr title="Embedding: texto convertido en números que representan su significado">embeddings</abbr><span class="gl"> (texto convertido en números que representan su significado)</span></em>, que no escribe: convierte texto en números para poder buscar por significado</td></tr>
+    <tr><td>Transcribir audio</td><td>Un modelo tipo Whisper</td></tr>
+  </table></div>
+
+  <div class="box tip">
+    <span class="lbl">Cómo elegir sin volverse loco</span>
+    <p>Empieza con <strong>un</strong> generalista de 8B cuantizado y <strong>un</strong> modelo de
+    <abbr title="Embedding: texto convertido en números que representan su significado">embeddings</abbr>. Con esos dos ya puedes trabajar y montar un <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr>. Añade especializados solo cuando
+    tengas una tarea concreta que lo pida.</p>
+  </div>
+
+  <h3>Un paso más: modelos propios</h3>
+  <p>Cuando llevas tiempo, puedes partir de un modelo abierto y <strong>ajustarlo a tu
+  especialidad</strong> con tu propio material. Deja de ser «un modelo genérico» para hablar tu
+  idioma técnico. No es el primer paso ni el segundo, pero conviene saber que el techo está más
+  arriba de lo que parece.</p>
+</section>
+
+<!-- ════════════ 4 ════════════ -->
+<section role="tabpanel" id="p4" hidden>
+  <h2>Montarlo: la primera tarde</h2>
+
+  <ol class="steps">
+    <li><strong>Instala el motor.</strong> <a href="https://ollama.com">Ollama</a> es la vía más
+    corta: instalador normal en Windows, macOS y Linux. Al terminar tienes un servicio escuchando
+    en <code>localhost:11434</code>.</li>
+
+    <li><strong>Descarga tu primer modelo</strong> y habla con él:
+      <pre><code>ollama pull qwen3:8b
+ollama run qwen3:8b</code></pre>
+      Ya tienes una IA funcionando sin conexión y sin cuenta en ningún sitio.</li>
+
+    <li><strong>Ponle una cara.</strong> Trabajar en la terminal cansa. <strong>Open WebUI</strong>
+    te da una interfaz de chat como las comerciales, pero contra tus modelos. Se levanta con
+    <abbr title="Docker: empaqueta programas para que funcionen igual en cualquier máquina">Docker</abbr><span class="gl"> (empaqueta programas para que funcionen igual en cualquier máquina)</span> y se abre en el navegador.</li>
+
+    <li><strong>Añade el modelo de <abbr title="Embedding: texto convertido en números que representan su significado">embeddings</abbr></strong>, que es lo que después permitirá buscar en
+    tus documentos:
+      <pre><code>ollama pull bge-m3</code></pre></li>
+
+    <li><strong>Prueba con trabajo de verdad.</strong> No con acertijos: coge un correo que
+    tendrías que contestar y una hoja de cálculo que tendrías que limpiar. Ahí se ve si te sirve.</li>
+  </ol>
+
+  <div class="box key">
+    <span class="lbl">Qué tendrás al acabar el día</span>
+    <p>Un chat privado contra un modelo local, el motor listo para que otras aplicaciones lo usen
+    por su <abbr title="API: Application Programming Interface: puerta para que un programa hable con otro">API</abbr><span class="gl"> (Application Programming Interface: puerta para que un programa hable con otro)</span>, y la base montada para el <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr>. <strong>Sin cuota mensual y sin que salga un byte
+    de tu equipo.</strong></p>
+  </div>
+
+  <h3>Lo que viene después, cuando esto se te quede corto</h3>
+  <div class="tblwrap"><table>
+    <tr><th>Pieza</th><th>Para qué la querrás</th></tr>
+    <tr><td>Base de datos vectorial</td><td>Guardar tus documentos «por significado» para el <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr></td></tr>
+    <tr><td>Gestor documental</td><td>Digitalizar e indexar expedientes, facturas y certificados</td></tr>
+    <tr><td>Transcripción</td><td>Reuniones con cliente y visitas de obra convertidas en acta</td></tr>
+    <tr><td>Avisos al móvil</td><td>Que te llegue un aviso cuando un proceso largo termina o falla</td></tr>
+    <tr><td>Registro de lo que preguntas</td><td>Saber qué se consultó, qué se respondió y cuánto costó</td></tr>
+  </table></div>
+</section>
+
+<!-- ════════════ 5 ════════════ -->
+<section role="tabpanel" id="p5" hidden>
+  <h2>Buenas prácticas: las pautas que evitan disgustos</h2>
+
+  <p>Esta es la parte que menos se cuenta y más vale. Son hábitos, no tecnología.</p>
+
+  <h3>1 · El número lo da el cálculo, nunca el modelo</h3>
+  <p>Un modelo de lenguaje predice texto; puede producir una cifra perfectamente formada y
+  perfectamente falsa. <strong>Que la IA escriba el script o la hoja, y que el número salga de
+  ejecutarlo.</strong> Para un cálculo justificativo esto no es una preferencia: es la diferencia
+  entre un dato trazable y uno inventado.</p>
+
+  <h3>2 · Toda cita normativa, con su fuente y su edición</h3>
+  <p>«Lo que dice la ISO 16283» no vale. Vale «UNE-EN ISO 16283-1:2015, apartado tal». Si el
+  sistema no te puede decir <em>de dónde</em> sale una afirmación, esa afirmación no entra en un
+  documento que vas a firmar.</p>
+
+  <h3>3 · Verifica con un instrumento distinto</h3>
+  <p>Si la comprobación la hace la misma herramienta que produjo el resultado, no estás
+  comprobando: estás repitiendo. Contrasta contra el PDF oficial, contra otra herramienta o
+  contra un caso cuya respuesta ya conoces.</p>
+
+  <div class="box tip">
+    <span class="lbl">El truco del caso conocido</span>
+    <p>Antes de fiarte de un flujo nuevo, pásale un caso del que <strong>ya sabes la
+    respuesta</strong>. Si acierta, has calibrado el instrumento. Si falla, lo has descubierto
+    con un caso inofensivo en vez de con el de un cliente.</p>
+  </div>
+
+  <h3>4 · Declara lo que no has comprobado</h3>
+  <p>En un informe, distinguir «medido» de «estimado» de «no verificado» cuesta una línea y te
+  protege entero. Vale igual para lo que te dé la IA.</p>
+
+  <h3>5 · Un cero puede ser «no hay» o «no he podido mirar»</h3>
+  <p>Si una búsqueda no encuentra nada, antes de concluir que no existe, comprueba que tu
+  herramienta <em>habría encontrado</em> algo que sí está. Es la diferencia entre una ausencia
+  real y un punto ciego.</p>
+
+  <h3>6 · Privacidad: decide antes, no después</h3>
+  <div class="tblwrap"><table>
+    <tr><th>Tipo de trabajo</th><th>Dónde conviene hacerlo</th></tr>
+    <tr><td>Documentación de cliente, periciales, datos personales</td><td><strong>Local</strong>, sin discusión</td></tr>
+    <tr><td>Normativa pública, formación, redacción general</td><td>Comercial sin problema</td></tr>
+    <tr><td>Borradores con datos anonimizados</td><td>Comercial, si de verdad están anonimizados</td></tr>
+  </table></div>
+
+  <div class="box warn">
+    <span class="lbl">La regla de oro</span>
+    <p><strong>La IA prepara y localiza; tú decides, mides y firmas.</strong> Todo lo demás de
+    esta guía son detalles de implementación de esa frase.</p>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Guía 1 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  profesional» · Colegio Oficial de Ingenieros de Telecomunicación.<br>
+  Los equipos y cifras citados corresponden a instalaciones reales medidas el 14/09/2026.</p>
+  <p><a href="Glosario.html">¿Una sigla que no conoces? Consulta el glosario</a></p>
+</footer>
+
+</div>
+<script>
+  const tabs=[...document.querySelectorAll('nav.tabs button')];
+  const paneles=[...document.querySelectorAll('section[role=tabpanel]')];
+  tabs.forEach(b=>b.addEventListener('click',()=>{
+    tabs.forEach(x=>x.setAttribute('aria-selected', x===b?'true':'false'));
+    paneles.forEach(p=>p.hidden = (p.id!==b.dataset.p));
+    window.scrollTo({top:0,behavior:'smooth'});
+  }));
+</script>
+</body>
+</html>

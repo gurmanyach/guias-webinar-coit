@@ -1,0 +1,880 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía 12 · Formatos y representaciones — Webinar COIT</title>
+<style>
+  :root{
+    --bg:#ffffff; --ink:#1F2A37; --muted:#6B7785; --line:#D9E1EC;
+    --accent:#2E6DA4; --navy:#1B3A6B; --amber:#B5650A; --amber-bg:#FBEEDC;
+    --green:#2F7D4F; --green-bg:#E9F3EC; --card:#F3F6FB;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+      --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+      --green:#7BC49A; --green-bg:#16241C;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+    --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+    --green:#7BC49A; --green-bg:#16241C;
+  }
+  body{background:var(--bg);color:var(--ink);
+    font:16px/1.65 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    margin:0;padding:0 16px 80px}
+  .wrap{max-width:900px;margin:0 auto}
+  header.top{padding:34px 0 10px;border-bottom:1px solid var(--line)}
+  .eyebrow{font:600 12.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--amber);margin:0 0 10px}
+  h1{font-size:2.05rem;line-height:1.2;margin:0 0 10px;font-weight:650;letter-spacing:-.02em}
+  .sub{color:var(--muted);margin:0 0 18px;max-width:70ch}
+  nav.tabs{position:sticky;top:0;z-index:20;background:var(--bg);
+    border-bottom:1px solid var(--line);margin:0 0 30px;display:flex;gap:2px;
+    overflow-x:auto;padding-top:10px}
+  nav.tabs button{flex:0 0 auto;background:none;border:0;border-bottom:3px solid transparent;
+    padding:12px 15px;font:600 13.5px/1 ui-sans-serif,system-ui,sans-serif;color:var(--muted);
+    cursor:pointer;white-space:nowrap}
+  nav.tabs button:hover{color:var(--ink)}
+  nav.tabs button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+  section[role=tabpanel]{animation:fade .18s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+  h2{font-size:1.6rem;margin:34px 0 8px;font-weight:620;letter-spacing:-.01em}
+  h2:first-child{margin-top:0}
+  h3{font-size:1.14rem;margin:28px 0 8px;font-weight:620}
+  p{margin:0 0 14px;max-width:78ch}
+  ul,ol{max-width:78ch;padding-left:22px;margin:0 0 14px} li{margin-bottom:7px}
+  code{font:13.5px/1.5 ui-monospace,Menlo,Consolas,monospace;background:var(--card);
+    padding:2px 6px;border-radius:4px;border:1px solid var(--line)}
+  pre{background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:14px 16px;margin:0 0 8px;overflow-x:auto;max-width:78ch}
+  pre code{background:none;border:0;padding:0;display:block;white-space:pre;
+    font-size:13px;line-height:1.55;color:var(--ink)}
+  .cap{color:var(--muted);font-size:13px;margin:0 0 20px;max-width:78ch}
+  figure{margin:0 0 8px;background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:14px 12px;overflow-x:auto}
+  figure svg{display:block;width:100%;height:auto;min-width:500px;max-width:640px;margin:0 auto}
+  .tblwrap{overflow-x:auto;margin:0 0 18px}
+  table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+  th{background:var(--navy);color:#fff;text-align:left;padding:9px 11px;font-weight:600}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) th{color:#12161C}}
+  :root[data-theme="dark"] th{color:#12161C}
+  td{border-bottom:1px solid var(--line);padding:9px 11px;vertical-align:top}
+  .box{border-radius:10px;padding:16px 18px;margin:0 0 18px;border:1px solid var(--line)}
+  .box p:last-child{margin-bottom:0}
+  .box ul:last-child{margin-bottom:0}
+  .tip{background:var(--green-bg);border-color:transparent}
+  .warn{background:var(--amber-bg);border-color:transparent}
+  .key{background:var(--card)}
+  .lbl{font:600 11.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.1em;
+    text-transform:uppercase;display:block;margin-bottom:8px}
+  .tip .lbl{color:var(--green)} .warn .lbl{color:var(--amber)} .key .lbl{color:var(--accent)}
+  .flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:0 0 18px}
+  .flow div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
+  .flow b{display:block;color:var(--accent);font-size:13px;margin-bottom:4px}
+  .flow span{font-size:14px}
+  footer{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13.5px}
+  .pill{display:inline-block;background:var(--card);border:1px solid var(--line);
+    border-radius:999px;padding:2px 10px;font-size:12.5px;color:var(--muted);margin-right:6px}
+  abbr[title]{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}
+  .gl{color:var(--muted);font-size:.86em}
+
+  .home{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;
+    border:0;border-radius:10px;padding:11px 20px;margin:18px 0 0;
+    font:700 15px/1 ui-sans-serif,system-ui,sans-serif;text-decoration:none;
+    box-shadow:0 1px 2px rgba(0,0,0,.12)}
+  .home:hover{filter:brightness(1.08)}
+  .home svg{flex:0 0 auto}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .home{color:#12161C}}
+  :root[data-theme="dark"] .home{color:#12161C}
+
+  a{color:var(--accent)}
+  a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="home" href="index.html"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M6 10.5V20h5v-5h2v5h5v-9.5"/></svg><span>Índice de guías</span></a>
+
+
+<header class="top">
+  <p class="eyebrow">Webinar COIT · Guía 12 de 14</p>
+  <h1>Formatos y representaciones</h1>
+  <p class="sub">La misma información, contada en el formato adecuado, se entiende, se versiona y se
+  automatiza sola. En el formato equivocado se pierde: se convierte en una captura de pantalla que
+  nadie puede recalcular. Esta guía recorre los formatos que usamos a diario —texto, datos,
+  diagramas, grafos y entregables— siempre en las dos direcciones: <strong>cómo se los das a una
+  <abbr title="IA: Inteligencia Artificial">IA</abbr> y cómo se los pides</strong>.</p>
+  <p><span class="pill">Nivel: desde cero</span><span class="pill">Lectura: ~30 min</span>
+  <span class="pill">Con ejemplos copiables</span></p>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" data-p="t1">1 · Por qué importa</button>
+  <button role="tab" aria-selected="false" data-p="t2">2 · Texto: Markdown</button>
+  <button role="tab" aria-selected="false" data-p="t3">3 · Datos: JSON, YAML, CSV</button>
+  <button role="tab" aria-selected="false" data-p="t4">4 · Mermaid</button>
+  <button role="tab" aria-selected="false" data-p="t5">5 · Dibujos e imágenes</button>
+  <button role="tab" aria-selected="false" data-p="t6">6 · Grafos</button>
+  <button role="tab" aria-selected="false" data-p="t7">7 · El entregable</button>
+  <button role="tab" aria-selected="false" data-p="t8">8 · Entrada y resumen</button>
+</nav>
+
+<!-- ════════════ 1 ════════════ -->
+<section role="tabpanel" id="t1">
+  <h2>Por qué el formato importa más de lo que parece</h2>
+
+  <p>Imagina el mismo dato —el nivel medido en diez puntos de una fachada— en cuatro envases
+  distintos: una foto del cuaderno de campo, una tabla pegada en un correo, una hoja de cálculo y un
+  fichero de datos con nombres de campo. El contenido es idéntico. Lo que cambia es
+  <strong>todo lo demás</strong>: si se puede recalcular, si se puede comparar con la campaña del año
+  pasado, si un compañero ve quién cambió qué, y si una <abbr title="IA: Inteligencia Artificial">IA</abbr><span class="gl"> (Inteligencia Artificial)</span>
+  puede trabajar con ello sin equivocarse.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>El mismo dato en…</th><th>¿Se recalcula?</th><th>¿Se versiona?</th><th>¿Lo entiende bien una IA?</th></tr>
+    <tr><td>Foto del cuaderno</td><td>No</td><td>No</td><td>Regular: hay que reconocerlo, y a veces se equivoca</td></tr>
+    <tr><td>Tabla pegada en un correo</td><td>Manualmente</td><td>No</td><td>Sí, si es pequeña y limpia</td></tr>
+    <tr><td>Hoja de cálculo</td><td>Sí</td><td>Mal (el fichero es opaco)</td><td>Sí, si la exportas a texto</td></tr>
+    <tr><td>Fichero de datos con campos</td><td>Sí</td><td>Sí, línea a línea</td><td>Muy bien: sabe qué es cada número</td></tr>
+  </table></div>
+
+  <h3>Las tres preguntas antes de elegir formato</h3>
+  <div class="flow">
+    <div><b>¿Quién lo va a leer?</b><span>Una persona, un programa, una IA, o la Administración. Rara vez los cuatro con el mismo fichero.</span></div>
+    <div><b>¿Va a cambiar?</b><span>Si va a tener versiones y revisiones, tiene que ser texto. Si es la foto final de algo, puede ser un documento cerrado.</span></div>
+    <div><b>¿Contiene números que se usan?</b><span>Si alguien va a sumarlos, compararlos o comprobarlos, no pueden vivir dentro de un párrafo.</span></div>
+  </div>
+
+  <div class="box key">
+    <span class="lbl">La regla de fondo</span>
+    <p><strong>El texto plano es el formato que no se muere.</strong> Un fichero de texto se abre en
+    cualquier sitio, se compara línea a línea, se busca, se versiona y lo entiende cualquier IA sin
+    conversiones. Todo lo demás —el documento con membrete, el <abbr title="PDF: Portable Document Format: documento de presentación fija">PDF</abbr><span class="gl"> (Portable Document Format: documento de presentación fija)</span>
+    sellado, la hoja de cálculo— es una <em>presentación</em> de ese texto. Trabaja en texto y genera
+    la presentación al final, nunca al revés.</p>
+  </div>
+
+  <h3>Entrada y salida: la idea que organiza toda la guía</h3>
+  <p>Cada formato se mira siempre desde dos lados, y son dos problemas distintos:</p>
+  <ul>
+    <li><strong>Entrada</strong> — qué le das tú a la IA. Aquí importa que el contenido llegue
+    <em>completo y sin ruido</em>: sin cabeceras repetidas, sin tablas partidas, sin capturas.</li>
+    <li><strong>Salida</strong> — qué le pides que te devuelva. Aquí importa que el resultado sea
+    <em>utilizable sin retoques</em>: que se pueda pegar en un programa, abrir en un navegador o
+    volcar a una hoja de cálculo.</li>
+  </ul>
+  <p>Un error muy común es pedir la salida en el formato en que quieres <em>verla</em> (un texto
+  bonito) cuando lo que necesitas es el formato en que vas a <em>usarla</em> (una tabla de datos). Lo
+  bonito se genera después, y se genera solo.</p>
+
+  <div class="box warn">
+    <span class="lbl">El coste de equivocarse</span>
+    <p>Pedir «hazme un resumen de estas mediciones» devuelve un párrafo agradable del que no se puede
+    sacar ni una cifra sin releerlo. Pedir «devuélveme una tabla con punto, fecha, nivel en decibelios
+    y observación» devuelve algo que se pega en la hoja de cálculo, se ordena, se filtra y se compara.
+    Mismo trabajo para la IA; media hora de diferencia para ti.</p>
+  </div>
+</section>
+
+<!-- ════════════ 2 ════════════ -->
+<section role="tabpanel" id="t2" hidden>
+  <h2>Texto estructurado: Markdown</h2>
+
+  <p>Markdown (extensión <code>.md</code>) es texto normal con cuatro marcas de puntuación que
+  significan estructura. Nació para escribir en internet y se ha convertido, sin que nadie lo
+  decidiera, en <strong>la lengua materna de las IA</strong>: cuando una IA te responde con títulos,
+  listas y negritas, está escribiendo Markdown.</p>
+
+  <h3>Todo el formato que necesitas cabe aquí</h3>
+  <pre><code># Memoria de aislamiento acústico
+
+## 1. Objeto
+Se evalúa el aislamiento a ruido aéreo entre dos recintos.
+
+## 2. Datos de partida
+- Superficie del elemento: 12,4 m²
+- Volumen del recinto receptor: 48 m³
+- **Exigencia aplicable:** 50 dBA
+
+### 2.1 Equipos utilizados
+| Equipo        | Referencia | Última calibración |
+|---------------|------------|--------------------|
+| Sonómetro     | SON-02     | 2026-03-11         |
+| Calibrador    | CAL-01     | 2026-03-11         |
+
+> Nota: los valores se redondean según el método aplicable.</code></pre>
+  <p class="cap">Esto es un fichero de texto. Se abre en el bloc de notas, se busca con
+  <code>Ctrl+F</code>, se compara con la versión de ayer línea a línea y pesa dos kilobytes.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Marca</th><th>Qué significa</th><th>Para qué la usas de verdad</th></tr>
+    <tr><td><code>#</code>, <code>##</code>, <code>###</code></td><td>Título de nivel 1, 2, 3</td><td>El esqueleto del documento. La IA lo usa para saber qué apartado estás tocando</td></tr>
+    <tr><td><code>-</code> o <code>1.</code></td><td>Lista sin orden / numerada</td><td>Condiciones, comprobaciones, pasos de un procedimiento</td></tr>
+    <tr><td><code>**texto**</code></td><td>Negrita</td><td>El valor que no puede pasarse por alto</td></tr>
+    <tr><td><code>|</code></td><td>Tabla</td><td>Datos pequeños que van dentro del texto</td></tr>
+    <tr><td><code>&gt;</code></td><td>Cita o nota</td><td>Texto literal de una norma, advertencias</td></tr>
+    <tr><td>Tres acentos graves</td><td>Bloque de código</td><td>Un comando, un cálculo, un fragmento de datos</td></tr>
+  </table></div>
+
+  <h3>Entrada: por qué Markdown le sienta tan bien a una IA</h3>
+  <ul>
+    <li><strong>La estructura es visible en el propio texto.</strong> No hay que interpretar tamaños
+    de letra ni sangrías: un <code>##</code> es un apartado, sin ambigüedad.</li>
+    <li><strong>No hay ruido.</strong> Un documento de tratamiento de textos lleva dentro cientos de
+    instrucciones de estilo que no aportan nada al contenido y consumen espacio de lectura.</li>
+    <li><strong>Puedes señalar un punto exacto.</strong> «En el apartado 2.1, cambia la fecha de
+    calibración» es una instrucción que se ejecuta sin error.</li>
+  </ul>
+  <p>Truco de entrada: si tienes un documento largo en Word, <strong>pégalo como texto</strong> y
+  pon tú mismo los <code>##</code> en los apartados. Tardas dos minutos y la calidad de las respuestas
+  sube de forma muy visible, porque la IA deja de adivinar dónde empieza cada cosa.</p>
+
+  <h3>Salida: cómo pedirla</h3>
+  <div class="box tip">
+    <span class="lbl">Fórmula que funciona</span>
+    <p>«Devuélvemelo en <strong>Markdown</strong>, con un título de nivel 2 por apartado, las
+    magnitudes en negrita y una tabla para los equipos. Sin texto introductorio antes ni comentarios
+    después: solo el documento.»</p>
+  </div>
+  <p>Ese «sin texto introductorio» importa más de lo que parece: convierte la respuesta en un fichero
+  que puedes guardar tal cual, en vez de en una conversación de la que hay que recortar.</p>
+
+  <h3>Cuándo pasa a Word o a PDF, y qué se pierde por el camino</h3>
+  <p>El Markdown es el <em>original</em>; el documento con membrete es una <em>copia impresa</em>. La
+  conversión es automática y de una sola dirección útil:</p>
+  <div class="flow">
+    <div><b>.md → Word</b><span>Para que el cliente comente sobre el texto. Se conservan títulos, listas y tablas; se pierden los bloques de código y se gana un montón de formato que ya no controlas.</span></div>
+    <div><b>.md → PDF</b><span>Para entregar y archivar. Presentación fija, paginación, firma. A cambio deja de ser editable y deja de compararse bien.</span></div>
+    <div><b>Word → .md</b><span>Posible, pero sucio: los estilos hechos «a mano» (negrita en vez de título) no se convierten en estructura. Lo que nunca fue estructura, no aparece.</span></div>
+  </div>
+
+  <div class="box warn">
+    <span class="lbl">Dos trampas del Markdown</span>
+    <p><strong>La tabla larga.</strong> En cuanto una tabla pasa de unas quince filas o de seis
+    columnas, el Markdown deja de ser cómodo y los datos deberían vivir aparte, como datos (pestaña
+    siguiente). <strong>La estructura falsa.</strong> Poner negrita donde debería haber un título
+    engaña igual a la IA que a un lector: parece organizado y no lo está.</p>
+  </div>
+</section>
+
+<!-- ════════════ 3 ════════════ -->
+<section role="tabpanel" id="t3" hidden>
+  <h2>Datos: <abbr title="JSON: JavaScript Object Notation: formato de datos con campos y valores">JSON</abbr>, <abbr title="YAML: formato de configuración legible, basado en sangrado">YAML</abbr> y <abbr title="CSV: Comma-Separated Values: valores separados por comas, una tabla en texto">CSV</abbr></h2>
+
+  <p>Cuando lo importante son los <strong>valores</strong> y no la prosa, el envase cambia. Estos tres
+  formatos son texto plano —se abren en el bloc de notas— pero cada uno está pensado para una forma
+  distinta de información.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Formato</th><th>Forma que representa</th><th>Cuándo es el adecuado</th></tr>
+    <tr><td><strong><abbr title="JSON: JavaScript Object Notation: formato de datos con campos y valores">JSON</abbr></strong><span class="gl"> (JavaScript Object Notation: datos con campos y valores)</span></td><td>Objetos anidados: un dato dentro de otro</td><td>Un resultado con varios niveles: ensayo → puntos → bandas de frecuencia. Es el formato que hablan los programas entre sí</td></tr>
+    <tr><td><strong><abbr title="YAML: formato de configuración legible, basado en sangrado">YAML</abbr></strong><span class="gl"> (formato de configuración legible, basado en sangrado)</span></td><td>Lo mismo que JSON, pero escrito para leerlo</td><td>Configuración que edita una persona: parámetros de un cálculo, plantillas, criterios</td></tr>
+    <tr><td><strong><abbr title="CSV: Comma-Separated Values: valores separados por comas; una tabla en texto plano">CSV</abbr></strong><span class="gl"> (valores separados por comas: una tabla en texto plano)</span></td><td>Una tabla plana: filas y columnas, sin niveles</td><td>Un listado de mediciones, un inventario, cualquier cosa que acabe en una hoja de cálculo</td></tr>
+  </table></div>
+
+  <h3>Un listado de mediciones, en JSON</h3>
+  <pre><code>{
+  "ensayo": "E-2026-012",
+  "fecha": "2026-04-18",
+  "magnitud": "nivel_sonoro_continuo_equivalente",
+  "unidad": "dBA",
+  "incertidumbre_expandida": 1.5,
+  "puntos": [
+    { "id": "P1", "altura_m": 1.5, "valor": 62.4, "valido": true },
+    { "id": "P2", "altura_m": 1.5, "valor": 64.1, "valido": true },
+    { "id": "P3", "altura_m": 1.5, "valor": 71.8, "valido": false,
+      "observacion": "paso de vehiculo pesado" }
+  ]
+}</code></pre>
+  <p class="cap">Fíjate en tres cosas: la unidad está declarada una sola vez y no se repite en cada
+  número; los valores son números de verdad (<code>62.4</code>, sin comillas); y la validez es un
+  sí/no explícito, no una nota de texto que haya que interpretar.</p>
+
+  <h3>Qué es un esquema, en una frase</h3>
+  <p>Un <strong>esquema</strong> es el contrato: la lista de campos que tiene que traer el fichero, de
+  qué tipo es cada uno y cuáles son obligatorios. Es exactamente lo mismo que la cabecera de un
+  formato de registro de un sistema de calidad: si falta la columna «última calibración», el registro
+  no vale. Con un esquema puedes <strong>comprobar automáticamente</strong> que la IA te ha devuelto
+  todo lo que pediste, en vez de revisarlo a ojo.</p>
+
+  <div class="box tip">
+    <span class="lbl">La petición que cambia el resultado</span>
+    <p>No pidas «un resumen de estas mediciones». Pide: <em>«Devuélveme <strong>solo</strong> un JSON
+    con esta forma exacta: un objeto con los campos <code>ensayo</code>, <code>fecha</code>,
+    <code>unidad</code> y <code>puntos</code>; cada punto con <code>id</code>, <code>valor</code>
+    (número, no texto) y <code>valido</code> (sí/no). Si un dato no está en la fuente, pon
+    <code>null</code>; no lo inventes ni lo estimes.»</em></p>
+  </div>
+  <p>Ese nivel de detalle hace tres cosas a la vez: fija qué tiene que salir, obliga a declarar los
+  huecos en vez de rellenarlos con suposiciones, y convierte la respuesta en algo que un programa
+  puede leer sin que tú intervengas.</p>
+
+  <h3>La trampa de los números en texto</h3>
+  <p>Es el error más frecuente y el más silencioso. Un número entre comillas, <code>"62,4"</code>,
+  ya no es un número: es una cadena de caracteres. Consecuencias reales:</p>
+  <ul>
+    <li><strong>No se puede sumar ni promediar</strong> sin convertirlo antes.</li>
+    <li><strong>Se ordena como texto</strong>: «100» va antes que «62», igual que «casa» va antes que
+    «silla».</li>
+    <li><strong>La coma decimal española rompe la conversión</strong> en casi cualquier programa, que
+    espera punto. En datos se escribe <code>62.4</code>; la coma se pone al <em>presentar</em>.</li>
+    <li><strong>Las unidades pegadas al valor</strong> (<code>"62,4 dBA"</code>) son el caso peor:
+    parecen más informativas y son inutilizables. La unidad va en su propio campo.</li>
+  </ul>
+
+  <h3>El mismo listado, en CSV</h3>
+  <pre><code>id;altura_m;valor_dBA;valido;observacion
+P1;1.5;62.4;si;
+P2;1.5;64.1;si;
+P3;1.5;71.8;no;paso de vehiculo pesado</code></pre>
+  <p class="cap">Separador punto y coma porque en configuración regional española la coma se usa como
+  decimal. Una sola línea de cabecera, sin filas de título encima, sin celdas combinadas y sin
+  totales al final: eso es un CSV sano.</p>
+
+  <h3>Y en YAML, cuando lo que se configura son criterios</h3>
+  <pre><code>proyecto: Edificio de oficinas
+criterios:
+  fachada:
+    exigencia_dBA: 30
+    margen_incertidumbre: 1.5
+  entre_recintos:
+    exigencia_dBA: 50
+    margen_incertidumbre: 1.5
+salida:
+  formato: html
+  incluir_graficas: true</code></pre>
+  <p class="cap">YAML se lee sin esfuerzo y se edita sin miedo a las llaves y las comas: por eso los
+  parámetros de un cálculo o las reglas de una plantilla suelen vivir aquí y no en JSON. Su punto
+  débil es el sangrado: un espacio de más cambia el significado.</p>
+
+  <div class="box warn">
+    <span class="lbl">Entrada: el formato que peor sienta</span>
+    <p>Pegar una hoja de cálculo con celdas combinadas, subtotales intercalados y cabecera en la fila
+    siete. La IA tiene que adivinar qué es cabecera, qué es dato y qué es total, y adivina bien casi
+    siempre —el «casi» es el problema—. Exporta a CSV con una sola fila de cabecera antes de
+    pegarlo, y el «casi» desaparece.</p>
+  </div>
+</section>
+
+<!-- ════════════ 4 ════════════ -->
+<section role="tabpanel" id="t4" hidden>
+  <h2>Diagramas escritos: Mermaid</h2>
+
+  <p>Mermaid es un modo de <strong>escribir</strong> un diagrama en vez de dibujarlo. Describes los
+  nodos y las flechas con texto, y un programa lo convierte en imagen. Suena a rodeo y es justo lo
+  contrario: el diagrama pasa a ser texto, y por tanto hereda todas las ventajas del texto.</p>
+
+  <div class="flow">
+    <div><b>Se versiona</b><span>Ves qué flecha cambió entre la revisión 2 y la 3. Con una imagen solo ves «la imagen ha cambiado».</span></div>
+    <div><b>La IA lo escribe</b><span>Le describes el proceso en una frase y te devuelve el diagrama. Y lo corrige: «añade un paso de revisión antes de la entrega».</span></div>
+    <div><b>Pesa nada</b><span>Diez líneas de texto dentro del propio documento, no un fichero de imagen aparte que se pierde.</span></div>
+    <div><b>Se corrige sin herramienta</b><span>Cambiar una etiqueta es editar una palabra, no reabrir un programa de dibujo y recolocar cajas.</span></div>
+  </div>
+
+  <div class="box key">
+    <span class="lbl">Cómo se ve el resultado</span>
+    <p>Esta guía funciona sin conexión a internet, así que <strong>los bloques de código de abajo no
+    se dibujan solos aquí</strong>. Cada uno va acompañado de un dibujo hecho a mano que representa
+    exactamente lo mismo. <strong>El código es el bueno</strong>: cópialo y pégalo en cualquier
+    editor de Mermaid, en la documentación de un repositorio o en las herramientas de notas que ya lo
+    admiten, y verás el diagrama renderizado.</p>
+  </div>
+
+  <h3>1 · Diagrama de flujo: el ciclo de una memoria</h3>
+  <pre><code>flowchart TD
+    A[Datos de medicion] --> B[Borrador de memoria]
+    B --> C{Cumple el guion?}
+    C -- No --> D[Corregir apartados]
+    D --> B
+    C -- Si --> E[Revision humana]
+    E --> F([Entrega firmada])</code></pre>
+  <figure>
+    <svg viewBox="0 0 600 440" role="img" aria-label="Diagrama de flujo: datos de medición, borrador, comprobación del guion, corrección, revisión humana y entrega firmada">
+      <defs>
+        <marker id="m4a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/>
+        </marker>
+      </defs>
+      <g fill="var(--card)" stroke="var(--accent)" stroke-width="1.6">
+        <rect x="60" y="16" width="200" height="48" rx="8"/>
+        <rect x="60" y="96" width="200" height="48" rx="8"/>
+        <rect x="360" y="182" width="200" height="48" rx="8"/>
+        <rect x="60" y="286" width="200" height="48" rx="8"/>
+        <rect x="60" y="366" width="200" height="48" rx="24"/>
+        <path d="M10,206 L160,166 L310,206 L160,246 z"/>
+      </g>
+      <g fill="var(--ink)" font-family="ui-sans-serif,system-ui,sans-serif" font-size="14" text-anchor="middle">
+        <text x="160" y="45">Datos de medición</text>
+        <text x="160" y="125">Borrador de memoria</text>
+        <text x="160" y="211" font-size="13">¿Cumple el guion?</text>
+        <text x="460" y="211">Corregir apartados</text>
+        <text x="160" y="315">Revisión humana</text>
+        <text x="160" y="395">Entrega firmada</text>
+      </g>
+      <g stroke="var(--accent)" stroke-width="1.6" fill="none" marker-end="url(#m4a)">
+        <path d="M160,64 L160,92"/>
+        <path d="M160,144 L160,162"/>
+        <path d="M310,206 L356,206"/>
+        <path d="M460,182 L460,120 L266,120"/>
+        <path d="M160,246 L160,282"/>
+        <path d="M160,334 L160,362"/>
+      </g>
+      <g fill="var(--muted)" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5">
+        <text x="322" y="198">No</text>
+        <text x="170" y="268">Sí</text>
+      </g>
+    </svg>
+  </figure>
+  <p class="cap">Lo que dibuja el código de arriba. <code>TD</code> significa «de arriba abajo»;
+  <code>[texto]</code> es una caja, <code>{texto}</code> un rombo de decisión y
+  <code>([texto])</code> una caja redondeada de final.</p>
+
+  <h3>2 · Diagrama de secuencia: quién le habla a quién y en qué orden</h3>
+  <pre><code>sequenceDiagram
+    participant T as Tecnico
+    participant IA as Asistente
+    participant N as Base normativa
+    T->>IA: Redacta el apartado 3
+    IA->>N: Consulta el umbral aplicable
+    N-->>IA: Valor + referencia de pagina
+    IA->>T: Borrador con la cita incluida
+    T->>IA: Corrige la tabla de equipos</code></pre>
+  <figure>
+    <svg viewBox="0 0 600 300" role="img" aria-label="Diagrama de secuencia entre técnico, asistente y base normativa">
+      <defs>
+        <marker id="m4b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/>
+        </marker>
+      </defs>
+      <g fill="var(--card)" stroke="var(--accent)" stroke-width="1.6">
+        <rect x="20" y="10" width="120" height="34" rx="8"/>
+        <rect x="240" y="10" width="120" height="34" rx="8"/>
+        <rect x="460" y="10" width="120" height="34" rx="8"/>
+      </g>
+      <g fill="var(--ink)" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13.5" text-anchor="middle">
+        <text x="80" y="32">Técnico</text>
+        <text x="300" y="32">Asistente</text>
+        <text x="520" y="32">Base normativa</text>
+      </g>
+      <g stroke="var(--line)" stroke-width="1.4" stroke-dasharray="5 5">
+        <path d="M80,44 L80,288"/><path d="M300,44 L300,288"/><path d="M520,44 L520,288"/>
+      </g>
+      <g stroke="var(--accent)" stroke-width="1.6" fill="none" marker-end="url(#m4b)">
+        <path d="M80,88 L296,88"/>
+        <path d="M300,136 L516,136"/>
+        <path d="M520,184 L304,184" stroke-dasharray="6 4"/>
+        <path d="M300,232 L84,232"/>
+        <path d="M80,278 L296,278"/>
+      </g>
+      <g fill="var(--ink)" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" text-anchor="middle">
+        <text x="188" y="80">Redacta el apartado 3</text>
+        <text x="408" y="128">Consulta el umbral</text>
+        <text x="412" y="176">Valor + página</text>
+        <text x="190" y="224">Borrador con la cita</text>
+        <text x="188" y="270">Corrige la tabla</text>
+      </g>
+    </svg>
+  </figure>
+  <p class="cap">La flecha de vuelta discontinua es una respuesta. Este diagrama sirve para documentar
+  un flujo de trabajo con una IA, pero también una interfaz entre dos sistemas o el reparto de
+  responsabilidades en un encargo.</p>
+
+  <h3>3 · Gantt: la planificación de un encargo</h3>
+  <pre><code>gantt
+    title Encargo tipo
+    dateFormat YYYY-MM-DD
+    axisFormat %d/%m
+    section Campo
+    Toma de datos      :a1, 2026-04-06, 5d
+    section Gabinete
+    Calculo            :a2, after a1, 4d
+    Redaccion          :a3, after a2, 6d
+    section Cierre
+    Revision interna   :a4, after a3, 2d
+    Entrega            :milestone, after a4, 0d</code></pre>
+  <figure>
+    <svg viewBox="0 0 600 230" role="img" aria-label="Diagrama de Gantt con cinco tareas encadenadas a lo largo de cuatro semanas">
+      <g stroke="var(--line)" stroke-width="1">
+        <path d="M150,26 L150,196"/><path d="M262,26 L262,196"/>
+        <path d="M374,26 L374,196"/><path d="M486,26 L486,196"/>
+        <path d="M150,196 L580,196"/>
+      </g>
+      <g fill="var(--muted)" font-family="ui-sans-serif,system-ui,sans-serif" font-size="11.5" text-anchor="middle">
+        <text x="150" y="18">sem. 1</text><text x="262" y="18">sem. 2</text>
+        <text x="374" y="18">sem. 3</text><text x="486" y="18">sem. 4</text>
+      </g>
+      <g fill="var(--accent)">
+        <rect x="150" y="38" width="80" height="20" rx="5"/>
+        <rect x="230" y="70" width="64" height="20" rx="5"/>
+        <rect x="294" y="102" width="96" height="20" rx="5"/>
+        <rect x="390" y="134" width="32" height="20" rx="5"/>
+      </g>
+      <path d="M422,166 l12,-12 l12,12 l-12,12 z" fill="var(--amber)"/>
+      <g fill="var(--ink)" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5">
+        <text x="8" y="53">Toma de datos</text>
+        <text x="8" y="85">Cálculo</text>
+        <text x="8" y="117">Redacción</text>
+        <text x="8" y="149">Revisión interna</text>
+        <text x="8" y="181">Entrega</text>
+      </g>
+    </svg>
+  </figure>
+  <p class="cap"><code>after a1</code> significa «cuando termine la tarea a1»: no escribes fechas,
+  escribes dependencias. Si la toma de datos se retrasa dos días, todo lo demás se recoloca solo.</p>
+
+  <h3>4 · Estados: en qué situación está un documento</h3>
+  <pre><code>stateDiagram-v2
+    [*] --> Borrador
+    Borrador --> EnRevision : se envia
+    EnRevision --> Borrador : con comentarios
+    EnRevision --> Aprobado : sin objeciones
+    Aprobado --> [*]</code></pre>
+  <figure>
+    <svg viewBox="0 0 600 150" role="img" aria-label="Diagrama de estados: borrador, en revisión y aprobado">
+      <defs>
+        <marker id="m4d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/>
+        </marker>
+      </defs>
+      <circle cx="30" cy="70" r="9" fill="var(--ink)"/>
+      <g fill="var(--card)" stroke="var(--accent)" stroke-width="1.6">
+        <rect x="80" y="48" width="130" height="44" rx="12"/>
+        <rect x="270" y="48" width="130" height="44" rx="12"/>
+        <rect x="450" y="48" width="110" height="44" rx="12"/>
+      </g>
+      <g fill="var(--ink)" font-family="ui-sans-serif,system-ui,sans-serif" font-size="14" text-anchor="middle">
+        <text x="145" y="75">Borrador</text>
+        <text x="335" y="75">En revisión</text>
+        <text x="505" y="75">Aprobado</text>
+      </g>
+      <g stroke="var(--accent)" stroke-width="1.6" fill="none" marker-end="url(#m4d)">
+        <path d="M41,70 L76,70"/>
+        <path d="M210,60 L266,60"/>
+        <path d="M270,82 L214,82"/>
+        <path d="M400,70 L446,70"/>
+      </g>
+      <g fill="var(--muted)" font-family="ui-sans-serif,system-ui,sans-serif" font-size="11.5" text-anchor="middle">
+        <text x="238" y="44">se envía</text>
+        <text x="242" y="108">con comentarios</text>
+        <text x="423" y="60">ok</text>
+      </g>
+    </svg>
+  </figure>
+  <p class="cap">Muy útil para el control documental de un sistema de calidad: deja escrito, sin
+  ambigüedad, qué transiciones existen y cuáles no.</p>
+
+  <div class="box tip">
+    <span class="lbl">Salida: cómo pedir un diagrama</span>
+    <p>«Dibújame el proceso de tramitación que te he descrito <strong>en código Mermaid,
+    <code>flowchart TD</code></strong>. Un nodo por paso, rombos en las decisiones, etiquetas en las
+    flechas. Devuélveme <strong>solo el bloque de código</strong>.» Y para corregir, en lenguaje
+    normal: «añade una rama de subsanación desde la decisión, que vuelva al paso 2».</p>
+  </div>
+  <div class="box warn">
+    <span class="lbl">Límites honestos</span>
+    <p>Mermaid coloca los elementos automáticamente: no controlas dónde queda cada caja. Con más de
+    unos veinte nodos el resultado se enreda y conviene partirlo en varios diagramas. Y si necesitas
+    un plano a escala o una figura con geometría exacta, esto no es la herramienta: es un esquema de
+    relaciones, no un dibujo técnico.</p>
+  </div>
+</section>
+
+<!-- ════════════ 5 ════════════ -->
+<section role="tabpanel" id="t5" hidden>
+  <h2>Diagramas dibujados: <abbr title="SVG: Scalable Vector Graphics: gráfico vectorial en texto">SVG</abbr> e imágenes</h2>
+
+  <p>Cuando el diagrama no sale de una estructura lógica sino de una <strong>composición concreta</strong>
+  —este bloque aquí, esta cota allí, esta flecha con este ángulo—, se dibuja. Y ahí hay dos familias
+  muy distintas.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Tipo</th><th>Qué es por dentro</th><th>Brilla en</th><th>Falla en</th></tr>
+    <tr><td><strong><abbr title="SVG: Scalable Vector Graphics: gráfico vectorial descrito en texto">SVG</abbr></strong><span class="gl"> (gráfico vectorial descrito en texto)</span></td><td>Texto: líneas, rectángulos y etiquetas con coordenadas</td><td>Esquemas, croquis, iconos, gráficas. Se amplía sin pixelarse, se busca por su texto y cambia de color con el tema claro/oscuro</td><td>Fotografías y cualquier imagen con matices continuos</td></tr>
+    <tr><td><strong>Imagen de puntos</strong> (PNG, JPG)</td><td>Una rejilla de píxeles</td><td>Fotos de obra, capturas de pantalla, cualquier cosa real</td><td>Ampliar, editar una etiqueta, buscar dentro, adaptarse al tema</td></tr>
+  </table></div>
+
+  <p>Los cinco dibujos de esta guía son SVG escritos a mano, y por eso <strong>cambian de color
+  solos</strong> cuando el sistema está en modo oscuro: los colores no están escritos en el dibujo,
+  sino tomados del tema de la página. Una imagen de puntos no puede hacer eso.</p>
+
+  <h3>Un SVG por dentro: es legible</h3>
+  <pre><code>&lt;svg viewBox="0 0 200 60"&gt;
+  &lt;rect x="10" y="10" width="120" height="40" rx="8"
+        fill="none" stroke="currentColor"/&gt;
+  &lt;text x="70" y="35" text-anchor="middle"&gt;Recinto emisor&lt;/text&gt;
+&lt;/svg&gt;</code></pre>
+  <p class="cap">Un rectángulo y una etiqueta. Como es texto, una IA puede escribirlo, corregirlo
+  («sube la etiqueta cinco puntos») y tú puedes comprobar exactamente qué hay dentro. Y como es
+  texto, cabe dentro del propio documento: no hay un fichero de imagen que se quede atrás al mover la
+  carpeta.</p>
+
+  <h3>Entrada: la imagen como pregunta</h3>
+  <p>En sentido contrario, una imagen también es una forma legítima de <em>darle</em> información a
+  una IA moderna: una foto del cuadro de mandos, una captura del mensaje de error, el plano
+  escaneado. Funciona sorprendentemente bien para <strong>describir y orientar</strong>, y hay que
+  desconfiar de ella para <strong>extraer cifras</strong>.</p>
+
+  <div class="box warn">
+    <span class="lbl">La regla de la foto</span>
+    <p>Una imagen sirve para <em>saber qué hay</em>, no para <em>copiar lo que pone</em>. De una tabla
+    fotografiada se sacan valores que <strong>parecen correctos y a veces no lo son</strong>, y el
+    error no avisa: no hay celda vacía ni signo raro que te alerte. Si de esa imagen van a salir
+    números que acaban en un informe, hay que verificarlos uno a uno contra el original, o buscar el
+    fichero de datos del que salió la tabla.</p>
+  </div>
+
+  <h3>Cuándo compensa cada uno</h3>
+  <ul>
+    <li><strong>Esquema conceptual</strong> (proceso, arquitectura, relaciones) → Mermaid, que además
+    lo escribe la IA.</li>
+    <li><strong>Croquis con posiciones concretas</strong> (situación de los puntos de medida en una
+    planta, sección de un elemento por capas) → SVG.</li>
+    <li><strong>Gráfica de datos</strong> → generada a partir de los datos, en SVG. Nunca una captura
+    de pantalla de la gráfica: si los datos cambian, la captura miente y nadie se entera.</li>
+    <li><strong>Realidad</strong> (obra, equipo, montaje) → foto, con su pie, su fecha y su
+    referencia.</li>
+  </ul>
+</section>
+
+<!-- ════════════ 6 ════════════ -->
+<section role="tabpanel" id="t6" hidden>
+  <h2>Grafos: cuando lo importante son las relaciones</h2>
+
+  <p>Un <strong>grafo</strong> son dos cosas: <em>nodos</em> (las cosas) y <em>aristas</em> (las
+  relaciones entre ellas). Nada más. Parece abstracto hasta que ves que la mitad de tu trabajo tiene
+  esa forma y la estás metiendo a la fuerza en una tabla.</p>
+
+  <figure>
+    <svg viewBox="0 0 620 340" role="img" aria-label="Grafo de trazabilidad: medición, equipo, calibración, ensayo, requisito e informe">
+      <defs>
+        <marker id="m6a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/>
+        </marker>
+      </defs>
+      <g stroke="var(--accent)" stroke-width="1.5" fill="none" marker-end="url(#m6a)">
+        <path d="M172,60 L256,60"/>
+        <path d="M100,82 L100,126"/>
+        <path d="M100,172 L100,266"/>
+        <path d="M330,82 L330,206"/>
+        <path d="M402,72 L462,126"/>
+        <path d="M402,228 L466,178"/>
+      </g>
+      <g fill="var(--card)" stroke="var(--accent)" stroke-width="1.6">
+        <rect x="30" y="40" width="140" height="40" rx="18"/>
+        <rect x="260" y="40" width="140" height="40" rx="18"/>
+        <rect x="460" y="130" width="140" height="40" rx="18"/>
+        <rect x="260" y="210" width="140" height="40" rx="18"/>
+        <rect x="30" y="128" width="140" height="40" rx="18"/>
+        <rect x="30" y="268" width="140" height="40" rx="18"/>
+      </g>
+      <g fill="var(--ink)" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" text-anchor="middle">
+        <text x="100" y="65">Medición M-07</text>
+        <text x="330" y="65">Ensayo E-12</text>
+        <text x="530" y="155">Requisito legal</text>
+        <text x="330" y="235">Informe INF-3</text>
+        <text x="100" y="153">Sonómetro SON-2</text>
+        <text x="100" y="293">Calibración 2026</text>
+      </g>
+      <g fill="var(--muted)" font-family="ui-sans-serif,system-ui,sans-serif" font-size="11">
+        <text x="180" y="52">pertenece a</text>
+        <text x="108" y="110">medida con</text>
+        <text x="108" y="228">calibrado por</text>
+        <text x="338" y="150">se cita en</text>
+        <text x="410" y="96">verifica</text>
+        <text x="418" y="216">cita</text>
+      </g>
+    </svg>
+  </figure>
+  <p class="cap">Trazabilidad de un ensayo. Ninguna tabla muestra esto de un vistazo, porque no es una
+  lista: es una red.</p>
+
+  <h3>Tabla o grafo: la diferencia práctica</h3>
+  <div class="tblwrap"><table>
+    <tr><th>Pregunta</th><th>Con una tabla</th><th>Con un grafo</th></tr>
+    <tr><td>¿Qué mediciones pertenecen al ensayo E-12?</td><td>Filtras una columna. Perfecto</td><td>También, sin ventaja</td></tr>
+    <tr><td>Si este sonómetro se cae de calibración, ¿qué informes quedan tocados?</td><td>Tres cruces manuales entre hojas, y esperar no olvidar ninguna</td><td>Es seguir las flechas hacia atrás: respuesta inmediata y completa</td></tr>
+    <tr><td>¿Qué apartados del informe dependen de un requisito que acaba de cambiar?</td><td>Depende de que alguien mantuviera una columna «referencia»</td><td>Está en la propia estructura</td></tr>
+    <tr><td>¿Quién revisa el trabajo de quién, y hay algún bucle?</td><td>Muy difícil de ver</td><td>Un bucle en un grafo se ve de un vistazo</td></tr>
+  </table></div>
+
+  <h3>Tres casos de despacho donde el grafo gana</h3>
+  <div class="flow">
+    <div><b>Dependencias</b><span>Qué tarea bloquea a cuál. La cadena crítica de un encargo es un camino dentro del grafo.</span></div>
+    <div><b>Revisiones</b><span>Quién revisa a quién. Detecta al instante que alguien se está revisando a sí mismo por una cadena larga.</span></div>
+    <div><b>Trazabilidad normativa</b><span>Qué exigencia cubre qué apartado, con qué ensayo y qué equipo. Cuando cambia la norma, sabes exactamente qué se toca.</span></div>
+  </div>
+
+  <h3>Entrada y salida de un grafo</h3>
+  <p><strong>Para dárselo a una IA</strong>, el grafo se escribe como una lista de relaciones, una por
+  línea. Es el formato más digerible que existe, porque cada línea es una afirmación completa:</p>
+  <pre><code>origen;relacion;destino
+M-07;pertenece_a;E-12
+M-07;medida_con;SON-2
+SON-2;calibrado_por;CAL-2026
+E-12;verifica;REQ-04
+E-12;se_cita_en;INF-3
+INF-3;cita;REQ-04</code></pre>
+  <p><strong>Para pedírselo</strong>, la fórmula es: «De este texto, extráeme las entidades y sus
+  relaciones en una tabla de tres columnas —origen, relación, destino—, usando <strong>solo</strong>
+  estos tipos de relación: <code>pertenece_a</code>, <code>verifica</code>, <code>cita</code>,
+  <code>medida_con</code>. Si una relación del texto no encaja en ninguno, no la fuerces: ponla
+  aparte en una lista de dudas».</p>
+
+  <div class="box tip">
+    <span class="lbl">Por qué ese «no la fuerces» es la parte importante</span>
+    <p>Un vocabulario cerrado de relaciones convierte el grafo en algo consultable; sin él acabas con
+    quince maneras de decir lo mismo. Y la lista de dudas es oro: es exactamente el sitio donde
+    aparecen los casos que tu clasificación no había previsto, en vez de quedar escondidos dentro de
+    una etiqueta que no les corresponde.</p>
+  </div>
+
+  <p>Un grafo también es la forma natural de guardar el conocimiento estable de un despacho —quién
+  hace qué, qué procedimiento depende de qué norma, qué equipo se usa en qué ensayo— y de
+  consultarlo después con lenguaje normal.</p>
+</section>
+
+<!-- ════════════ 7 ════════════ -->
+<section role="tabpanel" id="t7" hidden>
+  <h2>El entregable: <abbr title="HTML: HyperText Markup Language: el formato de las páginas web">HTML</abbr>, PDF, Word y Excel</h2>
+
+  <p>Todo lo anterior es el taller. Esto es el escaparate: el fichero que sale por la puerta con tu
+  nombre. Y aquí la pregunta no es «cuál es mejor», sino <strong>quién lo recibe y qué va a hacer con
+  él</strong>.</p>
+
+  <h3>HTML: una página que se basta a sí misma</h3>
+  <p><abbr title="HTML: HyperText Markup Language: el formato de las páginas web">HTML</abbr><span class="gl"> (el formato de las páginas web)</span>
+  suena a «sitio web», pero un fichero <code>.html</code> es simplemente un documento que se abre
+  haciendo doble clic, en cualquier ordenador, móvil o tableta, sin instalar nada. Si se escribe
+  <strong>autocontenido</strong> —con los estilos y los dibujos dentro del propio fichero, sin
+  depender de internet—, es probablemente el mejor entregable que existe hoy para un informe técnico:</p>
+  <ul>
+    <li><strong>Un solo fichero</strong> que se envía por correo y funciona igual dentro de diez años,
+    con o sin conexión. Esta misma guía es un ejemplo: no descarga absolutamente nada.</li>
+    <li><strong>Interactivo sin complicaciones</strong>: pestañas, secciones plegables, una tabla que
+    se ordena al pulsar en la cabecera. Un informe de cuarenta páginas se recorre en tres clics.</li>
+    <li><strong>Se adapta</strong> a la pantalla del que lo lee y al modo claro u oscuro.</li>
+    <li><strong>Es texto</strong>: se versiona, se compara y una IA lo genera y lo corrige entero.</li>
+    <li>Y cuando hace falta papel, <strong>se imprime a PDF</strong> desde el propio navegador.</li>
+  </ul>
+  <div class="box warn">
+    <span class="lbl">Sus dos límites</span>
+    <p>No tiene paginación fija —no existe «la página 12»— y <strong>no es un formato de registro
+    firmado</strong>: cualquiera puede editarlo. Para lo que hay que sellar, archivar o presentar, el
+    entregable es el PDF.</p>
+  </div>
+
+  <h3>PDF: la foto fija</h3>
+  <p>El PDF congela la presentación: se ve igual en todas partes, tiene páginas numeradas y admite
+  firma electrónica. Es lo que se entrega, lo que se archiva y lo que pide la Administración. Su
+  precio: <strong>es el peor formato de entrada que existe</strong>, y sobre eso va la pestaña
+  siguiente. Norma sana: el PDF se <em>genera</em> al final, y siempre se guarda también el original
+  del que salió.</p>
+
+  <h3>Word y Excel: cuando lo pide quien manda</h3>
+  <div class="tblwrap"><table>
+    <tr><th>Formato</th><th>Cuándo es la respuesta correcta</th><th>Qué hacer para no sufrir</th></tr>
+    <tr><td><strong>.docx</strong> (Word)</td><td>El cliente va a comentar sobre el texto; hay una plantilla oficial obligatoria; el destinatario trabaja con control de cambios</td><td>Escribe en Markdown y conviértelo al final sobre la plantilla. Mantén el original: el .docx es la copia, no la fuente</td></tr>
+    <tr><td><strong>.xlsx</strong> (Excel)</td><td>El receptor va a seguir calculando; es el formato de un anexo oficial; hay que entregar el listado de mediciones para que otro lo reutilice</td><td>Genera la hoja desde los datos (el CSV o el JSON), no a mano. Una fila de cabecera, sin celdas combinadas, sin colores que signifiquen algo</td></tr>
+    <tr><td><strong>Formatos de programa</strong> (cálculo, dibujo, medida)</td><td>Cuando el destinatario usa el mismo programa y necesita seguir trabajando</td><td>Acompáñalo siempre de una exportación en texto o PDF: dentro de cinco años puede que ese programa ya no exista o no abra ese fichero</td></tr>
+  </table></div>
+
+  <div class="box tip">
+    <span class="lbl">La cadena que usamos</span>
+    <p>Datos en <strong>CSV o JSON</strong> → texto en <strong>Markdown</strong> → diagramas en
+    <strong>Mermaid o SVG</strong> → todo ello ensamblado en un <strong>HTML</strong> autocontenido →
+    y de ahí, según quien lo reciba, un <strong>PDF</strong> para firmar o un <strong>.docx</strong>
+    sobre plantilla. Cada paso es automático: cambias un dato en el origen y el entregable se
+    regenera entero, sin que nadie tenga que acordarse de actualizar una tabla a mano.</p>
+  </div>
+</section>
+
+<!-- ════════════ 8 ════════════ -->
+<section role="tabpanel" id="t8" hidden>
+  <h2>Entrada: qué digiere bien una IA y qué no</h2>
+
+  <p>Aquí está la mitad de la calidad de las respuestas que vas a obtener, y casi nadie la trabaja. La
+  regla general: <strong>cuanto más cerca esté de texto plano con estructura visible, mejor</strong>.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Se lo das así…</th><th>Qué tal</th><th>Qué hacer</th></tr>
+    <tr><td>Texto plano, Markdown</td><td>✅&nbsp;Excelente</td><td>Nada. Es el caso ideal</td></tr>
+    <tr><td>CSV o JSON limpios</td><td>✅&nbsp;Excelente</td><td>Una fila de cabecera y unidades declaradas aparte</td></tr>
+    <tr><td>Tabla pequeña pegada en el mensaje</td><td>✅&nbsp;Bien</td><td>Que las columnas se distingan; sin celdas combinadas</td></tr>
+    <tr><td><abbr title="PDF: Portable Document Format: documento de presentación fija">PDF</abbr><span class="gl"> (documento de presentación fija)</span> con texto seleccionable</td><td>🟡&nbsp;Aceptable</td><td>Extraer el texto conservando el diseño de columnas antes de usarlo; comprobar que no se han mezclado</td></tr>
+    <tr><td>Documento de Word largo</td><td>🟡&nbsp;Aceptable</td><td>Pegar como texto y marcar los apartados con <code>##</code></td></tr>
+    <tr><td>Hoja de cálculo compleja</td><td>🟡&nbsp;Regular</td><td>Exportar cada hoja a CSV por separado; quitar subtotales y filas de adorno</td></tr>
+    <tr><td>Tabla numérica densa dentro de un PDF</td><td>🔴&nbsp;Mal</td><td>Extraerla con una herramienta de tablas y <strong>verificar cifra a cifra</strong>. Nunca copiarla «leyéndola»</td></tr>
+    <tr><td>PDF escaneado o foto de un documento</td><td>🔴&nbsp;Mal</td><td>Reconocimiento de caracteres (<abbr title="OCR: Optical Character Recognition: reconocimiento óptico de caracteres">OCR</abbr><span class="gl"> (reconocimiento óptico de caracteres)</span>) primero, revisión después; asumir que habrá errores</td></tr>
+    <tr><td>Captura de pantalla de una tabla</td><td>🔴&nbsp;Mal</td><td>Buscar el fichero del que salió. Si no existe, teclear los datos y revisarlos</td></tr>
+  </table></div>
+
+  <div class="box warn">
+    <span class="lbl">La regla que más disgustos evita</span>
+    <p><strong>Nunca extraigas tablas numéricas densas de un PDF «leyéndolas».</strong> Una IA que
+    transcribe una tabla de sesenta valores acierta la inmensa mayoría y se equivoca en algunos, y lo
+    hace con total naturalidad: el resultado tiene el mismo aspecto correcto que si estuviera bien.
+    Para tablas se usa una herramienta que extrae por posición, y se comprueba. Es el error que más
+    caro sale, porque entra en un informe sin hacer ruido.</p>
+  </div>
+
+  <h3>Tres gestos de entrada que valen por una hora de trabajo</h3>
+  <ul>
+    <li><strong>Di qué es lo que pegas</strong> antes de pegarlo: «esto es el listado de puntos de
+    medida, la primera fila es cabecera, el separador es punto y coma, los valores están en
+    decibelios ponderados A». Tres líneas que eliminan todas las suposiciones.</li>
+    <li><strong>Trocea por apartados</strong> en vez de pegar doscientas páginas: da mejor resultado
+    trabajar sobre el capítulo que te interesa que sobre el documento entero.</li>
+    <li><strong>Marca lo que es literal</strong>: si un párrafo es texto de norma que no se puede
+    reescribir, dilo explícitamente. Si no lo dices, se reformula con la mejor intención.</li>
+  </ul>
+
+  <h2>Tabla resumen</h2>
+  <div class="tblwrap"><table>
+    <tr><th>Formato</th><th>Para qué brilla</th><th>Entrada o salida</th><th>Trampa habitual</th></tr>
+    <tr><td><strong>Markdown</strong> (.md)</td><td>Cualquier texto con estructura: memorias, procedimientos, notas</td><td>Las dos. Es el formato por defecto para hablar con una IA</td><td>Usar negrita donde tocaba un título: parece estructura y no lo es</td></tr>
+    <tr><td><strong>JSON</strong></td><td>Datos con niveles; que un programa lea el resultado sin intervención humana</td><td>Salida sobre todo; entrada excelente</td><td>Números entre comillas, y unidades pegadas al valor</td></tr>
+    <tr><td><strong>YAML</strong></td><td>Parámetros y criterios que edita una persona</td><td>Entrada (configuración)</td><td>El sangrado: un espacio de más cambia el significado</td></tr>
+    <tr><td><strong>CSV</strong></td><td>Listados y tablas planas que acabarán en una hoja de cálculo</td><td>Las dos</td><td>Separador y decimal (coma frente a punto y coma); cabeceras dobles</td></tr>
+    <tr><td><strong>Mermaid</strong></td><td>Flujos, secuencias, estados, planificación</td><td>Salida: la IA lo escribe y lo corrige</td><td>Pasarse de nodos: por encima de veinte, se enreda</td></tr>
+    <tr><td><strong>SVG</strong></td><td>Croquis, esquemas con posiciones concretas, gráficas</td><td>Salida; entrada solo si es un esquema propio</td><td>Meter una foto dentro y llamarlo vectorial</td></tr>
+    <tr><td><strong>Grafo</strong> (lista de relaciones)</td><td>Dependencias, revisiones, trazabilidad normativa</td><td>Las dos; brilla como entrada, una relación por línea</td><td>Vocabulario abierto: quince formas de decir lo mismo</td></tr>
+    <tr><td><strong>HTML</strong></td><td>Entregable autocontenido, navegable, que funciona sin internet</td><td>Salida</td><td>Depender de recursos externos: el día que no hay red, el informe se rompe</td></tr>
+    <tr><td><strong>PDF</strong></td><td>Entrega, archivo, firma, presentación ante la Administración</td><td>Salida. Como entrada, el peor de todos</td><td>Tratarlo como origen de datos en vez de como destino</td></tr>
+    <tr><td><strong>.docx</strong></td><td>Cuando el cliente comenta o la plantilla es obligatoria</td><td>Salida</td><td>Convertirlo en la fuente de verdad y perder el original en texto</td></tr>
+    <tr><td><strong>.xlsx</strong></td><td>Cuando el receptor va a seguir calculando</td><td>Las dos, si está limpio</td><td>Celdas combinadas, subtotales intercalados y colores con significado</td></tr>
+    <tr><td><strong>Imagen</strong> (PNG, JPG)</td><td>Realidad: obra, equipos, montaje, errores en pantalla</td><td>Entrada para describir, no para transcribir</td><td>Sacar cifras de ella y darlas por buenas</td></tr>
+  </table></div>
+
+  <div class="box key">
+    <span class="lbl">Lo que hay que llevarse</span>
+    <p><strong>Trabaja en texto y genera la presentación.</strong> Los datos en un fichero de datos,
+    el texto en Markdown, los diagramas escritos, y el entregable bonito producido al final de forma
+    automática. Cuando cambie un número —y va a cambiar—, cambia en un sitio y se propaga solo. Ese
+    es todo el secreto, y no tiene nada que ver con la inteligencia artificial: ella solo hace que
+    montar esa cadena cueste una tarde en vez de un trimestre.</p>
+  </div>
+</section>
+
+<a class="home" href="index.html"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M6 10.5V20h5v-5h2v5h5v-9.5"/></svg><span>Índice de guías</span></a>
+
+<footer>
+  <p><strong>Guía 12 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  profesional» · Colegio Oficial de Ingenieros de Telecomunicación.</p>
+  <p><a href="Glosario.html">¿Una sigla que no conoces? Consulta el glosario</a></p>
+</footer>
+
+</div>
+<script>
+  const tabs=[...document.querySelectorAll('nav.tabs button')];
+  const paneles=[...document.querySelectorAll('section[role=tabpanel]')];
+  tabs.forEach(b=>b.addEventListener('click',()=>{
+    tabs.forEach(x=>x.setAttribute('aria-selected', x===b?'true':'false'));
+    paneles.forEach(p=>p.hidden = (p.id!==b.dataset.p));
+    window.scrollTo({top:0,behavior:'smooth'});
+  }));
+</script>
+</body>
+</html>

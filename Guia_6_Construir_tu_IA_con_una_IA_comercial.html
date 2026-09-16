@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía 6 · Construir tu IA con una IA comercial — Webinar COIT</title>
+<style>
+  :root{
+    --bg:#ffffff; --ink:#1F2A37; --muted:#6B7785; --line:#D9E1EC;
+    --accent:#2E6DA4; --navy:#1B3A6B; --amber:#B5650A; --amber-bg:#FBEEDC;
+    --green:#2F7D4F; --green-bg:#E9F3EC; --card:#F3F6FB;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+      --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+      --green:#7BC49A; --green-bg:#16241C;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+    --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+    --green:#7BC49A; --green-bg:#16241C;
+  }
+  body{background:var(--bg);color:var(--ink);
+    font:16px/1.65 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    margin:0;padding:0 16px 80px}
+  .wrap{max-width:900px;margin:0 auto}
+  header.top{padding:34px 0 10px;border-bottom:1px solid var(--line)}
+  .eyebrow{font:600 12.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--amber);margin:0 0 10px}
+  h1{font-size:2.05rem;line-height:1.2;margin:0 0 10px;font-weight:650;letter-spacing:-.02em}
+  .sub{color:var(--muted);margin:0 0 18px;max-width:70ch}
+  nav.tabs{position:sticky;top:0;z-index:20;background:var(--bg);
+    border-bottom:1px solid var(--line);margin:0 0 30px;display:flex;gap:2px;
+    overflow-x:auto;padding-top:10px}
+  nav.tabs button{flex:0 0 auto;background:none;border:0;border-bottom:3px solid transparent;
+    padding:12px 15px;font:600 13.5px/1 ui-sans-serif,system-ui,sans-serif;color:var(--muted);
+    cursor:pointer;white-space:nowrap}
+  nav.tabs button:hover{color:var(--ink)}
+  nav.tabs button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+  section[role=tabpanel]{animation:fade .18s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+  h2{font-size:1.6rem;margin:34px 0 8px;font-weight:620;letter-spacing:-.01em}
+  h2:first-child{margin-top:0}
+  h3{font-size:1.14rem;margin:28px 0 8px;font-weight:620}
+  p{margin:0 0 14px;max-width:78ch}
+  ul,ol{max-width:78ch;padding-left:22px;margin:0 0 14px} li{margin-bottom:7px}
+  code{font:13.5px/1.5 ui-monospace,Menlo,Consolas,monospace;background:var(--card);
+    padding:2px 6px;border-radius:4px;border:1px solid var(--line)}
+  .tblwrap{overflow-x:auto;margin:0 0 18px}
+  table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+  th{background:var(--navy);color:#fff;text-align:left;padding:9px 11px;font-weight:600}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) th{color:#12161C}}
+  :root[data-theme="dark"] th{color:#12161C}
+  td{border-bottom:1px solid var(--line);padding:9px 11px;vertical-align:top}
+  .box{border-radius:10px;padding:16px 18px;margin:0 0 18px;border:1px solid var(--line)}
+  .box p:last-child{margin-bottom:0}
+  .tip{background:var(--green-bg);border-color:transparent}
+  .warn{background:var(--amber-bg);border-color:transparent}
+  .key{background:var(--card)}
+  .lbl{font:600 11.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.1em;
+    text-transform:uppercase;display:block;margin-bottom:8px}
+  .tip .lbl{color:var(--green)} .warn .lbl{color:var(--amber)} .key .lbl{color:var(--accent)}
+  .flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:0 0 18px}
+  .flow div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
+  .flow b{display:block;color:var(--accent);font-size:13px;margin-bottom:4px}
+  .flow span{font-size:14px}
+  footer{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13.5px}
+  .pill{display:inline-block;background:var(--card);border:1px solid var(--line);
+    border-radius:999px;padding:2px 10px;font-size:12.5px;color:var(--muted);margin-right:6px}
+  abbr[title]{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}
+  .gl{color:var(--muted);font-size:.86em}
+
+  .home{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;
+    border:0;border-radius:10px;padding:11px 20px;margin:18px 0 0;
+    font:700 15px/1 ui-sans-serif,system-ui,sans-serif;text-decoration:none;
+    box-shadow:0 1px 2px rgba(0,0,0,.12)}
+  .home:hover{filter:brightness(1.08)}
+  .home svg{flex:0 0 auto}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .home{color:#12161C}}
+  :root[data-theme="dark"] .home{color:#12161C}
+
+  a{color:var(--accent)}
+  a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="home" href="index.html"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M6 10.5V20h5v-5h2v5h5v-9.5"/></svg><span>Índice de guías</span></a>
+
+
+<header class="top">
+  <p class="eyebrow">Webinar COIT · Guía 6 de 14</p>
+  <h1>Construir tu IA con la ayuda de una IA comercial</h1>
+  <p class="sub">No hace falta ser programador para montar un sistema propio. Hace falta un buen
+  asistente de pago que haga de técnico a tu lado, y un método de trabajo que te permita confiar
+  en lo que construye. Esta guía cuenta ese método.</p>
+  <p><span class="pill">Nivel: todos</span><span class="pill">Lectura: ~25 min</span>
+  <span class="pill">El método detrás de todo lo anterior</span></p>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" data-p="k1">1 · La idea</button>
+  <button role="tab" aria-selected="false" data-p="k2">2 · Cómo se trabaja</button>
+  <button role="tab" aria-selected="false" data-p="k3">3 · Que no olvide nada</button>
+  <button role="tab" aria-selected="false" data-p="k4">4 · Darle herramientas</button>
+  <button role="tab" aria-selected="false" data-p="k5">5 · Varios agentes</button>
+  <button role="tab" aria-selected="false" data-p="k6">6 · Coste y límites</button>
+  <button role="tab" aria-selected="false" data-p="k7">7 · Pautas</button>
+</nav>
+
+<!-- ════════════ 1 ════════════ -->
+<section role="tabpanel" id="k1">
+  <h2>La idea: un técnico de sistemas que escribe por ti</h2>
+
+  <p>Los asistentes de IA de pago más capaces ya no solo conversan: <strong>pueden trabajar en tu
+  ordenador</strong>. Leen ficheros, ejecutan órdenes, instalan programas, escriben scripts y los
+  prueban. Con uno de ellos, montar un modelo local, un <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr><span class="gl"> (Retrieval-Augmented Generation: busca en tus documentos y responde citándolos)</span> o una herramienta de cálculo pasa de
+  «proyecto de informático» a «encargo que supervisas».</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Lo hace el asistente</th><th>Lo haces tú</th></tr>
+    <tr><td>Instalar y configurar programas y servicios</td><td>Decidir qué se instala y dónde</td></tr>
+    <tr><td>Escribir scripts, macros y aplicaciones</td><td>Definir qué deben hacer y comprobar que lo hacen</td></tr>
+    <tr><td>Buscar el error cuando algo falla</td><td>Decidir si la solución propuesta es aceptable</td></tr>
+    <tr><td>Documentar lo que ha hecho</td><td>Leerlo y aprobarlo</td></tr>
+    <tr><td>Preparar el borrador técnico</td><td>Firmar</td></tr>
+  </table></div>
+
+  <div class="box key">
+    <span class="lbl">El cambio de papel</span>
+    <p>Pasas de ejecutar a <strong>dirigir y verificar</strong>. Es un papel que un ingeniero conoce
+    bien: el de director de obra. El asistente construye; tú defines, inspeccionas y das por buena
+    cada fase.</p>
+  </div>
+
+  <p>Todo lo que se cuenta en las Guías 3 a 5 —los modelos, el <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr>, las herramientas de ingeniería,
+  la búsqueda sin gastar <abbr title="Token: trozo de texto con el que trabaja el modelo">tokens</abbr><span class="gl"> (trozo de texto con el que trabaja el modelo)</span>— se ha construido así.</p>
+</section>
+
+<!-- ════════════ 2 ════════════ -->
+<section role="tabpanel" id="k2" hidden>
+  <h2>Cómo se trabaja: el ciclo de cada encargo</h2>
+
+  <div class="flow">
+    <div><b>1 · Plan</b><span>Antes de tocar nada, el asistente propone qué va a hacer. Tú lo apruebas o lo corriges.</span></div>
+    <div><b>2 · Copia</b><span>Copia de seguridad de lo que se va a modificar.</span></div>
+    <div><b>3 · En seco</b><span>Si la operación cambia o borra algo, primero se simula.</span></div>
+    <div><b>4 · Ejecución</b><span>Pasos pequeños, uno cada vez.</span></div>
+    <div><b>5 · Verificación</b><span>Se comprueba el resultado con un caso conocido, no con «ha terminado sin error».</span></div>
+    <div><b>6 · Registro</b><span>Qué se hizo, cuándo y cómo deshacerlo.</span></div>
+  </div>
+
+  <h3>Cómo pedir las cosas</h3>
+  <ul>
+    <li><strong>Di el objetivo, no solo la orden.</strong> «Quiero consultar mi normativa con cita»
+    da mejor resultado que «instala Qdrant».</li>
+    <li><strong>Pide opciones con su pega.</strong> «Dame dos formas de hacerlo y qué pierdo con cada
+    una.»</li>
+    <li><strong>Pide que te explique lo que no entiendas</strong> antes de aprobarlo.</li>
+    <li><strong>Pide que distinga lo medido de lo supuesto.</strong> «¿Esto lo has comprobado o lo
+    deduces?» es la pregunta más útil que puedes hacerle.</li>
+  </ul>
+
+  <div class="box warn">
+    <span class="lbl">«Ha terminado sin errores» no significa «funciona»</span>
+    <p>Un proceso puede acabar limpio y haber hecho otra cosa. La verificación es comprobar el
+    <strong>resultado</strong> —abrir el documento, consultar el dato, repetir un cálculo conocido—, no
+    el mensaje de que acabó.</p>
+  </div>
+</section>
+
+<!-- ════════════ 3 ════════════ -->
+<section role="tabpanel" id="k3" hidden>
+  <h2>Que no olvide nada: el contexto persistente</h2>
+
+  <p>Un asistente empieza cada sesión sin recordar la anterior. Si el conocimiento del sistema vive
+  solo en la conversación, <strong>se pierde</strong>. La solución es que viva en ficheros.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Fichero</th><th>Para qué sirve</th></tr>
+    <tr><td><strong>Instrucciones del proyecto</strong></td><td>Qué es el sistema, qué máquinas hay, qué reglas se siguen siempre. El asistente lo lee al empezar.</td></tr>
+    <tr><td><strong>Estado</strong></td><td>Qué está hecho, qué está a medias y qué falta.</td></tr>
+    <tr><td><strong>Hoja de ruta</strong></td><td>El plan vigente, con fecha. Una nueva cada vez que el plan cambia de verdad, sin borrar la anterior.</td></tr>
+    <tr><td><strong>Memoria de lecciones</strong></td><td>Lo aprendido de los errores, para no repetirlos en la sesión siguiente.</td></tr>
+    <tr><td><strong>Texto de arranque</strong></td><td>Al cerrar, un resumen para pegar al abrir la siguiente sesión.</td></tr>
+  </table></div>
+
+  <div class="box tip">
+    <span class="lbl">La costumbre que más rinde</span>
+    <p><strong>Cerrar cada sesión con el estado escrito.</strong> Al día siguiente, en lugar de
+    explicar otra vez dónde estabas, pegas el texto de arranque y el asistente continúa.</p>
+  </div>
+
+  <p>Las <strong>reglas</strong> merecen su propio sitio: «nunca borrar sin copia», «toda cifra
+  normativa con su fuente», «no instalar sin anotar la versión». Escritas una vez en las
+  instrucciones, el asistente las aplica siempre.</p>
+</section>
+
+<!-- ════════════ 4 ════════════ -->
+<section role="tabpanel" id="k4" hidden>
+  <h2>Darle herramientas: conectores y procedimientos</h2>
+
+  <p>Un asistente es mucho más útil cuando puede usar directamente tus sistemas. Eso se hace con
+  <strong>conectores</strong> (un estándar llamado <abbr title="MCP: Model Context Protocol: conecta el asistente con herramientas">MCP</abbr><span class="gl"> (Model Context Protocol: conecta el asistente con herramientas)</span>, <em>Model Context Protocol</em>): pequeños
+  programas que le dan acceso controlado a una herramienta concreta.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Conector</th><th>Qué le permite al asistente</th></tr>
+    <tr><td>Tu <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> normativo</td><td>Consultar la normativa con vigencia <strong>antes</strong> de afirmar una cifra</td></tr>
+    <tr><td>Acceso al servidor</td><td>Ejecutar órdenes en otra máquina de forma controlada</td></tr>
+    <tr><td>Búsqueda web local</td><td>Buscar en internet haciendo que lea las páginas un modelo local (Guía 3)</td></tr>
+    <tr><td>Programas de ingeniería</td><td>Manejar QGIS o generar documentos a partir de datos</td></tr>
+  </table></div>
+
+  <h3>Procedimientos reutilizables</h3>
+  <p>Las tareas que se repiten —preparar un informe de jornada, dar de alta una norma en el <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr>,
+  cerrar una sesión— se escriben una vez como <strong>procedimiento</strong> que el asistente sigue
+  paso a paso. Así el resultado sale igual cada vez, lo haga quien lo haga.</p>
+
+  <div class="box warn">
+    <span class="lbl">Credenciales: nunca en el chat</span>
+    <p>Si el asistente necesita una contraseña, no la escribas en la conversación: queda en el
+    historial. Usa el mecanismo de credenciales del sistema operativo o del conector, que la guarda
+    cifrada sin que el asistente llegue a verla.</p>
+  </div>
+</section>
+
+<!-- ════════════ 5 ════════════ -->
+<section role="tabpanel" id="k5" hidden>
+  <h2>Varios agentes que se coordinan y se revisan</h2>
+
+  <p>Cuando el sistema crece, conviene tener <strong>un asistente por máquina o por área</strong>,
+  cada uno con su trabajo. Para que no se pisen, necesitan una forma ordenada de hablar entre ellos.
+  En el sistema de ejemplo se llama, con humor, el <strong>Patio de Vecinos</strong>.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Pieza</th><th>Qué es</th></tr>
+    <tr><td><strong>Tablón común</strong></td><td>Un fichero compartido donde cada agente anota mensajes: avisos, entregas, preguntas, acuses. Solo se añade, nunca se borra.</td></tr>
+    <tr><td><strong>Buzones</strong></td><td>Cada agente recibe lo que va dirigido a él, y un vigía le avisa en cuanto llega algo.</td></tr>
+    <tr><td><strong>Salas de trabajo</strong></td><td>Cuando dos o tres agentes trabajan juntos en algo, tienen un espacio propio para no llenar el tablón común.</td></tr>
+    <tr><td><strong>Reparto por carriles</strong></td><td>Cada agente reclama su tarea antes de empezar, para que no la haga otro a la vez.</td></tr>
+  </table></div>
+
+  <h3>La parte que más vale: la revisión cruzada</h3>
+  <p>Ningún trabajo importante se da por bueno con la palabra de quien lo hizo. Antes de publicarlo
+  pasa por dos revisiones con papeles distintos:</p>
+  <ul>
+    <li><strong>Un adversario</strong>, cuyo trabajo es intentar demostrar que está mal.</li>
+    <li><strong>Un auditor</strong>, que comprueba referencias, coherencia y que no falte nada.</li>
+  </ul>
+  <p>Y los agentes se revisan entre sí: es habitual que uno detecte en la herramienta de otro un
+  caso que su autor no había probado, y que el primer arreglo se vuelva a revisar antes de darlo por
+  cerrado.</p>
+
+  <div class="box key">
+    <span class="lbl">Lo que se lleva un despacho de una sola persona</span>
+    <p>No necesitas varios agentes para aplicar la idea. El valor no está en que la IA acierte, sino
+    en <strong>montar un sistema que detecte cuándo se equivoca</strong>: pedir a un segundo asistente
+    —o a una segunda sesión— que revise con ojos críticos lo que produjo el primero.</p>
+  </div>
+</section>
+
+<!-- ════════════ 6 ════════════ -->
+<section role="tabpanel" id="k6" hidden>
+  <h2>Coste y límites</h2>
+
+  <h3>Cuánto cuesta</h3>
+  <p>Los asistentes capaces de trabajar sobre tu ordenador se contratan por suscripción mensual. Como
+  referencia, los planes de Claude cuestan <strong>17–20 $/mes (Pro)</strong> y <strong>desde
+  100 $/mes (Max)</strong>, en dólares y sin impuestos, a 14 de septiembre de 2026; los demás
+  fabricantes tienen planes de rango parecido (Guía 2). El uso intensivo consume antes los límites
+  del plan.</p>
+
+  <div class="box tip">
+    <span class="lbl">Gasta el plan de pago en juicio</span>
+    <p>Lo mecánico —extraer, convertir, comparar, buscar— que lo haga un modelo local o un script. El
+    asistente de pago, donde hace falta criterio: diseñar, decidir, revisar. Es la misma idea con la
+    que se construyó el <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> de la Guía 4.</p>
+  </div>
+
+  <h3>Sus límites, dichos claro</h3>
+  <ul>
+    <li><strong>Se equivoca con aplomo.</strong> Una respuesta segura no es una respuesta
+    comprobada.</li>
+    <li><strong>Puede dar por hecho algo que no ha verificado</strong> si no le pides que distinga.</li>
+    <li><strong>No recuerda</strong> lo que no esté escrito en ficheros.</li>
+    <li><strong>Hace lo que le permitas.</strong> Configura qué puede ejecutar sin preguntar y qué no.</li>
+    <li><strong>No asume responsabilidad.</strong> Esa sigue siendo tuya.</li>
+  </ul>
+</section>
+
+<!-- ════════════ 7 ════════════ -->
+<section role="tabpanel" id="k7" hidden>
+  <h2>Pautas de trabajo con un asistente</h2>
+
+  <ol>
+    <li><strong>Plan antes de código.</strong> Nada se toca sin un plan aprobado.</li>
+    <li><strong>Copia y ensayo en seco</strong> antes de cualquier operación que modifique o borre.</li>
+    <li><strong>Pasos pequeños</strong> y verificación después de cada uno.</li>
+    <li><strong>Verifica con un instrumento distinto</strong> del que produjo el resultado.</li>
+    <li><strong>Distingue medido de supuesto</strong>, en lo que te dice y en lo que escribes.</li>
+    <li><strong>Toda cifra con su fuente y su fecha.</strong></li>
+    <li><strong>El estado, escrito</strong>: instrucciones, estado, hoja de ruta, lecciones.</li>
+    <li><strong>Credenciales fuera del chat.</strong></li>
+    <li><strong>Dos intentos fallidos, cambia de enfoque.</strong> Insistir por tercera vez con la misma
+    idea rara vez funciona.</li>
+    <li><strong>Una segunda mirada crítica</strong> antes de dar por bueno algo importante.</li>
+  </ol>
+
+  <div class="box key">
+    <span class="lbl">Para empezar esta semana</span>
+    <p>Contrata un plan de un asistente capaz de trabajar en tu ordenador. Pídele que te ayude a
+    instalar <abbr title="Ollama: programa gratuito para ejecutar modelos en tu equipo">Ollama</abbr><span class="gl"> (programa gratuito para ejecutar modelos en tu equipo)</span> y un modelo pequeño (Guía 1). Escribe con él un fichero de instrucciones con tus
+    tres reglas básicas. Y cierra la sesión pidiéndole el estado por escrito. <strong>Ya tienes el
+    método en marcha.</strong></p>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Guía 6 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  profesional» · Colegio Oficial de Ingenieros de Telecomunicación.<br>
+  Precios de referencia consultados el 14/09/2026.</p>
+  <p><a href="Glosario.html">¿Una sigla que no conoces? Consulta el glosario</a></p>
+</footer>
+
+</div>
+<script>
+  const tabs=[...document.querySelectorAll('nav.tabs button')];
+  const paneles=[...document.querySelectorAll('section[role=tabpanel]')];
+  tabs.forEach(b=>b.addEventListener('click',()=>{
+    tabs.forEach(x=>x.setAttribute('aria-selected', x===b?'true':'false'));
+    paneles.forEach(p=>p.hidden = (p.id!==b.dataset.p));
+    window.scrollTo({top:0,behavior:'smooth'});
+  }));
+</script>
+</body>
+</html>

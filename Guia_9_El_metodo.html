@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía 9 · El método — Webinar COIT</title>
+<style>
+  :root{
+    --bg:#ffffff; --ink:#1F2A37; --muted:#6B7785; --line:#D9E1EC;
+    --accent:#2E6DA4; --navy:#1B3A6B; --amber:#B5650A; --amber-bg:#FBEEDC;
+    --green:#2F7D4F; --green-bg:#E9F3EC; --card:#F3F6FB;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+      --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+      --green:#7BC49A; --green-bg:#16241C;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+    --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+    --green:#7BC49A; --green-bg:#16241C;
+  }
+  body{background:var(--bg);color:var(--ink);
+    font:16px/1.65 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    margin:0;padding:0 16px 80px}
+  .wrap{max-width:900px;margin:0 auto}
+  header.top{padding:34px 0 10px;border-bottom:1px solid var(--line)}
+  .eyebrow{font:600 12.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--amber);margin:0 0 10px}
+  h1{font-size:2.05rem;line-height:1.2;margin:0 0 10px;font-weight:650;letter-spacing:-.02em}
+  .sub{color:var(--muted);margin:0 0 18px;max-width:70ch}
+  nav.tabs{position:sticky;top:0;z-index:20;background:var(--bg);
+    border-bottom:1px solid var(--line);margin:0 0 30px;display:flex;gap:2px;
+    overflow-x:auto;padding-top:10px}
+  nav.tabs button{flex:0 0 auto;background:none;border:0;border-bottom:3px solid transparent;
+    padding:12px 15px;font:600 13.5px/1 ui-sans-serif,system-ui,sans-serif;color:var(--muted);
+    cursor:pointer;white-space:nowrap}
+  nav.tabs button:hover{color:var(--ink)}
+  nav.tabs button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+  section[role=tabpanel]{animation:fade .18s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+  h2{font-size:1.6rem;margin:34px 0 8px;font-weight:620;letter-spacing:-.01em}
+  h2:first-child{margin-top:0}
+  h3{font-size:1.14rem;margin:28px 0 8px;font-weight:620}
+  p{margin:0 0 14px;max-width:78ch}
+  ul,ol{max-width:78ch;padding-left:22px;margin:0 0 14px} li{margin-bottom:7px}
+  code{font:13.5px/1.5 ui-monospace,Menlo,Consolas,monospace;background:var(--card);
+    padding:2px 6px;border-radius:4px;border:1px solid var(--line)}
+  .tblwrap{overflow-x:auto;margin:0 0 18px}
+  table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+  th{background:var(--navy);color:#fff;text-align:left;padding:9px 11px;font-weight:600}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) th{color:#12161C}}
+  :root[data-theme="dark"] th{color:#12161C}
+  td{border-bottom:1px solid var(--line);padding:9px 11px;vertical-align:top}
+  .box{border-radius:10px;padding:16px 18px;margin:0 0 18px;border:1px solid var(--line)}
+  .box p:last-child{margin-bottom:0}
+  .tip{background:var(--green-bg);border-color:transparent}
+  .warn{background:var(--amber-bg);border-color:transparent}
+  .key{background:var(--card)}
+  .lbl{font:600 11.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.1em;
+    text-transform:uppercase;display:block;margin-bottom:8px}
+  .tip .lbl{color:var(--green)} .warn .lbl{color:var(--amber)} .key .lbl{color:var(--accent)}
+  .flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:0 0 18px}
+  .flow div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
+  .flow b{display:block;color:var(--accent);font-size:13px;margin-bottom:4px}
+  .flow span{font-size:14px}
+  footer{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13.5px}
+  .pill{display:inline-block;background:var(--card);border:1px solid var(--line);
+    border-radius:999px;padding:2px 10px;font-size:12.5px;color:var(--muted);margin-right:6px}
+  abbr[title]{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}
+  .gl{color:var(--muted);font-size:.86em}
+
+  .home{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;
+    border:0;border-radius:10px;padding:11px 20px;margin:18px 0 0;
+    font:700 15px/1 ui-sans-serif,system-ui,sans-serif;text-decoration:none;
+    box-shadow:0 1px 2px rgba(0,0,0,.12)}
+  .home:hover{filter:brightness(1.08)}
+  .home svg{flex:0 0 auto}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .home{color:#12161C}}
+  :root[data-theme="dark"] .home{color:#12161C}
+
+  a{color:var(--accent)}
+  a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="home" href="index.html"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M6 10.5V20h5v-5h2v5h5v-9.5"/></svg><span>Índice de guías</span></a>
+
+
+<header class="top">
+  <p class="eyebrow">Webinar COIT · Guía 9 de 14</p>
+  <h1>El método</h1>
+  <p class="sub">Trabajar con una IA potente sin método es como dirigir una obra sin proyecto: sale
+  algo, pero no sabes si aguanta. Esta guía reúne los métodos que usamos para construir nuestra
+  infraestructura con Claude —desde los clásicos de gestión hasta los específicos para dirigir el
+  razonamiento de una IA— y, sobre todo, la lección de cuáles se cumplen de verdad.</p>
+  <p><span class="pill">Nivel: práctico</span><span class="pill">Lectura: ~30 min</span>
+  <span class="pill">Métodos probados en trabajo real</span></p>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" data-p="t1">1 · Por qué método</button>
+  <button role="tab" aria-selected="false" data-p="t2">2 · Catálogo de marcos</button>
+  <button role="tab" aria-selected="false" data-p="t3">3 · Seis sombreros</button>
+  <button role="tab" aria-selected="false" data-p="t4">4 · ADPAI y LEAR</button>
+  <button role="tab" aria-selected="false" data-p="t5">5 · Reglas de cada día</button>
+  <button role="tab" aria-selected="false" data-p="t6">6 · Recetas</button>
+  <button role="tab" aria-selected="false" data-p="t7">7 · Lo que se cumple</button>
+</nav>
+
+<!-- ════════════ 1 ════════════ -->
+<section role="tabpanel" id="t1">
+  <h2>Por qué hace falta un método</h2>
+
+  <p>Una IA escribe rápido, con seguridad y con buena forma. Justo por eso <strong>sus errores no
+  avisan</strong>: un script que termina sin fallos puede haber hecho otra cosa, y una cifra bien
+  presentada puede ser inventada. El método sirve para tres cosas:</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Riesgo</th><th>Lo que lo ataja</th></tr>
+    <tr><td>Hacer lo que no se pidió</td><td>Plan escrito y aprobado antes de tocar nada</td></tr>
+    <tr><td>Dar por bueno algo que no funciona</td><td>Separar quien hace de quien comprueba, y comprobar el resultado real</td></tr>
+    <tr><td>Romper algo difícil de deshacer</td><td>Copia, ensayo en seco y vuelta atrás definida</td></tr>
+    <tr><td>Afirmar lo que no se ha verificado</td><td>Marcar el nivel de evidencia de cada dato</td></tr>
+    <tr><td>Insistir en el camino equivocado</td><td>Límite de intentos antes de cambiar de enfoque</td></tr>
+  </table></div>
+
+  <div class="box key">
+    <span class="lbl">Idea de partida</span>
+    <p>La IA aporta velocidad; <strong>el método aporta la fiabilidad</strong>. Y la mayoría de los
+    métodos que necesitas ya existen: son los de gestión de calidad y de proyectos de toda la vida,
+    aplicados a un colaborador nuevo.</p>
+  </div>
+</section>
+
+<!-- ════════════ 2 ════════════ -->
+<section role="tabpanel" id="t2" hidden>
+  <h2>El catálogo de marcos</h2>
+
+  <p>Hemos reunido <strong>47 marcos de trabajo en 7 categorías</strong>, cada uno con ficha, ejemplos,
+  taller, evidencia de que funciona y dónde aplicarlo en nuestro trabajo.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Categoría</th><th>Marcos</th></tr>
+    <tr><td><strong>Pensar y crear</strong> (9)</td><td>Seis sombreros · SCAMPER · pensamiento lateral · TRIZ · Design Thinking · Design Sprint · método Disney · modelos mentales · <strong>pre-mortem</strong></td></tr>
+    <tr><td><strong>Diagnóstico y causa raíz</strong> (7)</td><td>5 porqués · Ishikawa · 8D · A3 · DMAIC · <strong><abbr title="PDCA: Plan-Do-Check-Act: ciclo de mejora continua">PDCA</abbr></strong> · <strong>Kepner-Tregoe</strong></td></tr>
+    <tr><td><strong>Priorizar</strong> (6)</td><td>Eisenhower · MoSCoW · RICE · ICE · Kano · Pareto</td></tr>
+    <tr><td><strong>Estrategia</strong> (7)</td><td>DAFO · PESTEL · 5 fuerzas · Business Model Canvas · Océano azul · OKR · Cuadro de mando integral</td></tr>
+    <tr><td><strong>Productividad y proyecto</strong> (6)</td><td>GTD · Kanban · Scrum · Pomodoro · Teoría de restricciones · PERT/CPM</td></tr>
+    <tr><td><strong>Decidir en grupo</strong> (5)</td><td><strong><abbr title="RACI: Responsable · Aprueba · Consultado · Informado">RACI</abbr></strong> / DACI · Delphi · grupo nominal · Fist of Five · Liberating Structures</td></tr>
+    <tr><td><strong>Dirigir el razonamiento de una IA</strong> (7)</td><td>Cadena de pensamiento · árbol de pensamientos · <abbr title="ReAct: Reasoning and Acting: alternar razonar y usar herramientas">ReAct</abbr><span class="gl"> (Reasoning and Acting: alternar razonar y usar herramientas)</span> · autoconsistencia · de lo simple a lo complejo · Reflexion · planificar y resolver</td></tr>
+  </table></div>
+
+  <h3>Los marcos para dirigir a una IA, en una línea</h3>
+  <div class="tblwrap"><table>
+    <tr><th>Marco</th><th>Qué es</th><th>Cómo lo usamos</th></tr>
+    <tr><td>Cadena de pensamiento</td><td>Razonar paso a paso antes de concluir</td><td>Los mensajes muestran la cadena de verificación, no solo la conclusión</td></tr>
+    <tr><td>Árbol de pensamientos</td><td>Explorar varias ramas</td><td>Dos hipótesis compitiendo, un agente por rama</td></tr>
+    <tr><td><abbr title="ReAct: Reasoning and Acting: alternar razonar y usar herramientas">ReAct</abbr></td><td>Alternar pensar y actuar con herramientas</td><td>Es el patrón de trabajo de cualquier agente con acceso al sistema</td></tr>
+    <tr><td>Autoconsistencia</td><td>Varias respuestas independientes, quedarse con la que coincide</td><td>Doble puerta adversario + auditor; verificación cruzada entre dos agentes</td></tr>
+    <tr><td>De lo simple a lo complejo</td><td>Resolver primero el caso fácil</td><td>Probar un criterio con un caso sano y uno roto antes de aplicarlo a cien</td></tr>
+    <tr><td>Reflexion</td><td>Generar, autocriticarse, corregir</td><td>Lista honesta de errores propios al cerrar la sesión</td></tr>
+    <tr><td>Planificar y resolver</td><td>Plan primero, ejecución después</td><td>Fijar el alcance de un lote antes de lanzarlo</td></tr>
+  </table></div>
+
+  <div class="box tip">
+    <span class="lbl">Dos clásicos que rinden mucho con IA</span>
+    <p><strong>Pre-mortem</strong>: antes de entregar, suponer que ya ha fallado y buscar por qué.
+    <strong>Kepner-Tregoe</strong>: separar el análisis del problema («qué ha pasado, medido») de la
+    decisión («qué propongo»). Mezclarlos es la fuente más habitual de rectificaciones.</p>
+  </div>
+</section>
+
+<!-- ════════════ 3 ════════════ -->
+<section role="tabpanel" id="t3" hidden>
+  <h2>Los seis sombreros para pensar</h2>
+
+  <p>Método de Edward de Bono (1985): todo el grupo piensa <strong>con el mismo sombrero a la vez</strong>,
+  en lugar de que uno defienda y otro ataque.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Sombrero</th><th>Pregunta</th><th>En nuestro trabajo</th></tr>
+    <tr><td>⚪ <strong>Blanco</strong></td><td>¿Qué datos tenemos?</td><td>Solo lo medido, con su fuente</td></tr>
+    <tr><td>🔴 <strong>Rojo</strong></td><td>¿Qué me dice la intuición?</td><td>Treinta segundos por participante, sin justificar</td></tr>
+    <tr><td>⚫ <strong>Negro</strong></td><td>¿Qué puede salir mal?</td><td>Riesgos: el papel del adversario</td></tr>
+    <tr><td>🟡 <strong>Amarillo</strong></td><td>¿Qué ganamos?</td><td>Oportunidades y beneficios de cada opción</td></tr>
+    <tr><td>🟢 <strong>Verde</strong></td><td>¿Qué otras opciones hay?</td><td>Alternativas nuevas, antes de criticarlas</td></tr>
+    <tr><td>🔵 <strong>Azul</strong></td><td>¿Cómo organizamos esto?</td><td>Quién decide y cómo se cierra</td></tr>
+  </table></div>
+
+  <h3>Una pasada de 15 minutos</h3>
+  <p>Azul (1') → blanco (4') → amarillo (3') → negro (3') → verde (3') → rojo (30 s por persona) →
+  azul (1'). Cada riesgo u oportunidad que sale se anota en el registro de riesgos, que en un sistema
+  de calidad ISO/IEC 17025 es justo lo que pide el apartado de riesgos y oportunidades.</p>
+
+  <div class="box warn">
+    <span class="lbl">Lo que descubrimos al aplicarlo</span>
+    <p>Analizando nuestro ecosistema con los sombreros, la conclusión fue: <strong>«es casi todo
+    sombrero negro»</strong>. Teníamos muchos revisores buscando fallos, datos bien medidos (blanco) y
+    organización (azul), pero casi nada de amarillo ni de rojo, y el verde solo aparecía cuando algo
+    fallaba. Revisar mucho no es lo mismo que pensar completo.</p>
+  </div>
+
+  <h3>Cuándo sí y cuándo no</h3>
+  <ul>
+    <li><strong>Sí</strong>: decisiones con varias opciones defendibles.</li>
+    <li><strong>No</strong>: preguntas con respuesta comprobable. Eso se resuelve midiendo, no debatiendo.</li>
+  </ul>
+</section>
+
+<!-- ════════════ 4 ════════════ -->
+<section role="tabpanel" id="t4" hidden>
+  <h2><abbr title="ADPAI: Analizar-Debatir-Planificar-Aprobar-Implementar">ADPAI</abbr> y <abbr title="LEAR: Leer-Editar-Auditar-Reparar">LEAR</abbr>: gobernar el cambio y ejecutarlo</h2>
+
+  <p>Dos métodos que encajan uno dentro del otro: <strong><abbr title="ADPAI: Analizar-Debatir-Planificar-Aprobar-Implementar">ADPAI</abbr></strong> decide qué se hace;
+  <strong><abbr title="LEAR: Leer-Editar-Auditar-Reparar">LEAR</abbr></strong> lo ejecuta sin romper nada.</p>
+
+  <h3><abbr title="ADPAI: Analizar-Debatir-Planificar-Aprobar-Implementar">ADPAI</abbr>: Analizar · Debatir · Planificar · Aprobar · Implementar</h3>
+  <div class="tblwrap"><table>
+    <tr><th>Fase</th><th>Quién</th><th>Qué produce</th></tr>
+    <tr><td><strong>Analizar</strong></td><td>La IA, en solo lectura, sobre una copia</td><td>Documento de análisis</td></tr>
+    <tr><td><strong>Debatir</strong></td><td>La persona corrige; la IA actualiza el mismo documento</td><td>Análisis aprobado</td></tr>
+    <tr><td><strong>Planificar</strong></td><td>La IA</td><td>Plan detallado: cada paso con su comando exacto, criterio de éxito y vuelta atrás</td></tr>
+    <tr><td><strong>Aprobar</strong></td><td>La persona. «Parece bien» no cuenta</td><td>Plan aprobado con fecha y hora</td></tr>
+    <tr><td><strong>Implementar</strong></td><td>La IA, según el tipo de cambio. Ante lo imprevisto, se para</td><td>Resultado documentado</td></tr>
+  </table></div>
+  <p>Se trabaja sobre versiones: <strong>original intocable</strong> → versión de trabajo → versión
+  final. Para cambios pequeños en tu propio espacio basta una versión ligera: analizar e implementar.</p>
+
+  <h3><abbr title="LEAR: Leer-Editar-Auditar-Reparar">LEAR</abbr>: Leer · Editar · Auditar · Reparar</h3>
+  <div class="flow">
+    <div><b>Lector</b><span>Lee el estado real y hace copia. Nunca modifica.</span></div>
+    <div><b>Editor</b><span>Aplica el cambio y comprueba la sintaxis. No prueba si funciona.</span></div>
+    <div><b>Auditor</b><span>Prueba como lo haría el usuario, sin tests preparados: solo el objetivo. Pasa o no pasa.</span></div>
+    <div><b>Reparador</b><span>Si no pasa, corrige con otro enfoque. Máximo tres intentos; si no, vuelta atrás.</span></div>
+  </div>
+
+  <div class="box key">
+    <span class="lbl">La regla de oro de <abbr title="LEAR: Leer-Editar-Auditar-Reparar">LEAR</abbr><span class="gl"> (Leer-Editar-Auditar-Reparar)</span></span>
+    <p><strong>Quien edita nunca valida su propio trabajo.</strong> Y si un cambio falla, no se sigue
+    parcheando: se restaura la copia y se empieza limpio.</p>
+  </div>
+</section>
+
+<!-- ════════════ 5 ════════════ -->
+<section role="tabpanel" id="t5" hidden>
+  <h2>Las reglas de cada día</h2>
+
+  <div class="tblwrap"><table>
+    <tr><th>Regla</th><th>Qué exige</th></tr>
+    <tr><td><strong>Plan primero</strong></td><td>No se escribe código ni se cambia nada sin un plan aprobado</td></tr>
+    <tr><td><strong>Ensayo en seco</strong></td><td>Toda operación que borra o modifica se simula antes</td></tr>
+    <tr><td><strong>Ley de hierro</strong></td><td>Nada se da por hecho sin comprobarlo con el resultado real: la respuesta del servidor, el fichero abierto, el cálculo repetido</td></tr>
+    <tr><td><strong>Pausa antes de un número</strong></td><td>Releer, contrastar la fuente y revisar la coherencia antes de entregar cualquier dato normativo o técnico</td></tr>
+    <tr><td><strong>Marcar la evidencia</strong></td><td>Cada dato lleva su marca: verificado (con fecha y fuente), no verificado, fuente pendiente o hipótesis. Prohibido inventar versiones, parámetros o referencias</td></tr>
+    <tr><td><strong>Dos fallos, cambio de enfoque</strong></td><td>Tras dos intentos fallidos seguidos, se propone una alternativa distinta; no hay tercer intento con retoques</td></tr>
+    <tr><td><strong>Jefe y trabajadores</strong></td><td>Con muchos documentos, un agente coordina y lanza varios en paralelo</td></tr>
+    <tr><td><strong>Revisor crítico</strong></td><td>En documentos del sistema de calidad y entregables con firma, un segundo agente revisa antes de entregar</td></tr>
+    <tr><td><strong><abbr title="RACI: Responsable · Aprueba · Consultado · Informado">RACI</abbr> en las propuestas</strong></td><td>Toda propuesta declara responsable, quien aprueba, consultados e informados</td></tr>
+    <tr><td><strong>Hora real</strong></td><td>La fecha y hora de un registro se consultan al sistema, nunca se escriben a ojo</td></tr>
+  </table></div>
+</section>
+
+<!-- ════════════ 6 ════════════ -->
+<section role="tabpanel" id="t6" hidden>
+  <h2>Recetas: cómo se combinan</h2>
+
+  <p>Ningún método se usa solo. Según el tipo de trabajo, se combinan así:</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Trabajo</th><th>Combinación</th></tr>
+    <tr><td><strong>Entregable para un cliente, con firma</strong></td><td>Plan primero + <abbr title="LEAR: Leer-Editar-Auditar-Reparar">LEAR</abbr> + revisor crítico + pausa antes de cada número + marcar la evidencia</td></tr>
+    <tr><td><strong>Instalar muchos programas o librerías</strong></td><td><abbr title="ReAct: Reasoning and Acting: alternar razonar y usar herramientas">ReAct</abbr> + marcar la evidencia + foto del estado antes y después + vuelta atrás automática si falla</td></tr>
+    <tr><td><strong>Cargar muchos documentos en una base de datos o un <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr></strong></td><td>Jefe y trabajadores + <abbr title="PDCA: Plan-Do-Check-Act: ciclo de mejora continua">PDCA</abbr><span class="gl"> (Plan-Do-Check-Act: ciclo de mejora continua)</span> + <abbr title="LEAR: Leer-Editar-Auditar-Reparar">LEAR</abbr> por documento</td></tr>
+    <tr><td><strong>Cambiar la configuración de un servidor</strong></td><td><abbr title="ADPAI: Analizar-Debatir-Planificar-Aprobar-Implementar">ADPAI</abbr><span class="gl"> (Analizar-Debatir-Planificar-Aprobar-Implementar)</span>, y dentro de «Implementar», <abbr title="LEAR: Leer-Editar-Auditar-Reparar">LEAR</abbr></td></tr>
+    <tr><td><strong>Elegir entre varias opciones</strong></td><td>Pasada de seis sombreros + <abbr title="RACI: Responsable · Aprueba · Consultado · Informado">RACI</abbr><span class="gl"> (Responsable · Aprueba · Consultado · Informado)</span> + decisión de la persona</td></tr>
+    <tr><td><strong>Algo ha fallado</strong></td><td>Kepner-Tregoe (qué ha pasado vs qué hago) + 5 porqués + pre-mortem de la solución</td></tr>
+  </table></div>
+
+  <h3>Métodos de otras profesiones que encajan igual</h3>
+  <p>Descargar e incorporar un modelo nuevo, por ejemplo, sigue su propio procedimiento:
+  <strong>cola → descarga → registro → prueba de rendimiento → ficha</strong>. Es el mismo esquema que
+  la recepción y verificación de un equipo de medida en un laboratorio.</p>
+</section>
+
+<!-- ════════════ 7 ════════════ -->
+<section role="tabpanel" id="t7" hidden>
+  <h2>La lección más importante: qué métodos se cumplen</h2>
+
+  <p>Medimos cuántas veces se aplicaban los métodos cuando tocaba. El resultado fue revelador:</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Método</th><th>Qué lo dispara</th><th>¿Se cumple?</th></tr>
+    <tr><td>Declarar <abbr title="RACI: Responsable · Aprueba · Consultado · Informado">RACI</abbr> en las propuestas</td><td>La herramienta rechaza la publicación si falta</td><td>✅ Siempre</td></tr>
+    <tr><td>Vigía al arrancar</td><td>Es el primer paso fijo del protocolo</td><td>✅ Casi siempre</td></tr>
+    <tr><td>Cierre formal</td><td>Lo pide la persona</td><td>✅ Sí</td></tr>
+    <tr><td>Seis sombreros</td><td>Que el agente reconozca que hay una decisión con varias opciones</td><td>⚠️ En 1 de 4 sesiones donde tocaba</td></tr>
+    <tr><td>Separar diagnóstico y decisión</td><td>Solo la buena voluntad</td><td>⚠️ Se olvida</td></tr>
+  </table></div>
+
+  <div class="box key">
+    <span class="lbl">La regla</span>
+    <p><strong>Un método se cumple si lo dispara algo externo</strong>: un evento, una persona o el
+    propio camino de la acción. Si depende de que el agente —o la persona— se acuerde en el momento
+    justo, se olvida. Igual que un procedimiento de calidad que nadie lee.</p>
+  </div>
+
+  <div class="box tip">
+    <span class="lbl">Para tu despacho</span>
+    <p>No adoptes cuarenta métodos. Elige <strong>tres</strong> que te resuelvan problemas reales —por
+    ejemplo, plan primero, quien hace no revisa y dos fallos cambio de enfoque— y <strong>ponles un
+    disparador</strong>: una casilla obligatoria, una plantilla que no avanza sin ese dato, una
+    instrucción fija al principio de cada sesión.</p>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Guía 9 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  profesional» · Colegio Oficial de Ingenieros de Telecomunicación.</p>
+  <p><a href="Glosario.html">¿Una sigla que no conoces? Consulta el glosario</a></p>
+</footer>
+
+</div>
+<script>
+  const tabs=[...document.querySelectorAll('nav.tabs button')];
+  const paneles=[...document.querySelectorAll('section[role=tabpanel]')];
+  tabs.forEach(b=>b.addEventListener('click',()=>{
+    tabs.forEach(x=>x.setAttribute('aria-selected', x===b?'true':'false'));
+    paneles.forEach(p=>p.hidden = (p.id!==b.dataset.p));
+    window.scrollTo({top:0,behavior:'smooth'});
+  }));
+</script>
+</body>
+</html>

@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía 2 · Herramientas comerciales — Webinar COIT</title>
+<style>
+  :root{
+    --bg:#ffffff; --ink:#1F2A37; --muted:#6B7785; --line:#D9E1EC;
+    --accent:#2E6DA4; --navy:#1B3A6B; --amber:#B5650A; --amber-bg:#FBEEDC;
+    --green:#2F7D4F; --green-bg:#E9F3EC; --card:#F3F6FB;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+      --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+      --green:#7BC49A; --green-bg:#16241C;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+    --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+    --green:#7BC49A; --green-bg:#16241C;
+  }
+  body{background:var(--bg);color:var(--ink);
+    font:16px/1.65 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    margin:0;padding:0 16px 80px}
+  .wrap{max-width:900px;margin:0 auto}
+  header.top{padding:34px 0 10px;border-bottom:1px solid var(--line)}
+  .eyebrow{font:600 12.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--amber);margin:0 0 10px}
+  h1{font-size:2.05rem;line-height:1.2;margin:0 0 10px;font-weight:650;letter-spacing:-.02em}
+  .sub{color:var(--muted);margin:0 0 18px;max-width:70ch}
+  nav.tabs{position:sticky;top:0;z-index:20;background:var(--bg);
+    border-bottom:1px solid var(--line);margin:0 0 30px;display:flex;gap:2px;
+    overflow-x:auto;padding-top:10px}
+  nav.tabs button{flex:0 0 auto;background:none;border:0;border-bottom:3px solid transparent;
+    padding:12px 15px;font:600 13.5px/1 ui-sans-serif,system-ui,sans-serif;color:var(--muted);
+    cursor:pointer;white-space:nowrap}
+  nav.tabs button:hover{color:var(--ink)}
+  nav.tabs button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+  section[role=tabpanel]{animation:fade .18s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+  h2{font-size:1.6rem;margin:34px 0 8px;font-weight:620;letter-spacing:-.01em}
+  h2:first-child{margin-top:0}
+  h3{font-size:1.14rem;margin:28px 0 8px;font-weight:620}
+  p{margin:0 0 14px;max-width:78ch}
+  ul,ol{max-width:78ch;padding-left:22px;margin:0 0 14px} li{margin-bottom:7px}
+  .tblwrap{overflow-x:auto;margin:0 0 18px}
+  table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+  th{background:var(--navy);color:#fff;text-align:left;padding:9px 11px;font-weight:600}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) th{color:#12161C}}
+  :root[data-theme="dark"] th{color:#12161C}
+  td{border-bottom:1px solid var(--line);padding:9px 11px;vertical-align:top}
+  .box{border-radius:10px;padding:16px 18px;margin:0 0 18px;border:1px solid var(--line)}
+  .box p:last-child{margin-bottom:0}
+  .tip{background:var(--green-bg);border-color:transparent}
+  .warn{background:var(--amber-bg);border-color:transparent}
+  .key{background:var(--card)}
+  .lbl{font:600 11.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.1em;
+    text-transform:uppercase;display:block;margin-bottom:8px}
+  .tip .lbl{color:var(--green)} .warn .lbl{color:var(--amber)} .key .lbl{color:var(--accent)}
+  .ex{background:var(--card);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;
+    padding:10px 14px;margin:0 0 10px;font-size:15px}
+  .ex b{color:var(--accent)}
+  footer{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13.5px}
+  .pill{display:inline-block;background:var(--card);border:1px solid var(--line);
+    border-radius:999px;padding:2px 10px;font-size:12.5px;color:var(--muted);margin-right:6px}
+  abbr[title]{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}
+  .gl{color:var(--muted);font-size:.86em}
+
+  .home{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;
+    border:0;border-radius:10px;padding:11px 20px;margin:18px 0 0;
+    font:700 15px/1 ui-sans-serif,system-ui,sans-serif;text-decoration:none;
+    box-shadow:0 1px 2px rgba(0,0,0,.12)}
+  .home:hover{filter:brightness(1.08)}
+  .home svg{flex:0 0 auto}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .home{color:#12161C}}
+  :root[data-theme="dark"] .home{color:#12161C}
+
+  a{color:var(--accent)}
+  a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="home" href="index.html"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M6 10.5V20h5v-5h2v5h5v-9.5"/></svg><span>Índice de guías</span></a>
+
+
+<header class="top">
+  <p class="eyebrow">Webinar COIT · Guía 2 de 14</p>
+  <h1>Herramientas comerciales: lo que puedes usar mañana</h1>
+  <p class="sub">Antes de montar nada propio, las herramientas de Google, Microsoft, OpenAI,
+  Anthropic y Perplexity resuelven mucho trabajo de un despacho. Qué hace cada una, cuánto
+  cuesta, ejemplos concretos de uso y dónde está el límite con los datos de tus clientes.</p>
+  <p><span class="pill">Nivel: desde cero</span><span class="pill">Lectura: ~25 min</span>
+  <span class="pill">Precios consultados el 14/09/2026</span></p>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" data-p="g1">1 · Panorama</button>
+  <button role="tab" aria-selected="false" data-p="g2">2 · Google</button>
+  <button role="tab" aria-selected="false" data-p="g3">3 · Microsoft</button>
+  <button role="tab" aria-selected="false" data-p="g4">4 · ChatGPT y Claude</button>
+  <button role="tab" aria-selected="false" data-p="g5">5 · Perplexity</button>
+  <button role="tab" aria-selected="false" data-p="g6">6 · Tus datos</button>
+  <button role="tab" aria-selected="false" data-p="g7">7 · Comercial o propia</button>
+</nav>
+
+<!-- ════════════ 1 ════════════ -->
+<section role="tabpanel" id="g1">
+  <h2>Panorama: cada herramienta tiene su terreno</h2>
+
+  <p>No compiten todas por lo mismo. Conviene elegir por la <strong>tarea</strong>, no por la marca.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Herramienta</th><th>Donde brilla</th><th>¿Gratis?</th><th>De pago, desde</th></tr>
+    <tr><td><strong>Gemini Notebook</strong> (antes NotebookLM)</td><td>Preguntar a <em>tus</em> documentos con cita a la fuente</td><td>Sí, con límites</td><td>incluido en Google AI</td></tr>
+    <tr><td><strong>Gemini</strong></td><td>Asistente general y trabajo dentro de Gmail, Docs y Sheets</td><td>Sí</td><td>4,99 €/mes</td></tr>
+    <tr><td><strong>Copilot / Microsoft 365</strong></td><td>Word, Excel, PowerPoint y Outlook, donde ya trabajas</td><td>Sí, limitado</td><td>10 €/mes (particular)</td></tr>
+    <tr><td><strong>ChatGPT</strong></td><td>Generalista, análisis de datos, redacción</td><td>Sí</td><td>7,99 €/mes</td></tr>
+    <tr><td><strong>Claude</strong></td><td>Documentos largos, revisión detallada, código</td><td>Sí</td><td>17–20 $/mes</td></tr>
+    <tr><td><strong>Perplexity</strong></td><td>Buscar en internet con fuentes citadas</td><td>Sí, con límites diarios</td><td>20 $/mes</td></tr>
+  </table></div>
+
+  <div class="box warn">
+    <span class="lbl">La regla que va antes que cualquier herramienta</span>
+    <p><strong>Con datos de clientes, planes de empresa.</strong> Con planes personales, solo
+    material público —normativa, formación, redacción general— y con el uso de tus datos para
+    entrenamiento desactivado. El detalle, en la pestaña 6.</p>
+  </div>
+
+  <div class="box key">
+    <span class="lbl">Cómo leer los precios</span>
+    <p>Son los publicados o de referencia en España el <strong>14 de septiembre de 2026</strong>.
+    Algunos se muestran sin IVA (planes de empresa) y los de Claude y Perplexity solo están en
+    dólares. <strong>Cambian a menudo: confírmalos en la web oficial antes de contratar.</strong></p>
+  </div>
+</section>
+
+<!-- ════════════ 2 ════════════ -->
+<section role="tabpanel" id="g2" hidden>
+  <h2>Google: Gemini Notebook, Gemini y Workspace</h2>
+
+  <h3>Gemini Notebook (antes NotebookLM)</h3>
+  <p>Google lo renombró en julio de 2026 manteniéndolo como producto independiente. Su principio
+  es el que más interesa a un ingeniero: <strong>solo responde con las fuentes que tú le cargas</strong>,
+  y cita el pasaje del que sale cada afirmación. Es, en la práctica, un <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr><span class="gl"> (Retrieval-Augmented Generation: busca en tus documentos y responde citándolos)</span> ya montado.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th></th><th>Gratis</th><th>Con Google AI Pro</th></tr>
+    <tr><td>Cuadernos</td><td>100</td><td>500</td></tr>
+    <tr><td>Fuentes por cuaderno</td><td>50</td><td>300</td></tr>
+    <tr><td>Consultas al día</td><td>50</td><td>500</td></tr>
+    <tr><td>Resúmenes en audio al día</td><td>3</td><td>más</td></tr>
+  </table></div>
+
+  <div class="ex"><b>Ejemplo · <abbr title="ICT: Infraestructura Común de Telecomunicaciones (RD 346/2011)">ICT</abbr>:</b> carga el RD 346/2011 y su reglamento técnico en un cuaderno y
+  pregunta «¿qué exige para el recinto de instalaciones de telecomunicación superior?». Obtienes la
+  respuesta con el pasaje señalado. Añade al cuaderno el Reglamento (UE) 2024/1309: su artículo 10.1 obliga a
+  que los edificios nuevos o con reforma importante cuyo permiso de construcción se solicite después del
+  12/02/2026 lleven infraestructura adaptada a la fibra y cableado de fibra hasta el punto de conexión del usuario.</div>
+  <div class="ex"><b>Ejemplo · ordenanzas:</b> un cuaderno por municipio donde trabajas, con su ordenanza
+  de ruido o de actividades. Deja de haber que buscar el artículo cada vez.</div>
+  <div class="ex"><b>Ejemplo · formación:</b> convierte una norma nueva en un resumen en audio para
+  escucharla en el coche de camino a obra.</div>
+
+  <h3>Gemini (app y Google AI)</h3>
+  <div class="tblwrap"><table>
+    <tr><th>Plan</th><th>Precio</th></tr>
+    <tr><td>Gratis</td><td>0 €, con límites</td></tr>
+    <tr><td>Google AI Plus</td><td>4,99 €/mes</td></tr>
+    <tr><td>Google AI Pro</td><td>21,99 €/mes</td></tr>
+    <tr><td>Google AI Ultra</td><td>desde 99,99 €/mes <em>(varían las fuentes: confirmar)</em></td></tr>
+  </table></div>
+
+  <h3>Gemini dentro de Google Workspace</h3>
+  <p>Para quien trabaja con Gmail y Google Drive como empresa. Por usuario y mes, <strong>sin IVA</strong>:
+  Business Starter <strong>6,80 €</strong> · Standard <strong>13,60 €</strong> · Plus <strong>21,10 €</strong>
+  (el pago anual ahorra en torno a un 16 %).</p>
+  <div class="ex"><b>Ejemplo · correo:</b> redactar la respuesta a un requerimiento de la administración a
+  partir del hilo de Gmail.</div>
+  <div class="ex"><b>Ejemplo · hojas:</b> limpiar y ordenar una tabla de presupuesto en Sheets.</div>
+</section>
+
+<!-- ════════════ 3 ════════════ -->
+<section role="tabpanel" id="g3" hidden>
+  <h2>Microsoft: Copilot en las herramientas que ya usas</h2>
+
+  <p>Su gran ventaja es que vive <strong>dentro de Word, Excel, PowerPoint y Outlook</strong>, que
+  es donde está el trabajo de la mayoría de los despachos.</p>
+
+  <h3>Para profesionales individuales</h3>
+  <div class="tblwrap"><table>
+    <tr><th>Plan</th><th>Mensual</th><th>Anual</th></tr>
+    <tr><td>Copilot gratis</td><td colspan="2">0 €, «sujeto a capacidad y límites»</td></tr>
+    <tr><td>Microsoft 365 Personal</td><td>10 €</td><td>99 €</td></tr>
+    <tr><td>Microsoft 365 Familia</td><td>13 €</td><td>129 €</td></tr>
+    <tr><td>Microsoft 365 Premium</td><td>22 €</td><td>219 €</td></tr>
+  </table></div>
+
+  <h3>Para empresa (con protección de datos corporativa)</h3>
+  <div class="tblwrap"><table>
+    <tr><th>Plan</th><th>Precio por usuario y mes, sin IVA</th></tr>
+    <tr><td>Complemento Microsoft 365 Copilot</td><td>15,60 € en oferta (18,20 € normal) en pago anual · 21,84 € en pago mensual</td></tr>
+    <tr><td>Empresa Estándar + Copilot</td><td>20,36 € (anual)</td></tr>
+    <tr><td>Empresa Premium + Copilot</td><td>27,73 € (anual)</td></tr>
+  </table></div>
+
+  <div class="ex"><b>Ejemplo · Word:</b> «redacta el apartado de antecedentes de la memoria a partir de
+  estas notas de visita» y luego corriges tú.</div>
+  <div class="ex"><b>Ejemplo · Excel:</b> «analiza este registro de mediciones y dime qué puntos superan el
+  límite y en qué franja horaria».</div>
+  <div class="ex"><b>Ejemplo · PowerPoint:</b> convertir el informe final en una presentación para la
+  reunión con el cliente.</div>
+  <div class="ex"><b>Ejemplo · Outlook:</b> resumir un hilo largo de correos de obra y listar lo pendiente
+  de cada parte.</div>
+</section>
+
+<!-- ════════════ 4 ════════════ -->
+<section role="tabpanel" id="g4" hidden>
+  <h2>ChatGPT y Claude: los asistentes generalistas</h2>
+
+  <h3>ChatGPT (OpenAI)</h3>
+  <div class="tblwrap"><table>
+    <tr><th>Plan</th><th>Precio orientativo en España</th></tr>
+    <tr><td>Free</td><td>0 €</td></tr>
+    <tr><td>Go</td><td>7,99 €/mes</td></tr>
+    <tr><td>Plus</td><td>22,99 €/mes</td></tr>
+    <tr><td>Pro</td><td>desde 102,99 €/mes</td></tr>
+    <tr><td>Business</td><td>en torno a 21 € por usuario y mes en pago anual (mínimo 2 usuarios) <em>(confirmar)</em></td></tr>
+  </table></div>
+  <div class="ex"><b>Ejemplo · pliegos:</b> revisar la coherencia de un pliego de prescripciones técnicas y
+  señalar contradicciones entre apartados.</div>
+  <div class="ex"><b>Ejemplo · datos:</b> subir un CSV de mediciones y pedir un gráfico y un resumen
+  estadístico, generado con código que puedes revisar.</div>
+
+  <h3>Claude (Anthropic)</h3>
+  <div class="tblwrap"><table>
+    <tr><th>Plan</th><th>Precio (en dólares, sin impuestos)</th></tr>
+    <tr><td>Free</td><td>0 $</td></tr>
+    <tr><td>Pro</td><td>17 $/mes en pago anual · 20 $ mensual</td></tr>
+    <tr><td>Max</td><td>desde 100 $/mes</td></tr>
+    <tr><td>Team</td><td>20–25 $ por usuario y mes (estándar)</td></tr>
+  </table></div>
+  <div class="ex"><b>Ejemplo · revisión:</b> pasarle un proyecto completo y una lista de comprobación, y
+  pedirle qué puntos no están resueltos y en qué página debería estar cada uno.</div>
+  <div class="ex"><b>Ejemplo · herramientas:</b> escribir un script de cálculo o una macro de Excel,
+  explicando qué debe hacer; y probarlo tú con un caso conocido.</div>
+  <div class="ex"><b>Ejemplo · expediente:</b> un «proyecto» con la documentación de un encargo, para
+  consultarlo durante semanas sin volver a subir nada.</div>
+
+  <div class="box tip">
+    <span class="lbl">Cuál elegir entre los dos</span>
+    <p>Para la mayoría de las tareas, <strong>los dos sirven</strong>. Prueba la misma tarea real en
+    ambos durante una semana con el plan gratuito y quédate con el que mejor encaje con tu forma de
+    trabajar. Pagar dos a la vez rara vez compensa.</p>
+  </div>
+</section>
+
+<!-- ════════════ 5 ════════════ -->
+<section role="tabpanel" id="g5" hidden>
+  <h2>Perplexity: buscar con fuentes</h2>
+
+  <p>Es un buscador conversacional: en lugar de una lista de enlaces, te da una respuesta
+  <strong>con las fuentes citadas</strong> para que las compruebes.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Plan</th><th>Qué incluye</th><th>Precio</th></tr>
+    <tr><td>Free</td><td>3 búsquedas avanzadas y 5 investigaciones profundas al día</td><td>0</td></tr>
+    <tr><td>Pro</td><td>uso intensivo</td><td>20 $/mes (≈20 € con IVA)</td></tr>
+    <tr><td>Max</td><td>el máximo</td><td>200 $/mes</td></tr>
+  </table></div>
+
+  <div class="ex"><b>Ejemplo · vigilancia normativa:</b> «¿ha habido cambios este año en la normativa de
+  <abbr title="ICT: Infraestructura Común de Telecomunicaciones (RD 346/2011)">ICT</abbr><span class="gl"> (Infraestructura Común de Telecomunicaciones (RD 346/2011))</span>?», y abrir las fuentes que devuelve.</div>
+  <div class="ex"><b>Ejemplo · productos:</b> comparar las fichas técnicas de tres fabricantes de un mismo
+  material o equipo.</div>
+  <div class="ex"><b>Ejemplo · estado del arte:</b> una investigación profunda antes de un informe sobre
+  una tecnología que no dominas.</div>
+
+  <div class="box warn">
+    <span class="lbl">Una cita no es una verificación</span>
+    <p>Que venga con enlace no significa que el enlace diga eso. Para cualquier cosa que vaya a un
+    documento que firmas, <strong>abre la fuente y compruébalo</strong>, y prefiere siempre el BOE, el
+    boletín autonómico o la norma UNE a un artículo que la resuma.</p>
+  </div>
+</section>
+
+<!-- ════════════ 6 ════════════ -->
+<section role="tabpanel" id="g6" hidden>
+  <h2>Tus datos: quién puede usarlos para entrenar</h2>
+
+  <p>Es la pregunta que decide qué puedes subir a cada herramienta. La respuesta cambia según el
+  plan, y en casi todos los personales depende de un ajuste que conviene revisar.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Herramienta</th><th>Planes personales</th><th>Planes de empresa</th></tr>
+    <tr><td><strong>Gemini Notebook</strong></td><td>No entrena con tus fuentes, <strong>salvo que valores una respuesta</strong> (pulgar arriba o abajo): entonces esa conversación puede revisarla una persona</td><td>Sin revisión humana ni entrenamiento</td></tr>
+    <tr><td><strong>App Gemini</strong></td><td>Con el historial de actividad activado, puede haber revisión y entrenamiento</td><td>Workspace tiene condiciones propias</td></tr>
+    <tr><td><strong>Copilot</strong></td><td>En el Espacio Económico Europeo no se entrena por defecto; se puede comprobar en la configuración</td><td>Microsoft 365 Copilot no entrena con los datos de tu organización</td></tr>
+    <tr><td><strong>ChatGPT</strong></td><td>Ajuste «mejorar el modelo para todos», que se puede desactivar</td><td>Business y Enterprise no entrenan por defecto</td></tr>
+    <tr><td><strong>Claude</strong></td><td>Solo entrena si el ajuste está activado</td><td>Team, Enterprise y <abbr title="API: Application Programming Interface: puerta para que un programa hable con otro">API</abbr><span class="gl"> (Application Programming Interface: puerta para que un programa hable con otro)</span>, excluidos</td></tr>
+    <tr><td><strong>Perplexity</strong></td><td>Retención activada por defecto, desactivable</td><td>Enterprise no entrena</td></tr>
+  </table></div>
+
+  <div class="box key">
+    <span class="lbl">Tres reglas prácticas</span>
+    <ol>
+      <li><strong>Documentación de cliente, periciales o datos personales:</strong> plan de empresa o
+      IA local. Nunca un plan personal.</li>
+      <li><strong>Normativa y material público:</strong> cualquier plan, con el entrenamiento desactivado.</li>
+      <li><strong>Revisa el ajuste cada cierto tiempo:</strong> las condiciones cambian y los
+      valores por defecto también.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ════════════ 7 ════════════ -->
+<section role="tabpanel" id="g7" hidden>
+  <h2>¿Comercial o propia? Casi siempre, las dos</h2>
+
+  <div class="tblwrap"><table>
+    <tr><th></th><th>Comercial</th><th>IA propia</th></tr>
+    <tr><td><strong>Arranque</strong></td><td>Inmediato</td><td>Una tarde para lo básico; semanas para un <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> serio</td></tr>
+    <tr><td><strong>Calidad bruta del modelo</strong></td><td>La mejor disponible</td><td>Menor, salvo con mucha memoria</td></tr>
+    <tr><td><strong>Tu normativa y tus plantillas</strong></td><td>Hasta donde permita subir documentos</td><td>Sin límite y con control de vigencia</td></tr>
+    <tr><td><strong>Confidencialidad</strong></td><td>Depende del plan</td><td>Total: nada sale del despacho</td></tr>
+    <tr><td><strong>Coste</strong></td><td>Cuota fija por usuario y mes</td><td>Inversión inicial + electricidad</td></tr>
+  </table></div>
+
+  <h3>Una cuenta orientativa</h3>
+  <p>Un único usuario con el complemento de Microsoft 365 Copilot en pago anual paga del orden de
+  <strong>190–220 € al año sin IVA</strong>. Una tarjeta de 16 GB de gama media cuesta hoy en torno a
+  <strong>800 €</strong> (solo la tarjeta) y permite modelos de hasta unos 24B en local. Para una sola
+  persona las cifras se parecen a varios años vista; lo que inclina la balanza <strong>no es el
+  precio</strong>, sino qué datos manejas y si necesitas tu propia normativa con vigencia.
+  <em>(Cálculo orientativo con los precios de esta guía; no incluye el equipo que aloja la tarjeta
+  ni la electricidad.)</em></p>
+
+  <div class="box tip">
+    <span class="lbl">El modelo que mejor funciona</span>
+    <p><strong>Comercial para lo público y lo general; propia para lo confidencial y lo tuyo.</strong>
+    Y una herramienta comercial de pago es, además, la mejor ayuda para construir la propia: es lo que
+    cuenta la Guía 6.</p>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Guía 2 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  profesional» · Colegio Oficial de Ingenieros de Telecomunicación.<br>
+  Precios y condiciones consultados el 14/09/2026 en las webs de los fabricantes y en referencias
+  de precios para España. Cambian con frecuencia: confírmalos antes de contratar.</p>
+  <p><a href="Glosario.html">¿Una sigla que no conoces? Consulta el glosario</a></p>
+</footer>
+
+</div>
+<script>
+  const tabs=[...document.querySelectorAll('nav.tabs button')];
+  const paneles=[...document.querySelectorAll('section[role=tabpanel]')];
+  tabs.forEach(b=>b.addEventListener('click',()=>{
+    tabs.forEach(x=>x.setAttribute('aria-selected', x===b?'true':'false'));
+    paneles.forEach(p=>p.hidden = (p.id!==b.dataset.p));
+    window.scrollTo({top:0,behavior:'smooth'});
+  }));
+</script>
+</body>
+</html>

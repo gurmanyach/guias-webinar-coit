@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guías IA para el libre ejercicio</title>
+<style>
+  :root{--bg:#fff;--ink:#1F2A37;--muted:#6B7785;--line:#D9E1EC;--accent:#2E6DA4;--amber:#B5650A;--card:#F3F6FB;--green:#2F7D4F;--green-bg:#E9F3EC;--amber-bg:#FBEEDC}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#12161C;--ink:#E6EBF2;--muted:#98A3B3;--line:#2A3340;--accent:#6FA8DC;--amber:#E0A458;--card:#1A212B;--green:#7BC49A;--green-bg:#16241C;--amber-bg:#2B2318}}
+  :root[data-theme="dark"]{--bg:#12161C;--ink:#E6EBF2;--muted:#98A3B3;--line:#2A3340;--accent:#6FA8DC;--amber:#E0A458;--card:#1A212B;--green:#7BC49A;--green-bg:#16241C;--amber-bg:#2B2318}
+  body{background:var(--bg);color:var(--ink);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;margin:0;padding:0 16px 60px}
+  .wrap{max-width:860px;margin:0 auto}
+  header{padding:36px 0 18px;border-bottom:1px solid var(--line);margin-bottom:26px}
+  .eyebrow{font:600 12.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin:0 0 10px}
+  h1{font-size:2rem;line-height:1.2;margin:0 0 10px;font-weight:650}
+  p.sub{color:var(--muted);margin:0;max-width:68ch}
+  ol{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+  li a,li div.pend{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;text-decoration:none;color:var(--ink)}
+  li a:hover{border-color:var(--accent)}
+  .n{font:700 12.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.1em;color:var(--accent)}
+  .t{display:block;font-size:1.15rem;font-weight:620;margin:6px 0 4px}
+  .d{font-size:14.5px;color:var(--muted)}
+  .st{float:right;font-size:11.5px;font-weight:700;border-radius:999px;padding:2px 9px}
+  .ok{background:var(--green-bg);color:var(--green)} .pe{background:var(--amber-bg);color:var(--amber)}
+  footer{margin-top:36px;color:var(--muted);font-size:13.5px}
+
+  a{color:var(--accent)}
+  a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <p class="eyebrow">Webinar COIT · Material para asistentes</p>
+  <h1>Inteligencia Artificial aplicada al libre ejercicio profesional</h1>
+  <p class="sub">Catorce guías con pestañas, pensadas para leer después de la sesión: de las
+  herramientas comerciales que puedes usar mañana a un sistema de IA propio completo, y de cómo se
+  organiza, aprende y trabaja un equipo de agentes. Se leen sin conexión: guárdalas y ábrelas cuando
+  quieras.</p>
+</header>
+<ol>
+  <li><a href="Glosario.html"><span class="st ok">consulta</span><span class="n">GLOSARIO</span>
+    <span class="t">Siglas y términos, explicados</span>
+    <span class="d">RAG, LLM, VRAM, MCP, cuantización, embedding… Todas las palabras del webinar sin tecnicismos.</span></a></li>
+  <li><a href="Guia_1_Tu_propia_IA_desde_cero.html"><span class="st ok">disponible</span><span class="n">GUÍA 1</span>
+    <span class="t">Tu propia IA, desde cero</span>
+    <span class="d">Por qué tener una IA propia, qué equipo hace falta, los modelos, cómo montarla y buenas prácticas.</span></a></li>
+  <li><a href="Guia_2_Herramientas_comerciales.html"><span class="st ok">disponible</span><span class="n">GUÍA 2</span>
+    <span class="t">Herramientas comerciales</span>
+    <span class="d">Gemini Notebook (antes NotebookLM), Gemini, Copilot, ChatGPT, Claude y Perplexity: qué hacen, cuánto cuestan, ejemplos y el límite con los datos de clientes.</span></a></li>
+  <li><a href="Guia_3_Lo_que_hemos_construido.html"><span class="st ok">disponible</span><span class="n">GUÍA 3</span>
+    <span class="t">Lo que hemos construido</span>
+    <span class="d">Un sistema real: modelos propios, ahorro de tokens, herramientas de ingeniería, imagen, voz y realidad virtual.</span></a></li>
+  <li><a href="Guia_4_El_RAG_tu_normativa_con_fuente.html"><span class="st ok">disponible</span><span class="n">GUÍA 4</span>
+    <span class="t">El RAG: tu normativa, respondida con fuente</span>
+    <span class="d">Qué es, cómo funciona, cómo evitar que invente, cómo se construye y cómo medir si funciona.</span></a></li>
+  <li><a href="Guia_5_El_despacho_automatizado.html"><span class="st ok">disponible</span><span class="n">GUÍA 5</span>
+    <span class="t">El despacho automatizado</span>
+    <span class="d">Correo, cuentas, Excel y VBA, cálculo, documentos y automatización de tareas.</span></a></li>
+  <li><a href="Guia_6_Construir_tu_IA_con_una_IA_comercial.html"><span class="st ok">disponible</span><span class="n">GUÍA 6</span>
+    <span class="t">Trabajar con una IA comercial para construir la tuya</span>
+    <span class="d">Cómo usar un asistente de pago para montar y mantener tu sistema, y cómo organizar varios agentes que se revisan entre sí.</span></a></li>
+  <li><a href="Guia_7_El_ecosistema_de_vecinos.html"><span class="st ok">disponible</span><span class="n">GUÍA 7</span>
+    <span class="t">El ecosistema de vecinos</span>
+    <span class="d">Qué agente vive en cada máquina, quién lidera, quién audita y quién verifica; el Patio, las reuniones, las salas, el laboratorio y los protocolos de arranque y cierre.</span></a></li>
+  <li><a href="Guia_8_Saber_y_aprender_de_verdad.html"><span class="st ok">disponible</span><span class="n">GUÍA 8</span>
+    <span class="t">Saber y aprender de verdad</span>
+    <span class="d">El problema de la memoria, la universidad de los vecinos, la biblioteca y por qué tener algo escrito no garantiza aplicarlo.</span></a></li>
+  <li><a href="Guia_9_El_metodo.html"><span class="st ok">disponible</span><span class="n">GUÍA 9</span>
+    <span class="t">El método</span>
+    <span class="d">Seis sombreros, catálogo de marcos, LEAR, ADPAI y las demás piezas que hacen fiable trabajar con una IA.</span></a></li>
+  <li><a href="Guia_10_La_caja_de_herramientas.html"><span class="st ok">disponible</span><span class="n">GUÍA 10</span>
+    <span class="t">La caja de herramientas</span>
+    <span class="d">Disco, SSH, SMB, Tailscale, scripts, VBA, Python, QGIS, MATLAB, SonArchitect y los conectores MCP y skills que organizan el trabajo.</span></a></li>
+  <li><a href="Guia_11_Catalogo_de_marcos.html"><span class="st ok">disponible</span><span class="n">GUÍA 11</span>
+    <span class="t">Catálogo de marcos</span>
+    <span class="d">47 marcos en 7 categorías para pensar, diagnosticar, priorizar, decidir y dirigir el razonamiento de una IA: cada uno con ficha, ejemplo real, anatomía, taller y evidencia.</span></a></li>
+  <li><a href="Guia_12_Formatos_y_representaciones.html"><span class="st ok">disponible</span><span class="n">GUÍA 12</span>
+    <span class="t">Formatos y representaciones</span>
+    <span class="d">Markdown, JSON, YAML, CSV, Mermaid, SVG, grafos, HTML y PDF: qué aporta cada uno, cómo se lo das a una IA y cómo se lo pides, con ejemplos copiables.</span></a></li>
+  <li><a href="Guia_13_Librerias_Python.html"><span class="st ok">disponible</span><span class="n">GUÍA 13</span>
+    <span class="t">Librerías de Python</span>
+    <span class="d">Qué es una librería, por qué chocan las versiones y cómo convivir con ellas (entorno virtual, contenedor, máquina virtual), y más de cien librerías por familias, desplegables.</span></a></li>
+  <li><a href="Guia_14_Enlaces_y_recursos.html"><span class="st ok">disponible</span><span class="n">GUÍA 14</span>
+    <span class="t">Enlaces y recursos</span>
+    <span class="d">Todo lo citado en el webinar, ordenado por tema: asistentes comerciales, modelos locales, RAG, automatización, GPU por horas, ingeniería y mapas, y por dónde empezar.</span></a></li>
+</ol>
+<footer>Colegio Oficial de Ingenieros de Telecomunicación · Material del ponente, septiembre de 2026.</footer>
+</div>
+</body>
+</html>

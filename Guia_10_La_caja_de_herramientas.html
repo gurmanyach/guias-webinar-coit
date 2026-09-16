@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía 10 · La caja de herramientas — Webinar COIT</title>
+<style>
+  :root{
+    --bg:#ffffff; --ink:#1F2A37; --muted:#6B7785; --line:#D9E1EC;
+    --accent:#2E6DA4; --navy:#1B3A6B; --amber:#B5650A; --amber-bg:#FBEEDC;
+    --green:#2F7D4F; --green-bg:#E9F3EC; --card:#F3F6FB;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+      --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+      --green:#7BC49A; --green-bg:#16241C;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+    --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+    --green:#7BC49A; --green-bg:#16241C;
+  }
+  body{background:var(--bg);color:var(--ink);
+    font:16px/1.65 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    margin:0;padding:0 16px 80px}
+  .wrap{max-width:900px;margin:0 auto}
+  header.top{padding:34px 0 10px;border-bottom:1px solid var(--line)}
+  .eyebrow{font:600 12.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--amber);margin:0 0 10px}
+  h1{font-size:2.05rem;line-height:1.2;margin:0 0 10px;font-weight:650;letter-spacing:-.02em}
+  .sub{color:var(--muted);margin:0 0 18px;max-width:70ch}
+  nav.tabs{position:sticky;top:0;z-index:20;background:var(--bg);
+    border-bottom:1px solid var(--line);margin:0 0 30px;display:flex;gap:2px;
+    overflow-x:auto;padding-top:10px}
+  nav.tabs button{flex:0 0 auto;background:none;border:0;border-bottom:3px solid transparent;
+    padding:12px 15px;font:600 13.5px/1 ui-sans-serif,system-ui,sans-serif;color:var(--muted);
+    cursor:pointer;white-space:nowrap}
+  nav.tabs button:hover{color:var(--ink)}
+  nav.tabs button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+  section[role=tabpanel]{animation:fade .18s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+  h2{font-size:1.6rem;margin:34px 0 8px;font-weight:620;letter-spacing:-.01em}
+  h2:first-child{margin-top:0}
+  h3{font-size:1.14rem;margin:28px 0 8px;font-weight:620}
+  p{margin:0 0 14px;max-width:78ch}
+  ul,ol{max-width:78ch;padding-left:22px;margin:0 0 14px} li{margin-bottom:7px}
+  code{font:13.5px/1.5 ui-monospace,Menlo,Consolas,monospace;background:var(--card);
+    padding:2px 6px;border-radius:4px;border:1px solid var(--line)}
+  .tblwrap{overflow-x:auto;margin:0 0 18px}
+  table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+  th{background:var(--navy);color:#fff;text-align:left;padding:9px 11px;font-weight:600}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) th{color:#12161C}}
+  :root[data-theme="dark"] th{color:#12161C}
+  td{border-bottom:1px solid var(--line);padding:9px 11px;vertical-align:top}
+  .box{border-radius:10px;padding:16px 18px;margin:0 0 18px;border:1px solid var(--line)}
+  .box p:last-child{margin-bottom:0}
+  .tip{background:var(--green-bg);border-color:transparent}
+  .warn{background:var(--amber-bg);border-color:transparent}
+  .key{background:var(--card)}
+  .lbl{font:600 11.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.1em;
+    text-transform:uppercase;display:block;margin-bottom:8px}
+  .tip .lbl{color:var(--green)} .warn .lbl{color:var(--amber)} .key .lbl{color:var(--accent)}
+  .flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:0 0 18px}
+  .flow div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
+  .flow b{display:block;color:var(--accent);font-size:13px;margin-bottom:4px}
+  .flow span{font-size:14px}
+  footer{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13.5px}
+  .pill{display:inline-block;background:var(--card);border:1px solid var(--line);
+    border-radius:999px;padding:2px 10px;font-size:12.5px;color:var(--muted);margin-right:6px}
+  abbr[title]{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}
+  .gl{color:var(--muted);font-size:.86em}
+
+  .home{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;
+    border:0;border-radius:10px;padding:11px 20px;margin:18px 0 0;
+    font:700 15px/1 ui-sans-serif,system-ui,sans-serif;text-decoration:none;
+    box-shadow:0 1px 2px rgba(0,0,0,.12)}
+  .home:hover{filter:brightness(1.08)}
+  .home svg{flex:0 0 auto}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .home{color:#12161C}}
+  :root[data-theme="dark"] .home{color:#12161C}
+
+  a{color:var(--accent)}
+  a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="home" href="index.html"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M6 10.5V20h5v-5h2v5h5v-9.5"/></svg><span>Índice de guías</span></a>
+
+
+<header class="top">
+  <p class="eyebrow">Webinar COIT · Guía 10 de 14</p>
+  <h1>La caja de herramientas</h1>
+  <p class="sub">Un asistente de IA no hace nada útil si no puede tocar tus sistemas: leer tus
+  ficheros, conectarse a tus máquinas, lanzar tus programas de ingeniería. Esta guía repasa cómo
+  trabajan nuestros agentes sobre el disco, por <abbr title="SSH: Secure Shell: conexión cifrada para manejar otra máquina">SSH</abbr><span class="gl"> (Secure Shell: conexión cifrada para manejar otra máquina)</span> y por red, con qué conectores y habilidades, y
+  qué software de ingeniería controlan —siempre con la persona decidiendo.</p>
+  <p><span class="pill">Nivel: técnico</span><span class="pill">Lectura: ~35 min</span>
+  <span class="pill">Herramientas en uso, septiembre de 2026</span></p>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" data-p="h1">1 · Trabajar en el disco</button>
+  <button role="tab" aria-selected="false" data-p="h2">2 · Conectar máquinas</button>
+  <button role="tab" aria-selected="false" data-p="h3">3 · Rosa: manos con cuidado</button>
+  <button role="tab" aria-selected="false" data-p="h4">4 · Conectores MCP</button>
+  <button role="tab" aria-selected="false" data-p="h5">5 · Skills, agentes y hooks</button>
+  <button role="tab" aria-selected="false" data-p="h6">6 · Software de ingeniería</button>
+  <button role="tab" aria-selected="false" data-p="h7">7 · Pautas de seguridad</button>
+</nav>
+
+<!-- ════════════ 1 ════════════ -->
+<section role="tabpanel" id="h1">
+  <h2>Trabajar sobre el disco</h2>
+
+  <p>Todo empieza por algo muy poco espectacular: <strong>una estructura de carpetas ordenada</strong>.
+  Un agente que encuentra cada cosa en su sitio trabaja mejor y comete menos errores.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Convención</th><th>Para qué sirve</th></tr>
+    <tr><td><strong>Carpetas numeradas</strong> (00 estado, 04 vuelta atrás, 06 auditoría, 08 scripts, 09 proyectos…)</td><td>Orden estable que el agente aprende una vez y reutiliza siempre</td></tr>
+    <tr><td><strong>Fecha ISO en los nombres</strong> (AAAA-MM-DD)</td><td>Se ordenan solos y se sabe cuál es el vigente</td></tr>
+    <tr><td><strong>Registros que solo crecen</strong></td><td>Historial fiable: nunca se reescribe el pasado</td></tr>
+    <tr><td><strong>Carpeta de vuelta atrás</strong></td><td>Copia verificada antes de cualquier cambio crítico</td></tr>
+    <tr><td><strong>Panel de pendientes</strong></td><td>Un fichero visible con lo que está en marcha, lo que espera a la persona y lo hecho, con copia antes de cada reescritura</td></tr>
+    <tr><td><strong>Repositorio de recetas</strong></td><td>Cómo se instaló cada servicio y modelo, sin contraseñas. Si hay que reinstalar, está escrito</td></tr>
+    <tr><td><strong>Espejo</strong></td><td>La documentación y los scripts se copian al servidor para que los agentes de allí también los tengan</td></tr>
+  </table></div>
+
+  <div class="box tip">
+    <span class="lbl">El fichero de instrucciones del proyecto</span>
+    <p>En la raíz de cada proyecto hay un fichero que el asistente <strong>lee al arrancar</strong>: qué
+    máquinas hay, qué reglas se siguen, dónde está cada cosa. Es la pieza que más rinde de toda la caja.</p>
+  </div>
+</section>
+
+<!-- ════════════ 2 ════════════ -->
+<section role="tabpanel" id="h2" hidden>
+  <h2>Conectar las máquinas</h2>
+
+  <div class="tblwrap"><table>
+    <tr><th>Vía</th><th>Qué permite</th><th>Cómo lo usamos</th></tr>
+    <tr><td><strong><abbr title="SSH: Secure Shell: conexión cifrada para manejar otra máquina">SSH</abbr></strong></td><td>Ejecutar órdenes en otra máquina de forma segura</td><td>Desde el PC al servidor Linux, al Mac y a las máquinas virtuales, siempre con <strong>clave</strong>, nunca con contraseña. Cada destino tiene un alias corto</td></tr>
+    <tr><td><strong><abbr title="SMB: Server Message Block: carpetas compartidas en red">SMB</abbr></strong> (carpetas compartidas)</td><td>Ver los discos de otra máquina como unidades locales</td><td>Proyectos, almacenamiento y modelos del servidor; el Patio de Vecinos vive en una carpeta compartida del Mac. Entre el PC y el servidor hay además un enlace directo de 25 Gb/s</td></tr>
+    <tr><td><strong><abbr title="WSL: Windows Subsystem for Linux: Linux dentro de Windows">WSL</abbr></strong></td><td>Un Linux dentro de Windows, con acceso a la <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr><span class="gl"> (Graphics Processing Unit, tarjeta gráfica)</span></td><td>Herramientas Linux sin salir del PC</td></tr>
+    <tr><td><strong>Tailscale</strong></td><td>Red privada cifrada entre tus dispositivos, estés donde estés</td><td>Acceso seguro desde fuera de la oficina sin abrir puertos en el router</td></tr>
+    <tr><td><strong>Escritorio remoto</strong></td><td>Ver y usar la pantalla de otra máquina</td><td>Para lo que necesita interfaz gráfica</td></tr>
+  </table></div>
+
+  <div class="box warn">
+    <span class="lbl">Un detalle de Windows que cuesta horas</span>
+    <p>Las unidades de red mapeadas por un usuario normal <strong>no las ve</strong> un proceso que se
+    ejecuta con permisos de administrador, y viceversa. Si una herramienta «no encuentra» una unidad que
+    tú ves, empieza por ahí.</p>
+  </div>
+
+  <div class="box key">
+    <span class="lbl">Credenciales: el agente no las ve</span>
+    <p>Las contraseñas viven en un <strong>gestor de contraseñas</strong>. Cuando hay que teclear una en
+    el momento, se abre un <strong>diálogo nativo del sistema operativo</strong> donde la escribe la
+    persona: no pasa por el chat, ni por el historial, ni por los registros, y queda cifrada.</p>
+  </div>
+</section>
+
+<!-- ════════════ 3 ════════════ -->
+<section role="tabpanel" id="h3" hidden>
+  <h2>Rosa: darle manos al asistente, con cuidado</h2>
+
+  <p><strong>Rosa</strong> es un conjunto de cuatro conectores que permiten a Claude actuar sobre las
+  máquinas. Lo importante no es que pueda hacerlo, sino <strong>cómo se protege</strong> al hacerlo.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Conector</th><th>Qué hace</th><th>Protecciones</th></tr>
+    <tr><td><strong>Rosa <abbr title="SSH: Secure Shell: conexión cifrada para manejar otra máquina">SSH</abbr></strong></td><td>Ejecuta órdenes en servidores Linux remotos, transfiere ficheros, abre túneles, gestiona tareas largas en segundo plano y varias máquinas a la vez</td><td><strong>Analiza el riesgo de cada orden</strong> antes de ejecutarla; copias y vuelta atrás; credenciales por diálogo nativo</td></tr>
+    <tr><td><strong>PowerShell Executor</strong></td><td>Opera sobre el Windows local: órdenes, ficheros, tareas en segundo plano, consolas interactivas</td><td>Validación de órdenes, puntos de restauración, elevación de permisos explícita y registro de auditoría</td></tr>
+    <tr><td><strong>Rosita <abbr title="WSL: Windows Subsystem for Linux: Linux dentro de Windows">WSL</abbr></strong></td><td>Ejecuta en el Linux local de Windows, sin <abbr title="SSH: Secure Shell: conexión cifrada para manejar otra máquina">SSH</abbr></td><td>La contraseña de administrador se inyecta de forma segura, nunca escrita en la orden</td></tr>
+    <tr><td><strong>Context Keeper</strong></td><td>Audita y ordena la configuración de los propios asistentes: habilidades, memorias, perfiles</td><td>Copia integral antes de tocar; nada destructivo sin ensayo en seco; cada cambio se decide de forma supervisada</td></tr>
+  </table></div>
+
+  <div class="box tip">
+    <span class="lbl">Software libre controlable por <abbr title="SSH: Secure Shell: conexión cifrada para manejar otra máquina">SSH</abbr></span>
+    <p>La combinación que más rinde: <strong>programas libres en un servidor Linux</strong> (modelos,
+    cálculo, bases de datos, <abbr title="SIG: Sistema de Información Geográfica">SIG</abbr><span class="gl"> (Sistema de Información Geográfica)</span>) <strong>manejados por <abbr title="SSH: Secure Shell: conexión cifrada para manejar otra máquina">SSH</abbr></strong> desde el asistente. Todo se puede
+    ejecutar sin interfaz, dejar trazas y repetir.</p>
+  </div>
+</section>
+
+<!-- ════════════ 4 ════════════ -->
+<section role="tabpanel" id="h4" hidden>
+  <h2>Conectores <abbr title="MCP: Model Context Protocol: conecta el asistente con herramientas">MCP</abbr>: el asistente con acceso a tus sistemas</h2>
+
+  <p><strong><abbr title="MCP: Model Context Protocol: conecta el asistente con herramientas">MCP</abbr></strong> (<em>Model Context Protocol</em>) es el estándar para darle a un asistente
+  herramientas concretas. Cada conector es un pequeño programa que expone unas pocas funciones con
+  permisos acotados.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Conector</th><th>Qué le permite al asistente</th></tr>
+    <tr><td><strong><abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr> normativo y servicios de IA</strong></td><td>Consultar la normativa con vigencia antes de afirmar una cifra; arrancar, parar y recomendar servicios de IA del servidor</td></tr>
+    <tr><td><strong>Grafo de conocimiento del equipo</strong></td><td>Registrar y consultar hechos estructurados: qué máquina hace qué, qué decisión depende de qué</td></tr>
+    <tr><td><strong>Selector de herramientas</strong></td><td>Elegir qué librería o programa usar <strong>antes</strong> de escribir código (cientos de entradas catalogadas)</td></tr>
+    <tr><td><strong>Búsqueda web propia</strong></td><td>Buscar e investigar en internet leyendo las páginas con un modelo local (Guía 3)</td></tr>
+    <tr><td><strong>Memoria de sesión</strong></td><td>Indexar conversaciones y recuperar lo decidido en sesiones anteriores</td></tr>
+    <tr><td><strong>Protocolo de sesión</strong></td><td>Leer el Patio, publicar en él y generar el texto de arranque</td></tr>
+    <tr><td><strong>PDF</strong></td><td>Leer, renderizar, rellenar formularios, firmar, unir y extraer tablas</td></tr>
+    <tr><td><strong>QGIS</strong> y <strong>CAD</strong></td><td>Manejar un proyecto de QGIS en vivo; leer y generar dibujos <abbr title="DXF · DWG: formatos de dibujo técnico CAD">DXF</abbr><span class="gl"> (formatos de dibujo técnico CAD)</span></td></tr>
+    <tr><td><strong>Auditoría de equipos</strong></td><td>Salud de discos, procesos sospechosos, integridad de ficheros</td></tr>
+  </table></div>
+
+  <div class="box warn">
+    <span class="lbl">Un conector también puede fallar</span>
+    <p>Si un conector no conecta, el asistente debe decirlo y no suponer que la herramienta no existe
+    ni inventarse el resultado. Pide que te avise siempre de qué conectores tiene disponibles.</p>
+  </div>
+</section>
+
+<!-- ════════════ 5 ════════════ -->
+<section role="tabpanel" id="h5" hidden>
+  <h2>Skills, agentes y hooks: organizar el flujo de trabajo</h2>
+
+  <h3>Skills (habilidades)</h3>
+  <p>Una <strong>skill</strong> es un procedimiento escrito que el asistente carga cuando la tarea lo
+  requiere: cómo hacer un informe de jornada, cómo consultar la normativa, cómo manejar un instrumento.
+  Tenemos cerca de un centenar, agrupadas así:</p>
+  <div class="tblwrap"><table>
+    <tr><th>Grupo</th><th>Ejemplos</th></tr>
+    <tr><td>Infraestructura</td><td><abbr title="Docker: empaqueta programas para que funcionen igual en cualquier máquina">Docker</abbr><span class="gl"> (empaqueta programas para que funcionen igual en cualquier máquina)</span> y modelos locales, entornos de Python, conectores Rosa, credenciales</td></tr>
+    <tr><td>Coordinación</td><td>Patio de Vecinos, protocolo de sesión, informe de jornada, memoria</td></tr>
+    <tr><td>Acústica y normativa</td><td>Normativa acústica, <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr><span class="gl"> (Retrieval-Augmented Generation: busca en tus documentos y responde citándolos)</span> normativo, medida in situ, sistema de calidad</td></tr>
+    <tr><td>Telecomunicación</td><td>Modo <abbr title="ICT: Infraestructura Común de Telecomunicaciones (RD 346/2011)">ICT</abbr><span class="gl"> (Infraestructura Común de Telecomunicaciones (RD 346/2011))</span>, normativa <abbr title="ICT: Infraestructura Común de Telecomunicaciones (RD 346/2011)">ICT</abbr>, herramientas <abbr title="ICT: Infraestructura Común de Telecomunicaciones (RD 346/2011)">ICT</abbr></td></tr>
+    <tr><td>Programación y datos</td><td>Selección de herramientas, Python y <abbr title="VBA: Visual Basic for Applications, macros de Office">VBA</abbr><span class="gl"> (Visual Basic for Applications, macros de Office)</span>, calidad de código, análisis de datos</td></tr>
+    <tr><td>MATLAB y Simulink</td><td>Una veintena del propio fabricante</td></tr>
+    <tr><td>Documentos, multimedia, <abbr title="SIG: Sistema de Información Geográfica">SIG</abbr> y 3D</td><td>Informes, audio y vídeo, mapas, escaneo 3D</td></tr>
+    <tr><td>Recuperación forense</td><td>Diagnóstico, clonado y recuperación de ficheros</td></tr>
+  </table></div>
+
+  <h3>Agentes especializados</h3>
+  <p>Subagentes que el asistente principal lanza para una tarea concreta: <strong>adversarios</strong>
+  que intentan refutar, <strong>auditores</strong> que dan el sí o el no final, redactores y
+  verificadores del <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr>, constructores de módulos de cálculo o de interfaces, investigadores.</p>
+
+  <h3>Hooks: lo que ocurre sin que nadie se acuerde</h3>
+  <div class="tblwrap"><table>
+    <tr><th>Momento</th><th>Qué hace</th></tr>
+    <tr><td>Al empezar la sesión</td><td>Recupera el contexto y carga las normas del Patio</td></tr>
+    <tr><td>En cada mensaje</td><td>Recupera recuerdos relevantes</td></tr>
+    <tr><td>Antes de compactar</td><td>Indexa la conversación</td></tr>
+    <tr><td>Antes de ejecutar Python</td><td>«El Calculista» avisa si se va a usar el entorno equivocado para una librería. Solo avisa, nunca bloquea</td></tr>
+  </table></div>
+</section>
+
+<!-- ════════════ 6 ════════════ -->
+<section role="tabpanel" id="h6" hidden>
+  <h2>Software de ingeniería controlado por agentes</h2>
+
+  <div class="tblwrap"><table>
+    <tr><th>Software</th><th>Para qué</th><th>Cómo lo controla el agente</th></tr>
+    <tr><td><strong>Excel, Word y <abbr title="VBA: Visual Basic for Applications, macros de Office">VBA</abbr></strong></td><td>Plantillas de medida, informes, macros</td><td>Automatización de Office (COM) desde Python. Ojo: que una macro se ejecute no garantiza que el proyecto <abbr title="VBA: Visual Basic for Applications, macros de Office">VBA</abbr> entero compile</td></tr>
+    <tr><td><strong>Librerías Python</strong></td><td>Cálculo de aislamiento, acústica de salas, señal, datos</td><td>Scripts en el servidor, lanzados por <abbr title="SSH: Secure Shell: conexión cifrada para manejar otra máquina">SSH</abbr>. Regla: <strong>no predecir sin calcular</strong></td></tr>
+    <tr><td><strong>NoiseModelling + PostGIS</strong></td><td>Mapas de ruido exterior con el método europeo <abbr title="CNOSSOS-EU: método europeo de cálculo de ruido ambiental">CNOSSOS-EU</abbr><span class="gl"> (método europeo de cálculo de ruido ambiental)</span>: del catastro a los niveles día, tarde, noche</td><td>Una cadena de procesos en el servidor, por <abbr title="SSH: Secure Shell: conexión cifrada para manejar otra máquina">SSH</abbr>, con base de datos geográfica en contenedor</td></tr>
+    <tr><td><strong>QGIS</strong></td><td>Digitalizar, visualizar y procesar datos geográficos</td><td>Conector <abbr title="MCP: Model Context Protocol: conecta el asistente con herramientas">MCP</abbr><span class="gl"> (Model Context Protocol: conecta el asistente con herramientas)</span> en vivo, Python de QGIS y procesos sin interfaz</td></tr>
+    <tr><td><strong>MATLAB / Octave</strong></td><td>Validación cruzada, simulación, código heredado</td><td>MATLAB en Windows; Octave en el servidor para ejecuciones por lotes sin interfaz</td></tr>
+    <tr><td><strong>INSUL, SonArchitect y CATT-Acoustic</strong></td><td>Predicción de aislamiento de particiones, modelo de edificio según ISO 12354, acústica de salas</td><td>El agente <strong>genera los ficheros de entrada</strong> por script a partir del catálogo de materiales, y el ingeniero <strong>valida en la interfaz</strong> del programa antes de entregar. Nunca se inventan parámetros de materiales</td></tr>
+    <tr><td><strong><abbr title="Docker: empaqueta programas para que funcionen igual en cualquier máquina">Docker</abbr></strong></td><td>Servicios empaquetados: interfaz de chat, buscador, avisos, gestión documental…</td><td>Por <abbr title="SSH: Secure Shell: conexión cifrada para manejar otra máquina">SSH</abbr> y conector; un contenedor cada vez, verificando que arranca</td></tr>
+    <tr><td><strong><abbr title="Ollama: programa gratuito para ejecutar modelos en tu equipo">Ollama</abbr> y ComfyUI</strong></td><td>Modelos de lenguaje locales; generación de imagen</td><td>Por <abbr title="SSH: Secure Shell: conexión cifrada para manejar otra máquina">SSH</abbr> y <abbr title="API: Application Programming Interface: puerta para que un programa hable con otro">API</abbr><span class="gl"> (Application Programming Interface: puerta para que un programa hable con otro)</span>, comprobando antes la memoria de vídeo libre</td></tr>
+  </table></div>
+
+  <div class="box key">
+    <span class="lbl">El reparto que funciona</span>
+    <p>El agente <strong>prepara</strong> (genera ficheros, lanza cálculos, compara resultados); el programa
+    de ingeniería <strong>calcula</strong>; el ingeniero <strong>valida y firma</strong>. Ninguno de los
+    tres se salta.</p>
+  </div>
+</section>
+
+<!-- ════════════ 7 ════════════ -->
+<section role="tabpanel" id="h7" hidden>
+  <h2>Pautas de seguridad</h2>
+
+  <ol>
+    <li><strong>Contraseñas fuera del chat</strong>: gestor de contraseñas y diálogo nativo.</li>
+    <li><strong><abbr title="SSH: Secure Shell: conexión cifrada para manejar otra máquina">SSH</abbr> con clave</strong>, no con contraseña; y servicios accesibles solo desde tu red local o
+    tu red privada, sin puertos abiertos a internet.</li>
+    <li><strong>Copia antes de tocar</strong> y vuelta atrás definida.</li>
+    <li><strong>Ensayo en seco</strong> de todo lo que borra o modifica.</li>
+    <li><strong>Foto del estado antes y después</strong> de instalar: una instalación puede cambiar en
+    silencio la versión de otra librería.</li>
+    <li><strong>Permisos mínimos</strong>: cada conector, solo lo que necesita. Configura qué puede
+    ejecutar el asistente sin preguntar y qué no.</li>
+    <li><strong>Nada corriendo con la sesión cerrada</strong> si no es imprescindible.</li>
+    <li><strong>Registro de lo que se hizo</strong>, con fecha y hora reales.</li>
+    <li><strong>Datos de cliente, en local.</strong> Y cuidado con lo que se proyecta o se comparte: una
+    plantilla real puede llevar datos personales.</li>
+  </ol>
+
+  <div class="box tip">
+    <span class="lbl">Para empezar esta semana</span>
+    <p>Ordena tus carpetas, escribe el fichero de instrucciones, configura <abbr title="SSH: Secure Shell: conexión cifrada para manejar otra máquina">SSH</abbr> con clave hacia tu
+    máquina con <abbr title="GPU: Graphics Processing Unit, tarjeta gráfica">GPU</abbr> y conecta un solo conector. Con eso tu asistente ya puede trabajar sobre tus
+    sistemas de verdad —y tú sigues decidiendo.</p>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Guía 10 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  profesional» · Colegio Oficial de Ingenieros de Telecomunicación.<br>
+  Herramientas descritas a 14/09/2026.</p>
+  <p><a href="Glosario.html">¿Una sigla que no conoces? Consulta el glosario</a></p>
+</footer>
+
+</div>
+<script>
+  const tabs=[...document.querySelectorAll('nav.tabs button')];
+  const paneles=[...document.querySelectorAll('section[role=tabpanel]')];
+  tabs.forEach(b=>b.addEventListener('click',()=>{
+    tabs.forEach(x=>x.setAttribute('aria-selected', x===b?'true':'false'));
+    paneles.forEach(p=>p.hidden = (p.id!==b.dataset.p));
+    window.scrollTo({top:0,behavior:'smooth'});
+  }));
+</script>
+</body>
+</html>
