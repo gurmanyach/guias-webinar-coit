@@ -1,5 +1,11 @@
 # Sitio web de las guías (para GitHub Pages)
 
+**PUBLICADO el 16/09/2026 10:4x en https://gurmanyach.github.io/guias-webinar-coit/**
+Repositorio `gurmanyach/guias-webinar-coit`, rama `main`. Comprobado al publicar: la dirección
+responde, la portada enlaza las 15 páginas y la Guía 13 se sirve completa. El QR de las
+transparencias y del folleto apunta ahí (decodificado para comprobarlo, no supuesto).
+Republicar tras cambios: copiar de `01_ENTREGABLES/GUIAS/` y `git add . && git commit && git push`.
+
 Carpeta lista para publicar tal cual. **Origen: `01_ENTREGABLES/GUIAS/`** — aquí solo hay copias; si algo
 cambia, se edita allí y se vuelve a copiar (`Copy-Item ..\01_ENTREGABLES\GUIAS\*.html .`).
 
