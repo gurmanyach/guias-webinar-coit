@@ -134,7 +134,7 @@
 
 
 <header class="top">
-  <p class="eyebrow">Webinar COIT · Guía 8 de 14</p>
+  <p class="eyebrow">Webinar COIT · Guía 8 de 15</p>
   <h1>Saber y aprender de verdad</h1>
   <p class="sub">Un asistente de IA no recuerda la conversación de ayer. Todo lo que «sabe» de tu
   sistema tiene que estar escrito en algún sitio y volver a leerse. Y aun así, tenerlo escrito no
@@ -154,6 +154,8 @@
   <button role="tab" aria-selected="false" data-p="m8">6b · Dos formas de saber</button>
   <button role="tab" aria-selected="false" data-p="m7">7 · Para tu despacho</button>
   <button role="tab" aria-selected="false" data-p="m9">8 · Formas de representar</button>
+  
+  <button role="tab" aria-selected="false" data-p="m10">9 · Los dos conocimientos</button><!-- /dosconocimientos-boton -->
 </nav>
 
 <!-- ════════════ 1 ════════════ -->
@@ -723,11 +725,111 @@
   </div>
 </section>
 
+
+
+<!-- dosconocimientos -->
+<section role="tabpanel" id="m10" hidden>
+  <h2>Los dos conocimientos</h2>
+  <p class="sub">Esta es, probablemente, la distinción más útil de toda la guía, y la que explica por
+  qué una IA que parece brillante te falla justo en tu especialidad. Hay dos formas de que una
+  máquina «sepa» algo, y no se comportan igual.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th></th><th>Conocimiento paramétrico</th><th>Conocimiento determinista</th></tr>
+    <tr><td><strong>Qué es</strong></td>
+        <td>Lo que quedó grabado en los pesos del modelo al entrenarlo. Lo aplica <em>de memoria</em></td>
+        <td>Lo que está escrito en un documento y el sistema va a buscar antes de responder. También se le llama <em>recuperado</em></td></tr>
+    <tr><td><strong>Cómo se nota</strong></td>
+        <td>Fluidez: responde sin pensar, sin citar, sin buscar</td>
+        <td>Precisión: responde citando el párrafo exacto, y puedes comprobarlo</td></tr>
+    <tr><td><strong>Cómo se cambia</strong></td>
+        <td>Reentrenando. Caro, lento y no siempre funciona</td>
+        <td>Editando un fichero. Inmediato</td></tr>
+    <tr><td><strong>Cuando no sabe</strong></td>
+        <td><strong>Inventa con seguridad total</strong></td>
+        <td>Dice que no está en sus fuentes</td></tr>
+    <tr><td><strong>En la práctica</strong></td>
+        <td>El lenguaje, el oficio, el vocabulario, «cómo se hacen las cosas»</td>
+        <td>Tu normativa, tus proyectos, los umbrales, las fechas, los números</td></tr>
+  </table></div>
+
+  <div class="box key"><span class="lbl">La analogía que lo fija</span>
+  <p>Es la diferencia entre <strong>lo que un ingeniero sabe de memoria</strong> —cómo se estructura
+  una memoria técnica, qué preguntar en una visita, qué huele mal en un pliego— y <strong>lo que va a
+  mirar al reglamento</strong> antes de poner una cifra. Nadie se aprende de memoria las tablas del
+  CTE. Y nadie consulta el manual para saber cómo se redacta un párrafo.</p></div>
+
+  <h3>El problema que tenemos, con nuestras propias cifras</h3>
+  <p>La pregunta natural es: <em>si el conocimiento recuperado obliga a ir a buscar, ¿por qué no
+  metemos nuestra documentación dentro del modelo y ya está?</em> Lo intentamos. Estos son los
+  resultados reales, no una estimación:</p>
+  <div class="tblwrap"><table>
+    <tr><th>La prueba</th><th>Resultado</th></tr>
+    <tr><td>Preguntas <strong>con el documento delante</strong></td><td><strong>85,2 %</strong> de acierto</td></tr>
+    <tr><td>Las mismas preguntas <strong>sin el documento</strong>, de memoria</td><td><strong>3,1 %</strong></td></tr>
+  </table></div>
+  <p>Y el detalle que de verdad importa: en ese 97 % restante <strong>el modelo no decía «no lo
+  sé»</strong>. Daba explicaciones plausibles, bien redactadas y falsas, con total aplomo. Ese es el
+  fallo peligroso, porque parece una respuesta buena.</p>
+
+  <div class="box warn"><span class="lbl">Por qué no fue mala suerte</span>
+  <ul>
+    <li><strong>Un hecho necesita del orden de mil exposiciones</strong> para fijarse de forma estable
+    en los pesos de un modelo. Nuestro experimento usó ciento seis ejemplos, vistos una vez: dos o
+    tres órdenes de magnitud por debajo.</li>
+    <li><strong>El método barato aprende menos por diseño.</strong> Los adaptadores ligeros —la forma
+    asequible de afinar un modelo— son buenos para el estilo y malos para los hechos nuevos, y está
+    medido en estudios controlados.</li>
+    <li><strong>La curva real es brutal.</strong> En un caso público de preparación de un examen de
+    abogacía: 11 % el modelo base, 38 % con cinco mil preguntas de entrenamiento, 65 % con setenta
+    mil. Nosotros estábamos en el orden del centenar.</li>
+    <li><strong>Y aprender hechos nuevos aumenta la invención</strong> en temas no relacionados: se
+    gana en un sitio y se pierde en otro.</li>
+  </ul></div>
+
+  <h3>Las soluciones, ordenadas por sensatez</h3>
+  <div class="tblwrap"><table>
+    <tr><th>Solución</th><th>Para qué sirve de verdad</th><th>Qué cuesta</th></tr>
+    <tr><td><strong>Dejar los datos fuera del modelo</strong><br><span class="gl">buscador propio sobre tus documentos</span></td>
+        <td>Todo lo que sea cifra, umbral, fecha o referencia. Se actualiza editando un fichero, y la respuesta se puede comprobar</td>
+        <td>Bajo. Es lo primero que hay que montar</td></tr>
+    <tr><td><strong>Reglas fijas de comprobación</strong><br><span class="gl">antes de responder</span></td>
+        <td>Que el sistema mire si la norma sigue vigente y si el texto es de verdad lo que dice ser. No hace falta IA para esto: es una regla</td>
+        <td>Bajo, y es lo que más fallo evita</td></tr>
+    <tr><td><strong>Afinar el modelo</strong><br><span class="gl">para el oficio, no para los datos</span></td>
+        <td>Vocabulario, tono, formato de tus informes, cómo se comporta. Aquí sí funciona</td>
+        <td>Medio. Y no esperes que memorice tu normativa</td></tr>
+    <tr><td><strong>Meter el dominio entero en los pesos</strong></td>
+        <td>La fantasía de la IA que lo sabe todo sin consultar nada</td>
+        <td>Muy alto y, con equipo de despacho, <strong>no alcanzable</strong>. Nosotros lo medimos y lo descartamos</td></tr>
+  </table></div>
+
+  <div class="box tip"><span class="lbl">La arquitectura que funciona, y es la que usamos</span>
+  <p><strong>Las dos cosas a la vez, cada una en lo suyo:</strong> el conocimiento determinista
+  —documentos, buscador, citas y reglas de comprobación— sostiene <em>los datos</em>, que es donde
+  una equivocación te cuesta un proyecto; y el conocimiento paramétrico del modelo aporta
+  <em>la fluidez</em>: entender la pregunta, redactar bien, saber cómo se hace un informe.</p>
+  <p>Dicho de otro modo: <strong>no le pidas al modelo que recuerde; pídele que razone sobre lo que
+  le pones delante.</strong> Y ten muy presente que, si no se lo pones, no se callará.</p></div>
+
+  <div class="box key"><span class="lbl">Lo que te llevas para tu despacho</span>
+  <ul>
+    <li>Si una respuesta contiene <strong>una cifra o una referencia y no viene con su fuente</strong>,
+    trátala como un borrador de alguien que no ha mirado el reglamento.</li>
+    <li><strong>Invierte primero en tus documentos</strong>, no en un modelo más grande: el mismo
+    modelo con buenas fuentes rinde muchísimo más que uno mejor a ciegas.</li>
+    <li>La pregunta correcta ante cualquier herramienta de IA no es «¿cuánto sabe?», sino
+    <strong>«¿de dónde saca lo que me está diciendo?»</strong>.</li>
+  </ul></div>
+</section>
+<!-- /dosconocimientos -->
+
 <footer>
-  <p><strong>Guía 8 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  <p><strong>Guía 8 de 15</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
   profesional» · Colegio Oficial de Ingenieros de Telecomunicación.<br>
   Cifras de la biblioteca y del expediente consultadas el 14/09/2026.</p>
   <p><a href="Glosario.html">¿Una sigla que no conoces? Consulta el glosario</a></p>
+
 
 
 

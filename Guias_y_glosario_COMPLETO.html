@@ -1447,6 +1447,94 @@
   footer{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13.5px}
   .pill{display:inline-block;background:var(--card);border:1px solid var(--line);
     border-radius:999px;padding:2px 10px;font-size:12.5px;color:var(--muted);margin-right:6px}
+  abbr[title]{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}
+  .gl{color:var(--muted);font-size:.86em}
+  a{color:var(--accent)}
+  td a{word-break:break-word}
+
+  .home{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;
+    border:0;border-radius:10px;padding:11px 20px;margin:18px 0 0;
+    font:700 15px/1 ui-sans-serif,system-ui,sans-serif;text-decoration:none;
+    box-shadow:0 1px 2px rgba(0,0,0,.12)}
+  .home:hover{filter:brightness(1.08)}
+  .home svg{flex:0 0 auto}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .home{color:#12161C}}
+  :root[data-theme="dark"] .home{color:#12161C}
+
+  .autoria{border-top:1px solid var(--line);margin-top:18px;padding-top:14px;font-size:14px;line-height:1.55}
+  .autoria .nom{font-weight:700;color:var(--ink)}
+  .autoria .det{color:var(--muted)}
+
+  .cod{background:#0f1720;color:#e6edf3;border-radius:9px;padding:14px 16px;overflow-x:auto;
+    font:12.5px/1.55 ui-monospace,Consolas,monospace;margin:0 0 16px}
+  .cod code{background:none;border:0;padding:0;color:inherit;font:inherit}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .cod{background:#0b1016}}
+
+
+  :root{
+    --bg:#ffffff; --ink:#1F2A37; --muted:#6B7785; --line:#D9E1EC;
+    --accent:#2E6DA4; --navy:#1B3A6B; --amber:#B5650A; --amber-bg:#FBEEDC;
+    --green:#2F7D4F; --green-bg:#E9F3EC; --card:#F3F6FB;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+      --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+      --green:#7BC49A; --green-bg:#16241C;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12161C; --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3340; --card:#1A212B;
+    --accent:#6FA8DC; --navy:#8FB3E0; --amber:#E0A458; --amber-bg:#2B2318;
+    --green:#7BC49A; --green-bg:#16241C;
+  }
+  body{background:var(--bg);color:var(--ink);
+    font:16px/1.65 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    margin:0;padding:0 16px 80px}
+  .wrap{max-width:900px;margin:0 auto}
+  header.top{padding:34px 0 10px;border-bottom:1px solid var(--line)}
+  .eyebrow{font:600 12.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--amber);margin:0 0 10px}
+  h1{font-size:2.05rem;line-height:1.2;margin:0 0 10px;font-weight:650;letter-spacing:-.02em}
+  .sub{color:var(--muted);margin:0 0 18px;max-width:70ch}
+  nav.tabs{position:sticky;top:0;z-index:20;background:var(--bg);
+    border-bottom:1px solid var(--line);margin:0 0 30px;display:flex;gap:2px;
+    overflow-x:auto;padding-top:10px}
+  nav.tabs button{flex:0 0 auto;background:none;border:0;border-bottom:3px solid transparent;
+    padding:12px 15px;font:600 13.5px/1 ui-sans-serif,system-ui,sans-serif;color:var(--muted);
+    cursor:pointer;white-space:nowrap}
+  nav.tabs button:hover{color:var(--ink)}
+  nav.tabs button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+  section[role=tabpanel]{animation:fade .18s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+  h2{font-size:1.6rem;margin:34px 0 8px;font-weight:620;letter-spacing:-.01em}
+  h2:first-child{margin-top:0}
+  h3{font-size:1.14rem;margin:28px 0 8px;font-weight:620}
+  p{margin:0 0 14px;max-width:78ch}
+  ul,ol{max-width:78ch;padding-left:22px;margin:0 0 14px} li{margin-bottom:7px}
+  code{font:13.5px/1.5 ui-monospace,Menlo,Consolas,monospace;background:var(--card);
+    padding:2px 6px;border-radius:4px;border:1px solid var(--line)}
+  .tblwrap{overflow-x:auto;margin:0 0 18px}
+  table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+  th{background:var(--navy);color:#fff;text-align:left;padding:9px 11px;font-weight:600}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) th{color:#12161C}}
+  :root[data-theme="dark"] th{color:#12161C}
+  td{border-bottom:1px solid var(--line);padding:9px 11px;vertical-align:top}
+  .box{border-radius:10px;padding:16px 18px;margin:0 0 18px;border:1px solid var(--line)}
+  .box p:last-child{margin-bottom:0}
+  .tip{background:var(--green-bg);border-color:transparent}
+  .warn{background:var(--amber-bg);border-color:transparent}
+  .key{background:var(--card)}
+  .lbl{font:600 11.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.1em;
+    text-transform:uppercase;display:block;margin-bottom:8px}
+  .tip .lbl{color:var(--green)} .warn .lbl{color:var(--amber)} .key .lbl{color:var(--accent)}
+  .flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:0 0 18px}
+  .flow div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
+  .flow b{display:block;color:var(--accent);font-size:13px;margin-bottom:4px}
+  .flow span{font-size:14px}
+  footer{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13.5px}
+  .pill{display:inline-block;background:var(--card);border:1px solid var(--line);
+    border-radius:999px;padding:2px 10px;font-size:12.5px;color:var(--muted);margin-right:6px}
 
   .home{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;
     border:0;border-radius:10px;padding:11px 20px;margin:18px 0 0;
@@ -1490,7 +1578,7 @@
   PDF aparte, «Catálogo de marcos». Los diagramas escritos en Mermaid (Guía 8) aparecen aquí como código;
   dibujados, en la versión HTML que acompaña a este PDF.</p>
   <h2>Contenido</h2>
-  <ol><li><a href="#p0">Guía 1 — Tu propia IA, desde cero</a></li><li><a href="#p1">Guía 2 — Herramientas de IA de plataforma</a></li><li><a href="#p2">Guía 3 — Lo que hemos construido</a></li><li><a href="#p3">Guía 4 — El RAG: tu normativa, respondida con fuente</a></li><li><a href="#p4">Guía 5 — El despacho automatizado</a></li><li><a href="#p5">Guía 6 — Construir tu IA con la ayuda de una IA comercial</a></li><li><a href="#p6">Guía 7 — El ecosistema de vecinos</a></li><li><a href="#p7">Guía 8 — Saber y aprender de verdad</a></li><li><a href="#p8">Guía 9 — El método</a></li><li><a href="#p9">Guía 10 — La caja de herramientas</a></li><li><a href="#p10">Guía 11 — Catálogo de marcos</a></li><li><a href="#p11">Guía 12 — Formatos y representaciones</a></li><li><a href="#p12">Guía 13 — Librerías de Python</a></li><li><a href="#p13">Guía 14 — Enlaces y recursos</a></li><li><a href="#p14">Glosario — Glosario: siglas y términos</a></li></ol>
+  <ol><li><a href="#p0">Guía 1 — Tu propia IA, desde cero</a></li><li><a href="#p1">Guía 2 — Herramientas de IA de plataforma</a></li><li><a href="#p2">Guía 3 — Lo que hemos construido</a></li><li><a href="#p3">Guía 4 — El RAG: tu normativa, respondida con fuente</a></li><li><a href="#p4">Guía 5 — El despacho automatizado</a></li><li><a href="#p5">Guía 6 — Construir tu IA con la ayuda de una IA comercial</a></li><li><a href="#p6">Guía 7 — El ecosistema de vecinos</a></li><li><a href="#p7">Guía 8 — Saber y aprender de verdad</a></li><li><a href="#p8">Guía 9 — El método</a></li><li><a href="#p9">Guía 10 — La caja de herramientas</a></li><li><a href="#p10">Guía 11 — Catálogo de marcos</a></li><li><a href="#p11">Guía 12 — Formatos y representaciones</a></li><li><a href="#p12">Guía 13 — Librerías de Python</a></li><li><a href="#p13">Guía 14 — Enlaces y recursos</a></li><li><a href="#p14">Guía 15 — De un audio o un PDF a un informe</a></li><li><a href="#p15">Glosario — Glosario: siglas y términos</a></li></ol>
 </div>
 <div class="parte" id="p0">
 <div class="wrap">
@@ -1498,7 +1586,7 @@
 
 
 <header class="top">
-  <p class="eyebrow">Webinar COIT · Guía 1 de 14</p>
+  <p class="eyebrow">Webinar COIT · Guía 1 de 15</p>
   <h1>Tu propia IA, desde cero</h1>
   <p class="sub">Qué necesitas de verdad para tener inteligencia artificial funcionando en tu
   despacho, sin depender de que nadie te la aloje ni de mandar la documentación de tus clientes
@@ -1805,10 +1893,11 @@ ollama run qwen3:8b</code></pre>
 </section>
 
 <footer>
-  <p><strong>Guía 1 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  <p><strong>Guía 1 de 15</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
   profesional» · Colegio Oficial de Ingenieros de Telecomunicación.<br>
   Los equipos y cifras citados corresponden a instalaciones reales medidas el 14/09/2026.</p>
   <p><a href="#">¿Una sigla que no conoces? Consulta el glosario</a></p>
+
 
 
 
@@ -1829,7 +1918,7 @@ ollama run qwen3:8b</code></pre>
 <a class="home" href="#"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M6 10.5V20h5v-5h2v5h5v-9.5"/></svg><span>Índice de guías</span></a>
 
 <header class="top">
-  <p class="eyebrow">Webinar COIT · Guía 2 de 14</p>
+  <p class="eyebrow">Webinar COIT · Guía 2 de 15</p>
   <h1>Herramientas de IA de plataforma</h1>
   <p class="sub">Las que puedes contratar hoy con una tarjeta, ordenadas por <strong>lo que quieres
   hacer</strong>, no por quién las vende. De cada una: para qué sirve, qué te deja hacer con ejemplos
@@ -2127,11 +2216,12 @@ ollama run qwen3:8b</code></pre>
 </section>
 
 <footer>
-  <p><strong>Guía 2 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  <p><strong>Guía 2 de 15</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
   profesional» · Colegio Oficial de Ingenieros de Telecomunicación.<br>
   Las herramientas y sus condiciones cambian de mes en mes: cada ficha dice cómo se comprobó y qué
   quedó sin comprobar. Antes de contratar, mira la página del fabricante.</p>
   <p><a href="#">¿Una sigla que no conoces? Consulta el glosario</a></p>
+
 
 
 <!-- autoria -->
@@ -2152,7 +2242,7 @@ ollama run qwen3:8b</code></pre>
 
 
 <header class="top">
-  <p class="eyebrow">Webinar COIT · Guía 3 de 14</p>
+  <p class="eyebrow">Webinar COIT · Guía 3 de 15</p>
   <h1>Lo que hemos construido</h1>
   <p class="sub">Un recorrido por un sistema real de IA propia en un despacho de ingeniería:
   qué hace cada pieza, con qué está hecha y qué se puede aprender de ella para montar la
@@ -2440,9 +2530,10 @@ ollama run qwen3:8b</code></pre>
 </section>
 
 <footer>
-  <p><strong>Guía 3 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  <p><strong>Guía 3 de 15</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
   profesional» · Colegio Oficial de Ingenieros de Telecomunicación.</p>
   <p><a href="#">¿Una sigla que no conoces? Consulta el glosario</a></p>
+
 
 
 
@@ -2464,7 +2555,7 @@ ollama run qwen3:8b</code></pre>
 
 
 <header class="top">
-  <p class="eyebrow">Webinar COIT · Guía 4 de 14</p>
+  <p class="eyebrow">Webinar COIT · Guía 4 de 15</p>
   <h1>El <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr>: tu normativa, respondida con fuente</h1>
   <p class="sub">La pieza que convierte una IA que «sabe cosas» en una herramienta de trabajo
   profesional: responde sobre <em>tus</em> documentos y te dice de dónde ha sacado cada
@@ -3070,11 +3161,12 @@ ollama run qwen3:8b</code></pre>
 </section>
 
 <footer>
-  <p><strong>Guía 4 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  <p><strong>Guía 4 de 15</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
   profesional» · Colegio Oficial de Ingenieros de Telecomunicación.<br>
   Cifras del sistema de ejemplo medidas el 14/09/2026 (dossier técnico del <abbr title="RAG: Retrieval-Augmented Generation: busca en tus documentos y responde citándolos">RAG</abbr>, v04) y el 15/09/2026 (tipos de RAG). Las métricas
   de calidad corresponden a un conjunto de 41 preguntas reales.</p>
   <p><a href="#">¿Una sigla que no conoces? Consulta el glosario</a></p>
+
 
 
 
@@ -3096,7 +3188,7 @@ ollama run qwen3:8b</code></pre>
 
 
 <header class="top">
-  <p class="eyebrow">Webinar COIT · Guía 5 de 14</p>
+  <p class="eyebrow">Webinar COIT · Guía 5 de 15</p>
   <h1>El despacho automatizado</h1>
   <p class="sub">El proyecto es lo que se factura; el correo, los documentos, las hojas de
   cálculo, las cuentas y las mil tareas pequeñas son lo que se come las horas. Aquí es donde la
@@ -3398,9 +3490,10 @@ ollama run qwen3:8b</code></pre>
 <!-- /obligaciones -->
 
 <footer>
-  <p><strong>Guía 5 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  <p><strong>Guía 5 de 15</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
   profesional» · Colegio Oficial de Ingenieros de Telecomunicación.</p>
   <p><a href="#">¿Una sigla que no conoces? Consulta el glosario</a></p>
+
 
 
 
@@ -3422,7 +3515,7 @@ ollama run qwen3:8b</code></pre>
 
 
 <header class="top">
-  <p class="eyebrow">Webinar COIT · Guía 6 de 14</p>
+  <p class="eyebrow">Webinar COIT · Guía 6 de 15</p>
   <h1>Construir tu IA con la ayuda de una IA comercial</h1>
   <p class="sub">No hace falta ser programador para montar un sistema propio. Hace falta un buen
   asistente de pago que haga de técnico a tu lado, y un método de trabajo que te permita confiar
@@ -3642,10 +3735,11 @@ ollama run qwen3:8b</code></pre>
 </section>
 
 <footer>
-  <p><strong>Guía 6 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  <p><strong>Guía 6 de 15</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
   profesional» · Colegio Oficial de Ingenieros de Telecomunicación.<br>
   Precios de referencia consultados el 14/09/2026.</p>
   <p><a href="#">¿Una sigla que no conoces? Consulta el glosario</a></p>
+
 
 
 
@@ -3667,7 +3761,7 @@ ollama run qwen3:8b</code></pre>
 
 
 <header class="top">
-  <p class="eyebrow">Webinar COIT · Guía 7 de 14</p>
+  <p class="eyebrow">Webinar COIT · Guía 7 de 15</p>
   <h1>El ecosistema de vecinos</h1>
   <p class="sub">Cuando un solo asistente no basta, se trabaja con varios. En nuestro sistema hay más
   de veinte agentes de IA repartidos por cuatro máquinas, y los llamamos <strong>vecinos</strong>:
@@ -4171,10 +4265,11 @@ ollama run qwen3:8b</code></pre>
 </section>
 
 <footer>
-  <p><strong>Guía 7 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  <p><strong>Guía 7 de 15</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
   profesional» · Colegio Oficial de Ingenieros de Telecomunicación.<br>
   Descripción del sistema a 14/09/2026.</p>
   <p><a href="#">¿Una sigla que no conoces? Consulta el glosario</a></p>
+
 
 
 
@@ -4196,7 +4291,7 @@ ollama run qwen3:8b</code></pre>
 
 
 <header class="top">
-  <p class="eyebrow">Webinar COIT · Guía 8 de 14</p>
+  <p class="eyebrow">Webinar COIT · Guía 8 de 15</p>
   <h1>Saber y aprender de verdad</h1>
   <p class="sub">Un asistente de IA no recuerda la conversación de ayer. Todo lo que «sabe» de tu
   sistema tiene que estar escrito en algún sitio y volver a leerse. Y aun así, tenerlo escrito no
@@ -4775,11 +4870,111 @@ ollama run qwen3:8b</code></pre>
   </div>
 </section>
 
+
+
+<!-- dosconocimientos -->
+<section role="tabpanel" id="m10">
+  <h2>Los dos conocimientos</h2>
+  <p class="sub">Esta es, probablemente, la distinción más útil de toda la guía, y la que explica por
+  qué una IA que parece brillante te falla justo en tu especialidad. Hay dos formas de que una
+  máquina «sepa» algo, y no se comportan igual.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th></th><th>Conocimiento paramétrico</th><th>Conocimiento determinista</th></tr>
+    <tr><td><strong>Qué es</strong></td>
+        <td>Lo que quedó grabado en los pesos del modelo al entrenarlo. Lo aplica <em>de memoria</em></td>
+        <td>Lo que está escrito en un documento y el sistema va a buscar antes de responder. También se le llama <em>recuperado</em></td></tr>
+    <tr><td><strong>Cómo se nota</strong></td>
+        <td>Fluidez: responde sin pensar, sin citar, sin buscar</td>
+        <td>Precisión: responde citando el párrafo exacto, y puedes comprobarlo</td></tr>
+    <tr><td><strong>Cómo se cambia</strong></td>
+        <td>Reentrenando. Caro, lento y no siempre funciona</td>
+        <td>Editando un fichero. Inmediato</td></tr>
+    <tr><td><strong>Cuando no sabe</strong></td>
+        <td><strong>Inventa con seguridad total</strong></td>
+        <td>Dice que no está en sus fuentes</td></tr>
+    <tr><td><strong>En la práctica</strong></td>
+        <td>El lenguaje, el oficio, el vocabulario, «cómo se hacen las cosas»</td>
+        <td>Tu normativa, tus proyectos, los umbrales, las fechas, los números</td></tr>
+  </table></div>
+
+  <div class="box key"><span class="lbl">La analogía que lo fija</span>
+  <p>Es la diferencia entre <strong>lo que un ingeniero sabe de memoria</strong> —cómo se estructura
+  una memoria técnica, qué preguntar en una visita, qué huele mal en un pliego— y <strong>lo que va a
+  mirar al reglamento</strong> antes de poner una cifra. Nadie se aprende de memoria las tablas del
+  CTE. Y nadie consulta el manual para saber cómo se redacta un párrafo.</p></div>
+
+  <h3>El problema que tenemos, con nuestras propias cifras</h3>
+  <p>La pregunta natural es: <em>si el conocimiento recuperado obliga a ir a buscar, ¿por qué no
+  metemos nuestra documentación dentro del modelo y ya está?</em> Lo intentamos. Estos son los
+  resultados reales, no una estimación:</p>
+  <div class="tblwrap"><table>
+    <tr><th>La prueba</th><th>Resultado</th></tr>
+    <tr><td>Preguntas <strong>con el documento delante</strong></td><td><strong>85,2 %</strong> de acierto</td></tr>
+    <tr><td>Las mismas preguntas <strong>sin el documento</strong>, de memoria</td><td><strong>3,1 %</strong></td></tr>
+  </table></div>
+  <p>Y el detalle que de verdad importa: en ese 97 % restante <strong>el modelo no decía «no lo
+  sé»</strong>. Daba explicaciones plausibles, bien redactadas y falsas, con total aplomo. Ese es el
+  fallo peligroso, porque parece una respuesta buena.</p>
+
+  <div class="box warn"><span class="lbl">Por qué no fue mala suerte</span>
+  <ul>
+    <li><strong>Un hecho necesita del orden de mil exposiciones</strong> para fijarse de forma estable
+    en los pesos de un modelo. Nuestro experimento usó ciento seis ejemplos, vistos una vez: dos o
+    tres órdenes de magnitud por debajo.</li>
+    <li><strong>El método barato aprende menos por diseño.</strong> Los adaptadores ligeros —la forma
+    asequible de afinar un modelo— son buenos para el estilo y malos para los hechos nuevos, y está
+    medido en estudios controlados.</li>
+    <li><strong>La curva real es brutal.</strong> En un caso público de preparación de un examen de
+    abogacía: 11 % el modelo base, 38 % con cinco mil preguntas de entrenamiento, 65 % con setenta
+    mil. Nosotros estábamos en el orden del centenar.</li>
+    <li><strong>Y aprender hechos nuevos aumenta la invención</strong> en temas no relacionados: se
+    gana en un sitio y se pierde en otro.</li>
+  </ul></div>
+
+  <h3>Las soluciones, ordenadas por sensatez</h3>
+  <div class="tblwrap"><table>
+    <tr><th>Solución</th><th>Para qué sirve de verdad</th><th>Qué cuesta</th></tr>
+    <tr><td><strong>Dejar los datos fuera del modelo</strong><br><span class="gl">buscador propio sobre tus documentos</span></td>
+        <td>Todo lo que sea cifra, umbral, fecha o referencia. Se actualiza editando un fichero, y la respuesta se puede comprobar</td>
+        <td>Bajo. Es lo primero que hay que montar</td></tr>
+    <tr><td><strong>Reglas fijas de comprobación</strong><br><span class="gl">antes de responder</span></td>
+        <td>Que el sistema mire si la norma sigue vigente y si el texto es de verdad lo que dice ser. No hace falta IA para esto: es una regla</td>
+        <td>Bajo, y es lo que más fallo evita</td></tr>
+    <tr><td><strong>Afinar el modelo</strong><br><span class="gl">para el oficio, no para los datos</span></td>
+        <td>Vocabulario, tono, formato de tus informes, cómo se comporta. Aquí sí funciona</td>
+        <td>Medio. Y no esperes que memorice tu normativa</td></tr>
+    <tr><td><strong>Meter el dominio entero en los pesos</strong></td>
+        <td>La fantasía de la IA que lo sabe todo sin consultar nada</td>
+        <td>Muy alto y, con equipo de despacho, <strong>no alcanzable</strong>. Nosotros lo medimos y lo descartamos</td></tr>
+  </table></div>
+
+  <div class="box tip"><span class="lbl">La arquitectura que funciona, y es la que usamos</span>
+  <p><strong>Las dos cosas a la vez, cada una en lo suyo:</strong> el conocimiento determinista
+  —documentos, buscador, citas y reglas de comprobación— sostiene <em>los datos</em>, que es donde
+  una equivocación te cuesta un proyecto; y el conocimiento paramétrico del modelo aporta
+  <em>la fluidez</em>: entender la pregunta, redactar bien, saber cómo se hace un informe.</p>
+  <p>Dicho de otro modo: <strong>no le pidas al modelo que recuerde; pídele que razone sobre lo que
+  le pones delante.</strong> Y ten muy presente que, si no se lo pones, no se callará.</p></div>
+
+  <div class="box key"><span class="lbl">Lo que te llevas para tu despacho</span>
+  <ul>
+    <li>Si una respuesta contiene <strong>una cifra o una referencia y no viene con su fuente</strong>,
+    trátala como un borrador de alguien que no ha mirado el reglamento.</li>
+    <li><strong>Invierte primero en tus documentos</strong>, no en un modelo más grande: el mismo
+    modelo con buenas fuentes rinde muchísimo más que uno mejor a ciegas.</li>
+    <li>La pregunta correcta ante cualquier herramienta de IA no es «¿cuánto sabe?», sino
+    <strong>«¿de dónde saca lo que me está diciendo?»</strong>.</li>
+  </ul></div>
+</section>
+<!-- /dosconocimientos -->
+
 <footer>
-  <p><strong>Guía 8 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  <p><strong>Guía 8 de 15</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
   profesional» · Colegio Oficial de Ingenieros de Telecomunicación.<br>
   Cifras de la biblioteca y del expediente consultadas el 14/09/2026.</p>
   <p><a href="#">¿Una sigla que no conoces? Consulta el glosario</a></p>
+
 
 
 
@@ -4801,7 +4996,7 @@ ollama run qwen3:8b</code></pre>
 
 
 <header class="top">
-  <p class="eyebrow">Webinar COIT · Guía 9 de 14</p>
+  <p class="eyebrow">Webinar COIT · Guía 9 de 15</p>
   <h1>El método</h1>
   <p class="sub">Trabajar con una IA potente sin método es como dirigir una obra sin proyecto: sale
   algo, pero no sabes si aguanta. Esta guía reúne los métodos que usamos para construir nuestra
@@ -5020,9 +5215,10 @@ ollama run qwen3:8b</code></pre>
 </section>
 
 <footer>
-  <p><strong>Guía 9 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  <p><strong>Guía 9 de 15</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
   profesional» · Colegio Oficial de Ingenieros de Telecomunicación.</p>
   <p><a href="#">¿Una sigla que no conoces? Consulta el glosario</a></p>
+
 
 
 
@@ -5044,7 +5240,7 @@ ollama run qwen3:8b</code></pre>
 
 
 <header class="top">
-  <p class="eyebrow">Webinar COIT · Guía 10 de 14</p>
+  <p class="eyebrow">Webinar COIT · Guía 10 de 15</p>
   <h1>La caja de herramientas</h1>
   <p class="sub">Un asistente de IA no hace nada útil si no puede tocar tus sistemas: leer tus
   ficheros, conectarse a tus máquinas, lanzar tus programas de ingeniería. Esta guía repasa cómo
@@ -5318,10 +5514,11 @@ ollama run qwen3:8b</code></pre>
 <!-- /dominio -->
 
 <footer>
-  <p><strong>Guía 10 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  <p><strong>Guía 10 de 15</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
   profesional» · Colegio Oficial de Ingenieros de Telecomunicación.<br>
   Herramientas descritas a 14/09/2026.</p>
   <p><a href="#">¿Una sigla que no conoces? Consulta el glosario</a></p>
+
 
 
 
@@ -5353,7 +5550,7 @@ ollama run qwen3:8b</code></pre>
 
 
 <header class="top">
-  <p class="eyebrow">Webinar COIT · Guía 11 de 14</p>
+  <p class="eyebrow">Webinar COIT · Guía 11 de 15</p>
   <h1>Catálogo de marcos</h1>
   <p class="sub">47 formas reconocidas de pensar, decidir, organizar el trabajo y sacarle más partido a una
   <abbr title="IA: Inteligencia Artificial">IA</abbr>, ordenadas en 7 categorías. Cada marco con su historia, cómo funciona por dentro, un ejemplo real,
@@ -5944,10 +6141,11 @@ CONCLUSIÓN: [ ]adoptar PS+  [ ]el problema es el enunciado  [ ]hacen falta ejem
 </section>
 
 <footer>
-  <p><strong>Guía 11 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  <p><strong>Guía 11 de 15</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
   profesional» · Colegio Oficial de Ingenieros de Telecomunicación.</p>
   <p>Las fuentes de cada marco están enlazadas en sus apartados «Fuentes» y «Para leer más».</p>
   <p><a href="#">¿Una sigla que no conoces? Consulta el glosario</a></p>
+
 
 
 
@@ -5969,7 +6167,7 @@ CONCLUSIÓN: [ ]adoptar PS+  [ ]el problema es el enunciado  [ ]hacen falta ejem
 
 
 <header class="top">
-  <p class="eyebrow">Webinar COIT · Guía 12 de 14</p>
+  <p class="eyebrow">Webinar COIT · Guía 12 de 15</p>
   <h1>Formatos y representaciones</h1>
   <p class="sub">La misma información, contada en el formato adecuado, se entiende, se versiona y se
   automatiza sola. En el formato equivocado se pierde: se convierte en una captura de pantalla que
@@ -6721,9 +6919,10 @@ INF-3;cita;REQ-04</code></pre>
 <a class="home" href="#"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M6 10.5V20h5v-5h2v5h5v-9.5"/></svg><span>Índice de guías</span></a>
 
 <footer>
-  <p><strong>Guía 12 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  <p><strong>Guía 12 de 15</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
   profesional» · Colegio Oficial de Ingenieros de Telecomunicación.</p>
   <p><a href="#">¿Una sigla que no conoces? Consulta el glosario</a></p>
+
 
 
 
@@ -6745,7 +6944,7 @@ INF-3;cita;REQ-04</code></pre>
 
 
 <header class="top">
-  <p class="eyebrow">Webinar COIT · Guía 13 de 14</p>
+  <p class="eyebrow">Webinar COIT · Guía 13 de 15</p>
   <h1>Librerías de Python</h1>
   <p class="sub">Python no vale por sí mismo: vale por las decenas de miles de piezas ya
   escritas que puedes montar encima. Esta guía explica qué es una librería y por qué unas
@@ -8455,12 +8654,13 @@ INF-3;cita;REQ-04</code></pre>
 <a class="home" href="#"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M6 10.5V20h5v-5h2v5h5v-9.5"/></svg><span>Índice de guías</span></a>
 
 <footer>
-  <p><strong>Guía 13 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  <p><strong>Guía 13 de 15</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
   profesional» · Colegio Oficial de Ingenieros de Telecomunicación.<br>
   Las librerías marcadas <em>del inventario</em> proceden de un censo propio de cuatro equipos
   tomado el 14/07/2026; las marcadas <em>de uso común</em> son estándares del sector descritos sin
   cifras ni versiones. Los números de versión cambian: comprueba siempre los tuyos.</p>
   <p><a href="#">¿Una sigla que no conoces? Consulta el glosario</a></p>
+
 
 
 
@@ -8482,7 +8682,7 @@ INF-3;cita;REQ-04</code></pre>
 
 
 <header class="top">
-  <p class="eyebrow">Webinar COIT · Guía 14 de 14</p>
+  <p class="eyebrow">Webinar COIT · Guía 14 de 15</p>
   <h1>Enlaces y recursos</h1>
   <p class="sub">Todo lo que se nombra en el webinar, reunido y con su dirección oficial: las guías
   para releer con calma y las herramientas que puedes descargar, probar o contratar tú mismo. Cada
@@ -8830,11 +9030,12 @@ INF-3;cita;REQ-04</code></pre>
 <a class="home" href="#"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M6 10.5V20h5v-5h2v5h5v-9.5"/></svg><span>Índice de guías</span></a>
 
 <footer>
-  <p><strong>Guía 14 de 14</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  <p><strong>Guía 14 de 15</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
   profesional» · Colegio Oficial de Ingenieros de Telecomunicación.<br>
   Direcciones revisadas el 16/09/2026. Las herramientas y sus precios cambian: comprueba siempre en
   la página oficial antes de contratar.</p>
   <p><a href="#">¿Una sigla que no conoces? Consulta el glosario</a></p>
+
 
 
 
@@ -8851,6 +9052,471 @@ INF-3;cita;REQ-04</code></pre>
 
 </div>
 <div class="parte" id="p14">
+<div class="wrap">
+<a class="home" href="#"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M6 10.5V20h5v-5h2v5h5v-9.5"/></svg><span>Índice de guías</span></a>
+
+<header class="top">
+  <p class="eyebrow">Webinar COIT · Guía 15 de 15</p>
+  <h1>De un audio o un PDF a un informe</h1>
+  <p class="sub">Las herramientas pequeñas que hacen el trabajo sucio: transcribir una grabación,
+  entender un PDF complicado —con sus tablas, sus fórmulas y su numeración—, reconocer un escaneado
+  y comprobar lo que generas. <strong>Con el código, listo para copiar.</strong></p>
+  <p><span class="pill">Nivel: técnico</span><span class="pill">Lectura: ~25 min</span>
+  <span class="pill">Todo el código se ejecutó antes de publicarlo</span></p>
+</header>
+
+
+
+<section role="tabpanel" id="a1">
+
+  <h2>El recorrido, de un vistazo</h2>
+  <p class="sub">Dos entradas muy distintas —una grabación y un PDF— acaban en el mismo sitio: un
+  texto con estructura que una IA puede usar para redactarte un borrador. Lo difícil no es la IA:
+  es llegar a ese texto sin perder por el camino las tablas, los números y el orden.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Entras con…</th><th>La herramienta</th><th>Sales con…</th></tr>
+    <tr><td>Una grabación de una visita o una reunión</td><td><code>faster-whisper</code></td><td>Texto con marcas de tiempo, y quién habla si lo pides</td></tr>
+    <tr><td>Un PDF con texto (la mayoría)</td><td><code>PyMuPDF</code></td><td>Texto, títulos y su jerarquía</td></tr>
+    <tr><td>Tablas dentro de ese PDF</td><td><code>pdfplumber</code></td><td>Filas y columnas, listas para Excel</td></tr>
+    <tr><td>Un PDF escaneado, que es una foto</td><td><code>tesseract</code></td><td>Texto reconocido de la imagen</td></tr>
+    <tr><td>Fórmulas y figuras</td><td><code>PyMuPDF</code> en modo crudo</td><td>Los símbolos reales, no lo que parece</td></tr>
+  </table></div>
+
+  <div class="box key"><span class="lbl">La regla que ahorra disgustos</span>
+  <p><strong>Primero se extrae, después se pregunta.</strong> El error más común es darle el PDF
+  entero a una IA y pedirle la tabla: es justo donde más inventa. El camino correcto es sacar la
+  tabla con un programa —que no inventa, o falla de forma visible— y pasarle a la IA el resultado ya
+  estructurado.</p></div>
+
+  <div class="box tip"><span class="lbl">Qué hace falta instalar, en total</span>
+  <p>Menos de lo que parece. Todo lo de esta guía se monta con esto:</p>
+  <pre class="cod"><code>pip install faster-whisper      # transcripción de audio
+pip install pymupdf pdfplumber  # leer PDF: texto, estructura y tablas
+pip install pytesseract pillow  # OCR de PDF escaneados
+pip install playwright          # navegador, para comprobar lo que generas
+playwright install chromium     # descarga el navegador (una vez)</code></pre>
+  <p>Y dos programas que no son de Python: <strong>ffmpeg</strong> (para el audio) y
+  <strong>tesseract</strong> (para el OCR). En Windows se instalan con
+  <code>winget install Gyan.FFmpeg</code> y <code>winget install UB-Mannheim.TesseractOCR</code>;
+  en Linux, con el gestor de paquetes de la distribución.</p></div>
+
+</section>
+
+<section role="tabpanel" id="a2">
+
+  <h2>Transcribir una grabación</h2>
+  <p class="sub">Grabas la visita de obra con el móvil y quieres el acta. Esto es lo que hay que
+  hacer, y lo que cuesta de verdad.</p>
+
+  <h3>El código mínimo que funciona</h3>
+  <pre class="cod"><code>from faster_whisper import WhisperModel
+
+# &quot;base&quot; es el equilibrio para empezar; en un portátil normal, sin tarjeta gráfica.
+modelo = WhisperModel(&quot;base&quot;, device=&quot;cpu&quot;, compute_type=&quot;int8&quot;)
+segmentos, info = modelo.transcribe(
+    &quot;visita_obra.m4a&quot;,
+    language=&quot;es&quot;,        # si lo sabes, dilo: evita que se equivoque de idioma
+    vad_filter=True,      # se salta los silencios: más rápido y menos alucinación
+)
+
+print(f&quot;idioma: {info.language} (confianza {info.language_probability:.2f})&quot;)
+
+with open(&quot;transcripcion.txt&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+    for s in segmentos:
+        # las marcas de tiempo valen oro: te llevan al minuto exacto de la grabación
+        f.write(f&quot;[{s.start:7.1f} → {s.end:7.1f}]  {s.text.strip()}\n&quot;)</code></pre>
+  <div class="box tip"><span class="lbl">Medido, no estimado</span>
+  <p>Ejecutado el 16/09/2026 con <code>faster-whisper 1.2.1</code>, modelo <code>base</code>, en el
+  procesador (sin tarjeta gráfica): <strong>10 segundos de audio en español, transcritos en 6,1
+  segundos</strong>, con el idioma detectado con confianza 1,00. Es decir: una reunión de una hora
+  se transcribe en unos 35 minutos en un portátil normal, y en unos pocos minutos si hay tarjeta
+  gráfica.</p></div>
+
+  <h3>Qué modelo elegir</h3>
+  <div class="tblwrap"><table>
+    <tr><th>Modelo</th><th>Cuándo usarlo</th><th>Memoria aproximada</th></tr>
+    <tr><td><code>base</code></td><td>Notas personales, audio limpio, ir rápido</td><td>~1 GB</td></tr>
+    <tr><td><code>small</code></td><td>El equilibrio razonable para trabajo real</td><td>~2 GB</td></tr>
+    <tr><td><code>large-v3</code></td><td>Acta que va a leer un cliente, audio con ruido de obra</td><td>~5 GB</td></tr>
+  </table></div>
+  <p>Si el ordenador tiene tarjeta gráfica, cambia <code>device="cpu"</code> por
+  <code>device="cuda"</code> y <code>compute_type="int8"</code> por <code>"float16"</code>: va entre
+  cinco y diez veces más rápido.</p>
+
+  <h3>Quién dice qué</h3>
+  <p>Si necesitas separar interlocutores —«esto lo pidió la propiedad, no la dirección
+  facultativa»—, eso es <em>diarización</em>, y la hace otra herramienta:
+  <code>WhisperX</code>, que combina la transcripción con <code>pyannote.audio</code>. Requiere
+  aceptar las condiciones del modelo en su web y una clave gratuita. Para un acta interna, el
+  resultado sin diarizar suele bastar; para una discusión contractual, merece la pena.</p>
+
+  <div class="box warn"><span class="lbl">Antes de grabar a alguien</span>
+  <p>Grabar una reunión con terceros exige <strong>avisar a los presentes</strong>. Y si la
+  grabación se sube a un servicio en la nube, esos datos salen de tu despacho: para reuniones con
+  datos de cliente, la transcripción <strong>en local</strong> —que es exactamente lo que hace este
+  código— es la única respuesta cómoda.</p></div>
+
+</section>
+
+<section role="tabpanel" id="a3">
+
+  <h2>Del texto al informe</h2>
+  <p class="sub">Ya tienes la transcripción. Ahora viene la parte donde la IA sí aporta: convertir
+  hora y media de conversación en un acta con acuerdos y tareas.</p>
+
+  <h3>La petición que funciona</h3>
+  <p>El fallo típico es pedir «hazme un resumen». Sale un resumen bonito e inútil. Lo que sirve es
+  pedir <strong>una estructura concreta y prohibir explícitamente inventar</strong>:</p>
+  <pre class="cod"><code>PETICION = &quot;&quot;&quot;Eres el secretario técnico de una reunión de obra. A partir de la transcripción
+literal que te doy, redacta el acta con esta estructura exacta:
+
+1. ASISTENTES (solo los que se nombren en el texto)
+2. ACUERDOS: cada uno en una línea, con el minuto donde se acuerda
+3. TAREAS: qué, quién y para cuándo. Si no se dice el plazo, escribe &quot;sin plazo&quot;
+4. DUDAS: lo que quedó sin cerrar
+
+Reglas que no puedes saltarte:
+- No añadas nada que no esté en la transcripción. Nada.
+- Si algo no está claro, ponlo en DUDAS en lugar de deducirlo.
+- Cita siempre el minuto entre corchetes.
+
+TRANSCRIPCIÓN:
+&quot;&quot;&quot;
+
+texto = open(&quot;transcripcion.txt&quot;, encoding=&quot;utf-8&quot;).read()
+# ...y esto se le manda al asistente que uses, pegando PETICION + texto.</code></pre>
+
+  <h3>Y lo mismo, contra un modelo local</h3>
+  <p>Exactamente igual, pero sin que el texto salga de tu red:</p>
+  <pre class="cod"><code>import requests   # el modelo local se habla igual que cualquier servicio web
+
+respuesta = requests.post(
+    &quot;http://TU-SERVIDOR:11434/api/generate&quot;,   # Ollama, en tu propia máquina
+    json={
+        &quot;model&quot;: &quot;qwen3:8b&quot;,
+        &quot;prompt&quot;: PETICION + texto,
+        &quot;stream&quot;: False,
+        &quot;options&quot;: {&quot;temperature&quot;: 0.2},   # bajo: queremos fidelidad, no creatividad
+    }, timeout=600,
+)
+open(&quot;acta.md&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;).write(respuesta.json()[&quot;response&quot;])</code></pre>
+
+  <div class="box key"><span class="lbl">Las tres reglas del texto de la petición</span>
+  <ul>
+    <li><strong>Di el formato exacto</strong> que quieres, apartado por apartado.</li>
+    <li><strong>Obliga a citar el minuto.</strong> Es lo que te permite comprobarlo en diez
+    segundos, y lo que hace que el modelo se sujete al texto.</li>
+    <li><strong>Dale permiso para no saber.</strong> «Si algo no está claro, escríbelo en DUDAS» es
+    la frase que más alucinaciones evita, porque le das una salida honesta.</li>
+  </ul></div>
+
+</section>
+
+<section role="tabpanel" id="a4">
+
+  <h2>La estructura de un PDF difícil</h2>
+  <p class="sub">Un reglamento o un pliego no es un texto plano: es una jerarquía —1, 1.1, 1.1.a—
+  y perderla es perder el sentido. Esto es lo que hay que hacer, en orden.</p>
+
+  <h3>Paso 1: mira si el PDF ya trae su índice</h3>
+  <p>Muchos lo traen y casi nadie lo aprovecha. Es gratis y exacto:</p>
+  <pre class="cod"><code>import fitz   # el paquete se llama pymupdf, pero se importa como fitz
+
+doc = fitz.open(&quot;reglamento.pdf&quot;)
+indice = doc.get_toc()          # [[nivel, título, página], ...]
+
+for nivel, titulo, pagina in indice:
+    print(&quot;  &quot; * (nivel - 1) + f&quot;{titulo}  ......  pág. {pagina}&quot;)</code></pre>
+  <p>Si devuelve entradas, ya has terminado. Si devuelve cero —<strong>que es lo que pasó al probarlo
+  con un manual técnico real de 322 páginas</strong>— hay que reconstruirla.</p>
+
+  <h3>Paso 2: reconstruir la jerarquía</h3>
+  <p>Dos señales, y conviene usar las dos porque se corrigen entre sí: <strong>la numeración
+  escrita</strong> (1.2.3) y <strong>el tamaño de la letra</strong> (los títulos son más grandes o
+  van en negrita).</p>
+  <pre class="cod"><code>import fitz, re, collections
+
+doc = fitz.open(&quot;reglamento.pdf&quot;)
+
+# (a) ¿cuál es el tamaño del texto NORMAL? El más frecuente, por número de caracteres.
+tam = collections.Counter()
+for pag in doc:
+    for bloque in pag.get_text(&quot;dict&quot;)[&quot;blocks&quot;]:
+        for linea in bloque.get(&quot;lines&quot;, []):
+            for trozo in linea[&quot;spans&quot;]:
+                if trozo[&quot;text&quot;].strip():
+                    negrita = bool(trozo[&quot;flags&quot;] &amp; 2**4)
+                    tam[(round(trozo[&quot;size&quot;], 1), negrita)] += len(trozo[&quot;text&quot;])
+
+cuerpo = tam.most_common(1)[0][0][0]     # tamaño del cuerpo del texto
+
+# (b) es título si mide más que el cuerpo, o si empieza por numeración jerárquica
+NUMERACION = re.compile(r&quot;^\s*(\d+(?:\.\d+)*)\s+(\S.{2,70})$&quot;)
+
+titulos = []
+for n, pag in enumerate(doc, start=1):
+    for bloque in pag.get_text(&quot;dict&quot;)[&quot;blocks&quot;]:
+        for linea in bloque.get(&quot;lines&quot;, []):
+            texto = &quot;&quot;.join(t[&quot;text&quot;] for t in linea[&quot;spans&quot;]).strip()
+            if not texto or len(texto) &gt; 90:
+                continue
+            grande = linea[&quot;spans&quot;][0][&quot;size&quot;] &gt; cuerpo + 0.4
+            m = NUMERACION.match(texto)
+            if m or grande:
+                # el nivel sale de contar los puntos: &quot;4.2.1&quot; es nivel 3
+                nivel = m.group(1).count(&quot;.&quot;) + 1 if m else 1
+                titulos.append((nivel, texto, n))
+
+for nivel, texto, pagina in titulos[:30]:
+    print(&quot;  &quot; * (nivel - 1) + f&quot;{texto}   [pág. {pagina}]&quot;)</code></pre>
+  <div class="box tip"><span class="lbl">Probado</span>
+  <p>Sobre un manual técnico de 322 páginas sin índice incorporado, este método reconstruyó
+  <strong>24 encabezados numerados</strong> en las primeras 40 páginas. Y el censo de tamaños dejó
+  claro cuál era el cuerpo del texto —12 pt— frente a los títulos.</p></div>
+
+</section>
+
+<section role="tabpanel" id="a5">
+
+  <h2>Las tablas: donde todo el mundo se estrella</h2>
+  <p class="sub">Esta pestaña es la más importante de la guía, y la escribo con un fallo propio
+  delante, porque enseña más que el código que funciona.</p>
+
+  <h3>Primer intento: la configuración por defecto</h3>
+  <pre class="cod"><code>import pdfplumber
+
+with pdfplumber.open(&quot;catalogo.pdf&quot;) as pdf:
+    for pagina in pdf.pages:
+        for tabla in pagina.extract_tables():      # busca LÍNEAS dibujadas
+            print(tabla)</code></pre>
+  <p>Sobre un manual de fabricante real, esto devolvió <strong>cero tablas en 30 páginas</strong>.
+  No porque no las hubiera: porque el método por defecto busca <em>líneas</em>, y muchísimas tablas
+  técnicas no tienen bordes dibujados.</p>
+
+  <h3>Segundo intento: buscar por alineación de texto</h3>
+  <pre class="cod"><code>CONFIG = {
+    &quot;vertical_strategy&quot;: &quot;text&quot;,      # deduce las columnas por cómo se alinea el texto
+    &quot;horizontal_strategy&quot;: &quot;text&quot;,
+    &quot;text_tolerance&quot;: 2,
+    &quot;intersection_tolerance&quot;: 5,
+}
+tablas = pagina.extract_tables(CONFIG)</code></pre>
+  <p>Ahora salieron <strong>26 tablas</strong>… y la primera era <strong>un párrafo de prosa
+  troceado en columnas</strong>. Esto es peor que no encontrar nada: es basura con formato de dato.</p>
+
+  <h3>La pieza que falta: comprobar que lo extraído ES una tabla</h3>
+  <pre class="cod"><code>import re, statistics
+
+def limpia(t):
+    &quot;&quot;&quot;Quita filas y columnas completamente vacías. Sin esto, el filtro de abajo
+       descarta tablas buenas: lo comprobé, y me pasó.&quot;&quot;&quot;
+    t = [f for f in t if any((c or &quot;&quot;).strip() for c in f)]
+    if not t:
+        return t
+    ancho = max(len(f) for f in t)
+    vivas = [i for i in range(ancho)
+             if any(((f[i] if i &lt; len(f) else &quot;&quot;) or &quot;&quot;).strip() for f in t)]
+    return [[(f[i] if i &lt; len(f) else &quot;&quot;) for i in vivas] for f in t]
+
+def es_tabla(t):
+    &quot;&quot;&quot;¿Esto es una tabla de verdad, o es prosa troceada en columnas?&quot;&quot;&quot;
+    if len(t) &lt; 3 or len(t[0]) &lt; 3:
+        return False
+    llenas = [sum(1 for c in f if (c or &quot;&quot;).strip()) for f in t]
+    if statistics.mean(llenas) &lt; len(t[0]) * 0.6:      # demasiados huecos
+        return False
+    celdas = [(c or &quot;&quot;).strip() for f in t for c in f if (c or &quot;&quot;).strip()]
+    if not celdas or statistics.mean(len(c) for c in celdas) &gt; 18:
+        return False                                    # celdas largas = es prosa
+    numericas = sum(1 for c in celdas if re.fullmatch(r&quot;[-+]?[\d.,]+\s*%?&quot;, c))
+    return numericas / len(celdas) &gt;= 0.3               # una tabla técnica tiene números
+
+# uso:
+for bruta in pagina.extract_tables(CONFIG):
+    tabla = limpia(bruta)
+    if es_tabla(tabla):
+        for fila in tabla:
+            print(&quot; | &quot;.join((c or &quot;&quot;) for c in fila))</code></pre>
+
+  <div class="box warn"><span class="lbl">El fallo que cometí, y cómo lo cacé</span>
+  <p>Mi primera versión de ese filtro <strong>rechazaba también la tabla buena</strong>. Lo descubrí
+  porque hice la prueba obligatoria: fabriqué un PDF con una tabla numérica <em>que yo ya conocía</em>
+  y comprobé si el filtro la aceptaba. No lo hacía.</p>
+  <p>La causa: la extracción devuelve filas y columnas vacías de relleno, y yo estaba midiendo
+  «columnas huecas» sobre la tabla sucia. <strong>Hay que limpiar antes de juzgar.</strong> Con la
+  limpieza puesta: la tabla conocida se recupera intacta —5 filas × 7 columnas, 86 % de celdas
+  numéricas— y las <strong>54 candidatas de prosa de dos manuales distintos siguen descartándose,
+  todas</strong>.</p>
+  <p>La lección vale para cualquier extractor que escribas: <strong>un filtro hay que probarlo con
+  algo que SÍ debe pasar y con algo que NO debe pasar.</strong> Si solo pruebas una de las dos cosas,
+  no sabes si filtra o si simplemente dice que no a todo.</p></div>
+
+</section>
+
+<section role="tabpanel" id="a6">
+
+  <h2>Fórmulas, figuras y PDF escaneados</h2>
+
+  <h3>Las fórmulas mienten en la capa de texto</h3>
+  <p>Si copias una fórmula de un PDF y la pegas, muchas veces sale desordenada o con símbolos
+  cambiados. No es cosa tuya: las fórmulas se dibujan con tipografías especiales y, al extraer el
+  texto «plano», los símbolos salen en el orden del dibujo, no en el de la lectura.</p>
+  <div class="box warn"><span class="lbl">Regla de la casa, aprendida a base de errores</span>
+  <p><strong>Una fórmula de un documento normativo no se extrae nunca de la capa de texto plana.</strong>
+  Hay que mirarla en crudo, símbolo a símbolo, y contrastarla con la imagen. Si vas a usar una
+  fórmula para calcular algo que firmas, <strong>transcríbela mirándola</strong>.</p></div>
+  <pre class="cod"><code>import fitz
+
+pagina = fitz.open(&quot;norma.pdf&quot;)[24]
+
+# &quot;rawdict&quot; da cada carácter por separado, con su tipografía y su posición:
+# es la única forma de ver qué símbolo hay DE VERDAD en una fórmula.
+for bloque in pagina.get_text(&quot;rawdict&quot;)[&quot;blocks&quot;]:
+    for linea in bloque.get(&quot;lines&quot;, []):
+        for trozo in linea[&quot;spans&quot;]:
+            if &quot;Symbol&quot; in trozo[&quot;font&quot;] or &quot;Math&quot; in trozo[&quot;font&quot;]:
+                simbolos = &quot;&quot;.join(c[&quot;c&quot;] for c in trozo[&quot;chars&quot;])
+                # el código del carácter es lo que no engaña
+                codigos = [hex(ord(c[&quot;c&quot;])) for c in trozo[&quot;chars&quot;]]
+                print(trozo[&quot;font&quot;], simbolos, codigos)</code></pre>
+
+  <h3>Cuando el PDF es una foto</h3>
+  <p>Un PDF escaneado no tiene texto: tiene una imagen de un texto. Para eso está el OCR —
+  reconocimiento óptico de caracteres—, y funciona mejor de lo que la gente cree si se le da
+  resolución suficiente:</p>
+  <pre class="cod"><code>import fitz, pytesseract
+from PIL import Image
+import io
+
+doc = fitz.open(&quot;escaneado.pdf&quot;)
+texto_total = []
+
+for n, pagina in enumerate(doc, start=1):
+    if pagina.get_text().strip():
+        texto_total.append(pagina.get_text())      # esta página SÍ tiene texto: no hace falta OCR
+        continue
+    # 300 ppp: por debajo, el reconocimiento empeora mucho
+    pix = pagina.get_pixmap(dpi=300)
+    img = Image.open(io.BytesIO(pix.tobytes(&quot;png&quot;)))
+    texto_total.append(pytesseract.image_to_string(img, lang=&quot;spa&quot;))
+    print(f&quot;página {n}: reconocida por OCR&quot;)
+
+open(&quot;texto.txt&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;).write(&quot;\n\n&quot;.join(texto_total))</code></pre>
+  <div class="box tip"><span class="lbl">Probado el 16/09/2026</span>
+  <p>Con <code>tesseract</code> 5 y el idioma español, sobre una imagen con texto técnico, leyó sin
+  un solo error <em>«Aislamiento DnT,w = 52 dBA»</em> y <em>«art. 10.1 del RD 346/2011»</em>.
+  El único fallo fue confundir un separador «·» con «:». Conclusión práctica: los números y las
+  referencias salen bien; <strong>revisa la puntuación rara</strong>.</p>
+  <p>Dos detalles que marcan la diferencia: pedir <strong>300 puntos por pulgada</strong> al
+  rasterizar (con menos, el OCR se despeña) y <strong>decirle el idioma</strong> con
+  <code>lang="spa"</code>.</p></div>
+
+</section>
+
+<section role="tabpanel" id="a7">
+
+  <h2>El navegador que comprueba tu trabajo</h2>
+  <p class="sub">Esta es la herramienta menos conocida de todas y, para quien genere documentos o
+  páginas, la que más disgustos evita: un navegador que se abre solo, sin ventana, y comprueba que
+  lo que has generado se ve como debe.</p>
+
+  <h3>Para qué sirve, en concreto</h3>
+  <ul>
+    <li>Abrir el documento que acabas de generar y <strong>comprobar que no da errores</strong>.</li>
+    <li>Hacerle una <strong>captura</strong> para verlo sin abrirlo a mano.</li>
+    <li>Comprobar que funciona <strong>en modo oscuro</strong> y <strong>en un móvil</strong>.</li>
+    <li>Y lo más útil: comprobar que <strong>no necesita internet</strong> para verse bien.</li>
+  </ul>
+  <pre class="cod"><code>from playwright.sync_api import sync_playwright
+
+with sync_playwright() as p:
+    navegador = p.chromium.launch()
+    # offline=True: si la página necesita internet para verse, FALLA aquí y no delante del cliente
+    ctx = navegador.new_context(viewport={&quot;width&quot;: 1280, &quot;height&quot;: 900}, offline=True)
+    pagina = ctx.new_page()
+
+    errores = []
+    pagina.on(&quot;pageerror&quot;, lambda e: errores.append(str(e)))
+
+    pagina.goto(&quot;file:///C:/informes/informe.html&quot;)
+    pagina.screenshot(path=&quot;comprobacion.png&quot;, full_page=True)
+
+    print(&quot;errores:&quot;, errores or &quot;ninguno&quot;)
+    navegador.close()</code></pre>
+
+  <div class="box key"><span class="lbl">Por qué esto importa más de lo que parece</span>
+  <p>Las guías que estás leyendo se comprobaron así, una por una, antes de publicarlas: cada página
+  abierta en claro, en oscuro y a tamaño de móvil, <strong>con la red desconectada a propósito</strong>.
+  Así se descubrió que una de ellas cargaba un componente de internet y, sin conexión, se quedaba en
+  blanco. Ningún repaso a ojo lo habría encontrado.</p></div>
+
+  <h3>Cómo se instala</h3>
+  <pre class="cod"><code>pip install playwright
+playwright install chromium</code></pre>
+  <p>Ese <code>playwright install chromium</code> descarga un navegador propio, independiente del que
+  tengas. Ocupa unos cientos de megas y se hace una sola vez.</p>
+
+</section>
+
+<section role="tabpanel" id="a8">
+
+  <h2>Montarlo en tu equipo</h2>
+  <p class="sub">Qué poner en cada máquina, y por qué. Esto es lo que tenemos nosotros, medido el
+  16 de septiembre de 2026 — no una recomendación teórica.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Herramienta</th><th>En el portátil</th><th>En el servidor</th><th>Por qué ahí</th></tr>
+    <tr><td>PyMuPDF · pdfplumber</td><td><strong>Sí</strong></td><td>Sí</td><td>Ligero: leer PDF no necesita máquina grande</td></tr>
+    <tr><td>Transcripción de audio</td><td>Se puede</td><td><strong>Mejor aquí</strong></td><td>Con tarjeta gráfica va de cinco a diez veces más rápido</td></tr>
+    <tr><td>OCR (tesseract)</td><td>Se puede</td><td><strong>Mejor aquí</strong></td><td>Es lento y va por lotes: déjalo trabajando</td></tr>
+    <tr><td>Playwright</td><td><strong>Sí</strong></td><td>Opcional</td><td>Comprueba lo que generas donde lo generas</td></tr>
+    <tr><td>El modelo (Ollama)</td><td>Si tiene tarjeta</td><td><strong>Sí</strong></td><td>Es lo único que de verdad pide hardware</td></tr>
+  </table></div>
+
+  <div class="box tip"><span class="lbl">El orden por el que empezar, si empiezas hoy</span>
+  <ol>
+    <li><strong>PyMuPDF.</strong> Una tarde. Es la que más veces vas a usar.</li>
+    <li><strong>La transcripción.</strong> Otra tarde, y el ahorro se nota desde la primera visita
+    de obra.</li>
+    <li><strong>El resto</strong>, cuando te haga falta: el OCR solo si recibes escaneados, y el
+    navegador solo si generas documentos.</li>
+  </ol>
+  <p>Y no montes las cinco cosas a la vez «por tenerlas»: monta la que resuelva el problema que
+  tuviste la semana pasada.</p></div>
+
+  <div class="box warn"><span class="lbl">Lo que no te va a funcionar a la primera</span>
+  <ul>
+    <li><strong>El audio del móvil</strong> no siempre está en un formato que la herramienta entienda
+    directamente: ahí es donde entra <code>ffmpeg</code>, que convierte casi cualquier cosa.</li>
+    <li><strong>Los PDF firmados o protegidos</strong> pueden no dejar extraer texto. Es una
+    restricción del fichero, no un fallo tuyo.</li>
+    <li><strong>La primera vez que ejecutes la transcripción</strong> se descargará el modelo:
+    tarda, y necesita conexión. Después ya funciona sin internet.</li>
+  </ul></div>
+
+</section>
+
+<footer>
+  <p><strong>Guía 15 de 15</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio
+  profesional» · Colegio Oficial de Ingenieros de Telecomunicación.<br>
+  El código de esta guía se ejecutó el 16/09/2026 antes de escribirlo, y las cifras que aparecen
+  —tiempos, aciertos, número de tablas— son las que salieron, no estimaciones.</p>
+  <p><a href="#">¿Una sigla que no conoces? Consulta el glosario</a></p>
+
+<!-- autoria -->
+  <div class="autoria">
+    <span class="nom">Joaquín Serrat González</span><br>
+    <span class="det">Colegiado nº 8719 · Colegio Oficial de Ingenieros de Telecomunicación</span><br>
+    <a href="mailto:kim@nomasruido.com">kim@nomasruido.com</a>
+  </div>
+<!-- /autoria -->
+</footer>
+
+</div>
+
+</div>
+<div class="parte" id="p15">
 <div class="wrap">
 <a class="home" href="#"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M6 10.5V20h5v-5h2v5h5v-9.5"/></svg><span>Índice de guías</span></a>
 
@@ -9003,6 +9669,7 @@ INF-3;cita;REQ-04</code></pre>
 <footer>
   <p><strong>Glosario</strong> · Webinar «Inteligencia Artificial aplicada al libre ejercicio profesional» ·
   Colegio Oficial de Ingenieros de Telecomunicación.</p>
+
 
 
 
