@@ -1573,7 +1573,7 @@
   <h1>Inteligencia Artificial aplicada al libre ejercicio profesional</h1>
   <p class="sub">Las catorce guías del webinar, con todas sus pestañas desplegadas, y el glosario de siglas
   y términos. Pensadas para leer después de la sesión.</p>
-  <p class="sub">Versión del 16/09/2026. En la Guía 11 aparecen enunciados los 47 marcos; cada uno con su
+  <p class="sub">Versión del 17/09/2026. En la Guía 11 aparecen enunciados los 47 marcos; cada uno con su
   ficha, ejemplo, anatomía y taller ocupa por sí solo más que el resto del material junto, así que va en un
   PDF aparte, «Catálogo de marcos». Los diagramas escritos en Mermaid (Guía 8) aparecen aquí como código;
   dibujados, en la versión HTML que acompaña a este PDF.</p>
@@ -3415,6 +3415,8 @@ ollama run qwen3:8b</code></pre>
 
 
 
+
+
 <!-- obligaciones -->
 <section role="tabpanel" id="d8">
   <h2>Lo que te obliga la ley</h2>
@@ -3490,6 +3492,30 @@ ollama run qwen3:8b</code></pre>
   cambia, gratis, con solo registrarte. Poner en seguimiento las normas que te afectan es
   probablemente el consejo con mejor relación valor/coste de toda esta guía: es exactamente lo que
   evita enterarse tarde de un aplazamiento como los de arriba.</p></div>
+
+  <h3>«Mi BOE», paso a paso</h3>
+  <p>Es el servicio de alertas del propio BOE: le dices qué te interesa y te escribe cuando se
+  publica. Vale para una ley concreta, para oposiciones, para anuncios de contratación o para
+  cualquier búsqueda que repitas.</p>
+  <ol>
+    <li><strong>Date de alta.</strong> En <code>boe.es/mi_boe</code>, entra en «Registro»: nombre,
+    correo, contraseña y el código de seguridad. Te llega un correo titulado «Mi BOE - Verificación de
+    correo electrónico»: pulsa su enlace o teclea el número de seis dígitos que trae.</li>
+    <li><strong>Sigue una norma.</strong> Busca la ley o el real decreto, abre su <strong>texto
+    consolidado</strong> y pulsa <strong>«Recibir alerta»</strong>, arriba a la derecha. Te avisará cada
+    vez que se modifique. Empieza por el RD 1007/2023 (Verifactu) y el RD 238/2026 (factura
+    electrónica).</li>
+    <li><strong>Guarda tus búsquedas.</strong> Haz la búsqueda que repites (tu especialidad en
+    legislación, en anuncios de contratación…) y, en los resultados, pulsa <strong>«Guardar
+    búsqueda»</strong> con la alerta por correo marcada.</li>
+    <li><strong>O usa las que ya están hechas.</strong> En tu panel hay alertas listas para marcar:
+    legislación, nombramientos, oposiciones y concursos, anuncios de contratación y otras temáticas.</li>
+  </ol>
+  <div class="box"><span class="lbl">Qué te llega y cómo se quita</span>
+  <p>Un correo <strong>el mismo día</strong> de la publicación, salvo sábados y festivos. Es gratis.
+  Una alerta se quita desmarcando su casilla en el panel; la cuenta entera, con «Eliminar perfil de
+  usuario» en «Mi perfil».</p>
+  <p><small>Comprobado en las preguntas frecuentes de Mi BOE el 17 de septiembre de 2026.</small></p></div>
 </section>
 <!-- /obligaciones -->
 
@@ -9538,10 +9564,14 @@ playwright install chromium</code></pre>
 <header class="top">
   <p class="eyebrow">Webinar COIT · Glosario</p>
   <h1>Glosario: siglas y términos</h1>
-  <p class="sub">Las palabras que salen en el webinar y en las guías, explicadas sin tecnicismos. 102 términos
+  <p class="sub">Las palabras que salen en el webinar y en las guías, explicadas sin tecnicismos. 115 términos
   agrupados por tema. Si una sigla no está aquí, pregúntala: probablemente también le interese a alguien más.</p>
-  <p><span class="pill">Consulta rápida</span><span class="pill">102 términos</span></p>
+  <p><span class="pill">Consulta rápida</span><span class="pill">115 términos</span></p>
 </header>
+<!-- caducidad -->
+<div class="box key" style="margin:14px 0"><p><strong>Esta web estará publicada hasta el 17 de octubre de 2026.</strong> Después se retirará. Si quieres conservar las guías, guárdate <a href="https://gurmanyach.github.io/guias-webinar-coit/Guias_y_glosario_Webinar_IA.pdf">el PDF con todas las guías y el glosario</a> o <a href="https://gurmanyach.github.io/guias-webinar-coit/Guias_y_glosario_COMPLETO.html">la versión en un solo fichero</a> (Guardar como… en el navegador).</p></div>
+<!-- /caducidad -->
+
 
 <section role="tabpanel" id="g0">
   <h2>IA y modelos</h2>
@@ -9570,7 +9600,11 @@ playwright install chromium</code></pre>
     <tr><td><strong>STT · TTS</strong></td><td>Speech-to-Text · Text-to-Speech</td><td>Transcribir voz a texto (Whisper) y generar voz a partir de texto (XTTS, Kokoro).</td></tr>
     <tr><td><strong>GSM8K</strong></td><td>Grade School Math 8K</td><td>Banco de problemas matemáticos de primaria que se usa para medir el razonamiento de un modelo: si falla aquí, no razona, repite.</td></tr>
     <tr><td><strong>Few-shot · zero-shot</strong></td><td></td><td>Few-shot: dar al modelo unos pocos ejemplos ya resueltos dentro de la propia pregunta. Zero-shot: pedirle la tarea sin ningún ejemplo.</td></tr>
-  <tr><td><strong>Whisper</strong></td><td></td><td>Modelo libre de transcripción de voz a texto; funciona muy bien en español y se ejecuta en tu propio equipo.</td></tr>
+    <tr><td><strong>GraphRAG</strong></td><td>Graph RAG · RAG sobre grafo</td><td>Variante que construye un grafo de entidades y relaciones: responde preguntas de conjunto («qué cita a qué») que un RAG normal no puede.</td></tr>
+    <tr><td><strong>RAG agéntico</strong></td><td>Agentic RAG</td><td>Un agente decide qué buscar, reformula la pregunta y cruza varias fuentes, en vez de una sola búsqueda.</td></tr>
+    <tr><td><strong>Whisper</strong></td><td></td><td>Modelo libre de transcripción de voz a texto; funciona muy bien en español y se ejecuta en tu propio equipo.</td></tr>
+    <tr><td><strong>Pesos abiertos</strong></td><td>open weights</td><td>Modelo cuyos parámetros publica su fabricante para que los descargues y lo ejecutes en tu equipo. No siempre significa código abierto: la licencia puede limitar el uso comercial.</td></tr>
+    <tr><td><strong>Perplejidad</strong></td><td>perplexity</td><td>Medida de cuánto «duda» un modelo al predecir un texto: cuanto más baja, mejor lo predice. Sirve para ver cuánta calidad se pierde al cuantizar.</td></tr>
   </table></div>
 </section>
 <section role="tabpanel" id="g1">
@@ -9613,9 +9647,9 @@ playwright install chromium</code></pre>
     <tr><td><strong>Vigía</strong></td><td></td><td>Pequeño proceso que avisa a un agente en cuanto llega un mensaje para él.</td></tr>
     <tr><td><strong>Escudero · segunda lente</strong></td><td></td><td>Agente que acompaña a otro y revisa su trabajo con otro enfoque o instrumento.</td></tr>
     <tr><td><strong>Adversario · auditor</strong></td><td></td><td>El adversario intenta demostrar que un trabajo está mal; el auditor da el sí o el no final.</td></tr>
-  <tr><td><strong>FastAPI</strong></td><td></td><td>Librería de Python para exponer tu IA como una API interna con muy poco código.</td></tr>
-  <tr><td><strong>IMAP</strong></td><td>Internet Message Access Protocol</td><td>La forma estándar de que un programa lea tu buzón de correo. Es lo que permite automatizar el triaje.</td></tr>
-  <tr><td><strong>ffmpeg</strong></td><td></td><td>Programa libre que convierte audio y vídeo entre formatos. Imprescindible antes de transcribir lo grabado con el móvil.</td></tr>
+    <tr><td><strong>FastAPI</strong></td><td></td><td>Librería de Python para exponer tu IA como una API interna con muy poco código.</td></tr>
+    <tr><td><strong>IMAP</strong></td><td>Internet Message Access Protocol</td><td>La forma estándar de que un programa lea tu buzón de correo. Es lo que permite automatizar el triaje.</td></tr>
+    <tr><td><strong>ffmpeg</strong></td><td></td><td>Programa libre que convierte audio y vídeo entre formatos. Imprescindible antes de transcribir lo grabado con el móvil.</td></tr>
   </table></div>
 </section>
 <section role="tabpanel" id="g3">
@@ -9623,7 +9657,7 @@ playwright install chromium</code></pre>
   <div class="tblwrap"><table>
     <tr><th>Término</th><th>Siglas o nombre completo</th><th>Qué significa</th></tr>
     <tr><td><strong>GPU · CPU</strong></td><td>Graphics Processing Unit · Central Processing Unit</td><td>Tarjeta gráfica y procesador. La GPU hace el cálculo de los modelos mucho más rápido.</td></tr>
-    <tr><td><strong>VRAM</strong></td><td>Video RAM · memoria de la tarjeta gráfica</td><td>Memoria de la GPU. Es el límite de tamaño del modelo que puedes cargar en ella.</td></tr>
+    <tr><td><strong>VRAM</strong></td><td>Video RAM · memoria dedicada de la GPU</td><td>La memoria propia de la GPU, montada en la tarjeta gráfica junto al chip gráfico. Es el límite del tamaño del modelo que puedes cargar en ella: si el modelo no cabe entero, una parte pasa a la RAM y la velocidad cae. En equipos de memoria unificada (Mac con chip Apple, Ryzen AI Max+) no hay VRAM separada: CPU y GPU comparten la misma memoria.</td></tr>
     <tr><td><strong>RAM · memoria unificada</strong></td><td>Random Access Memory</td><td>Memoria del equipo. En los Mac con Apple Silicon la comparten CPU y GPU, por eso caben modelos grandes.</td></tr>
     <tr><td><strong>CUDA · Metal · MLX</strong></td><td></td><td>Tecnologías para usar la GPU: CUDA en NVIDIA, Metal y MLX en Apple.</td></tr>
     <tr><td><strong>SSH</strong></td><td>Secure Shell</td><td>Conexión cifrada para ejecutar órdenes en otra máquina.</td></tr>
@@ -9639,6 +9673,9 @@ playwright install chromium</code></pre>
     <tr><td><strong>ntfy</strong></td><td></td><td>Servicio de avisos al móvil desde tus propios programas.</td></tr>
     <tr><td><strong>Paperless-ngx</strong></td><td></td><td>Gestor documental con OCR: digitaliza, etiqueta y busca documentos.</td></tr>
     <tr><td><strong>Local · nube</strong></td><td></td><td>Local: se ejecuta en tus equipos. Nube: en servidores de un proveedor, por internet.</td></tr>
+    <tr><td><strong>ROCm</strong></td><td>Radeon Open Compute</td><td>La plataforma de AMD para usar sus tarjetas gráficas en IA: el equivalente de CUDA en NVIDIA. Hay menos programas compatibles que con CUDA.</td></tr>
+    <tr><td><strong>NPU</strong></td><td>Neural Processing Unit · unidad de procesamiento neuronal</td><td>Chip de IA de bajo consumo que ya traen muchos portátiles. Vale para tareas ligeras (transcribir, desenfocar el fondo), no para mover un modelo grande.</td></tr>
+    <tr><td><strong>CLI</strong></td><td>Command-Line Interface · interfaz de línea de órdenes</td><td>Programa que se usa escribiendo órdenes en una terminal en vez de con ventanas y botones; Claude Code, Ollama o git se usan así.</td></tr>
   </table></div>
 </section>
 <section role="tabpanel" id="g4">
@@ -9646,19 +9683,22 @@ playwright install chromium</code></pre>
   <div class="tblwrap"><table>
     <tr><th>Término</th><th>Siglas o nombre completo</th><th>Qué significa</th></tr>
     <tr><td><strong>VBA</strong></td><td>Visual Basic for Applications</td><td>Lenguaje de macros de Excel, Word y el resto de Office.</td></tr>
-    <tr><td><strong>M365</strong></td><td>Microsoft 365</td><td>Paquete de Office por suscripción (Word, Excel, Outlook, Teams); su asistente de IA es Copilot.</td></tr>
     <tr><td><strong>COM</strong></td><td>Component Object Model</td><td>Mecanismo de Windows que permite a un programa (por ejemplo Python) manejar Excel o Word.</td></tr>
     <tr><td><strong>Python · librería</strong></td><td></td><td>Lenguaje de programación muy usado en ingeniería; una librería es un paquete de funciones ya hecho.</td></tr>
     <tr><td><strong>SIG · GIS · QGIS</strong></td><td>Sistema de Información Geográfica · Geographic Information System</td><td>Programas para trabajar con mapas y datos geográficos; QGIS es libre y gratuito.</td></tr>
     <tr><td><strong>PostGIS</strong></td><td></td><td>Extensión de base de datos para guardar y consultar datos geográficos.</td></tr>
     <tr><td><strong>CNOSSOS-EU · NoiseModelling</strong></td><td>Common Noise Assessment Methods in Europe</td><td>Método europeo de cálculo de ruido ambiental y programa libre que lo implementa para hacer mapas de ruido.</td></tr>
     <tr><td><strong>DXF · DWG</strong></td><td>Drawing Exchange Format · Drawing</td><td>Formatos de fichero de dibujo técnico (CAD).</td></tr>
-    <tr><td><strong>CAD</strong></td><td>Computer-Aided Design</td><td>Diseño asistido por ordenador: programas de dibujo técnico como AutoCAD.</td></tr>
     <tr><td><strong>ICT</strong></td><td>Infraestructura Común de Telecomunicaciones</td><td>Instalaciones de telecomunicación de un edificio, reguladas en España por el RD 346/2011.</td></tr>
     <tr><td><strong>ISO/IEC 17025</strong></td><td></td><td>Norma internacional de competencia de los laboratorios de ensayo y calibración.</td></tr>
     <tr><td><strong>INSUL · SonArchitect · CATT</strong></td><td></td><td>Programas comerciales de predicción de aislamiento acústico, modelo de edificio y acústica de salas.</td></tr>
     <tr><td><strong>Apache 2.0 · MIT</strong></td><td></td><td>Licencias abiertas habituales que permiten usar un modelo o programa también comercialmente, con condiciones.</td></tr>
     <tr><td><strong>ERP</strong></td><td>Enterprise Resource Planning · planificación de recursos empresariales</td><td>Programa de gestión integral de la empresa: contabilidad, compras, almacén y facturación en un mismo sistema.</td></tr>
+    <tr><td><strong>M365</strong></td><td>Microsoft 365</td><td>Paquete de Office por suscripción (Word, Excel, Outlook, Teams); su asistente de IA es Copilot.</td></tr>
+    <tr><td><strong>CAD</strong></td><td>Computer-Aided Design</td><td>Diseño asistido por ordenador: programas de dibujo técnico como AutoCAD.</td></tr>
+    <tr><td><strong>Gage R&amp;R</strong></td><td>Gage Repeatability &amp; Reproducibility · repetibilidad y reproducibilidad</td><td>Ensayo que comprueba que el instrumento y quien mide dan resultados consistentes, antes de fiarse de ninguna medida.</td></tr>
+    <tr><td><strong>RGPD</strong></td><td>Reglamento General de Protección de Datos · Reglamento (UE) 2016/679</td><td>La norma europea sobre datos personales. Si subes datos de clientes a un servicio de IA, ese proveedor trata datos por cuenta tuya y necesitas contrato de encargado del tratamiento.</td></tr>
+    <tr><td><strong>RD</strong></td><td>Real Decreto</td><td>Norma reglamentaria aprobada por el Gobierno que desarrolla una ley; por ejemplo, el RD 1007/2023 de los sistemas de facturación (Verifactu).</td></tr>
   </table></div>
 </section>
 <section role="tabpanel" id="g5">
@@ -9681,7 +9721,6 @@ playwright install chromium</code></pre>
     <tr><td><strong>KPI</strong></td><td>Key Performance Indicator · indicador clave de rendimiento</td><td>Medida que vigila de forma continua la salud de un proceso, sin fecha de caducidad; un objetivo, en cambio, se cierra.</td></tr>
     <tr><td><strong>NPS</strong></td><td>Net Promoter Score · índice de recomendación</td><td>Encuesta de una sola pregunta («¿nos recomendarías?») que resume la satisfacción del cliente en un número de −100 a 100.</td></tr>
     <tr><td><strong>SPC</strong></td><td>Statistical Process Control · control estadístico de procesos</td><td>Vigilar un proceso con gráficos de control para distinguir la variación normal de la que avisa de un problema real.</td></tr>
-    <tr><td><strong>Gage R&amp;R</strong></td><td>Gage Repeatability &amp; Reproducibility · repetibilidad y reproducibilidad</td><td>Ensayo que comprueba que el instrumento y quien mide dan resultados consistentes, antes de fiarse de ninguna medida.</td></tr>
     <tr><td><strong>PPAP · APQP</strong></td><td>Production Part Approval Process · Advanced Product Quality Planning</td><td>Procedimientos del sector del automóvil para planificar la calidad de un producto nuevo y aprobar las primeras piezas de producción.</td></tr>
   </table></div>
 </section>
